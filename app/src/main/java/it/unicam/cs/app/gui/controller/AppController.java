@@ -1,14 +1,14 @@
-package it.unicam.cs.app;
+package it.unicam.cs.app.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class AppController {
     @FXML
     private Label welcomeText;
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        welcomeText.setText("Demetrio");
     }
 }

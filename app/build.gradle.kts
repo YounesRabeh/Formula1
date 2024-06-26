@@ -24,7 +24,7 @@ tasks.withType<JavaCompile> {
 
 application {
   mainModule.set("it.unicam.cs.app")
-  mainClass.set("it.unicam.cs.app.HelloApplication")
+  mainClass.set("it.unicam.cs.app.App")
 }
 
 javafx {
