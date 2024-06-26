@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * JavaFX App
@@ -23,7 +26,7 @@ import java.io.IOException;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, URISyntaxException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         // Create a Canvas
@@ -69,13 +72,17 @@ public class App extends Application {
         });
     }
 
-    private void drawCircuit(GraphicsContext gc) throws IOException {
+    private void drawCircuit(GraphicsContext gc) throws IOException, URISyntaxException {
         // Clear the canvas
         gc.clearRect(0, 0, 900, 900);
 
-        String PATH = "app/src/main/resources/it/unicam/cs/test.txt";
+        String PATH = "it/unicam/cs/test.txt";
+        // Get the absolute path of the file
+        // NOTE: to get gradle to work, you need to put the file in the resources folder
+        String absolutePath = Objects.requireNonNull(
+                getClass().getClassLoader().getResource(PATH)).toURI().getPath();
         // use classLoader
-        DrawingParser parser = new DrawingParser(new File(PATH), gc);
+        DrawingParser parser = new DrawingParser(new File(absolutePath), gc);
         parser.start();
         System.out.println(parser.getAllIdentifiers());
     }
