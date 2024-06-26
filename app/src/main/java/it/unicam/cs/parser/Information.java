@@ -1,4 +1,4 @@
-package it.unicam.cs.app.parser;
+package it.unicam.cs.parser;
 
 /**
  * An interface that contains the information used by the parser.

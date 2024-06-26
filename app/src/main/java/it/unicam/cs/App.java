@@ -1,7 +1,8 @@
-package it.unicam.cs.app;
+package it.unicam.cs;
 
-import it.unicam.cs.app.gui.tools.CanvasTools;
-import it.unicam.cs.app.parser.DrawingParser;
+import it.unicam.cs.gui.tools.CanvasTools;
+import it.unicam.cs.parser.DrawingParser;
+import it.unicam.cs.gui.map.MapRenderer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,9 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-
-import static it.unicam.cs.app.gui.map.MapRenderer.drawGrid;
-import static it.unicam.cs.app.gui.tools.CanvasTools.drawOutline;
 
 /**
  * JavaFX App
@@ -39,8 +37,8 @@ public class App extends Application {
 
         // Draw something on the canvas
 
-        drawGrid(gridCanvas, 24, Color.GRAY);
-        drawOutline(gridCanvas, Color.GRAY);
+        MapRenderer.drawGrid(gridCanvas, 24, Color.GRAY);
+        CanvasTools.drawOutline(gridCanvas, Color.GRAY);
         drawCircuit(track_gc);
 
         // Create a layout pane to hold the canvas
@@ -69,15 +67,13 @@ public class App extends Application {
             System.out.println("Pixel color at (" + x + ", " + y + "): " +
                     CanvasTools.colorToRGBString(pixelColor));
         });
-
-
     }
 
     private void drawCircuit(GraphicsContext gc) throws IOException {
         // Clear the canvas
         gc.clearRect(0, 0, 900, 900);
 
-        String PATH = "app/src/main/resources/it/unicam/cs/app/test.txt";
+        String PATH = "app/src/main/resources/it/unicam/cs/test.txt";
         // use classLoader
         DrawingParser parser = new DrawingParser(new File(PATH), gc);
         parser.start();

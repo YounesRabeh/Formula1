@@ -1,4 +1,4 @@
-package it.unicam.cs.app.gui.controller;
+package it.unicam.cs.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

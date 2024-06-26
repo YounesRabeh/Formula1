@@ -1,4 +1,4 @@
-package it.unicam.cs.app.gui.tools;
+package it.unicam.cs.gui.tools;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelReader;

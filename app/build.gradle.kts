@@ -23,8 +23,8 @@ tasks.withType<JavaCompile> {
 }
 
 application {
-  mainModule.set("it.unicam.cs.app")
-  mainClass.set("it.unicam.cs.app.App")
+  mainModule.set("it.unicam.cs")
+  mainClass.set("it.unicam.cs.App")
 }
 
 javafx {

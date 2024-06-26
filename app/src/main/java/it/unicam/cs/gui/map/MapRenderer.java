@@ -1,4 +1,4 @@
-package it.unicam.cs.app.gui.map;
+package it.unicam.cs.gui.map;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

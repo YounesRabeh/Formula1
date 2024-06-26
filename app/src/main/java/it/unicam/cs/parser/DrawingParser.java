@@ -1,6 +1,6 @@
-package it.unicam.cs.app.parser;
+package it.unicam.cs.parser;
 
-import it.unicam.cs.app.api.Graphics;
+import it.unicam.cs.api.Graphics;
 import javafx.scene.canvas.GraphicsContext;
 import java.io.File;
 
