@@ -7,4 +7,5 @@ module it.unicam.cs {
     opens it.unicam.cs.gui.controller to javafx.fxml;
     exports it.unicam.cs;
     exports it.unicam.cs.gui.controller;
+
 }
