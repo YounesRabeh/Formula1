@@ -4,6 +4,7 @@ import it.unicam.cs.gui.tools.CanvasTools;
 import it.unicam.cs.parser.DrawingParser;
 import it.unicam.cs.gui.map.MapRenderer;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
+import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -27,8 +28,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+//        URL url = getClass().getResource("hello-view.fxml");
+//        System.out.println("url = " + url);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         // Create a Canvas
         Canvas trackCanvas = new Canvas(800, 800);
         Canvas gridCanvas = new Canvas(800, 800);
@@ -54,7 +57,7 @@ public class App extends Application {
         root.getChildren().addAll(trackCanvas, gridCanvas);
 
         // Create a scene with the layout pane
-        Scene scene = new Scene(root, 1000, 1000);
+        //Scene scene = new Scene(root, 1000, 1000);
 
         // Set up the stage and show it
         stage.setTitle("Gagata ");
