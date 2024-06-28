@@ -5,21 +5,42 @@ import javafx.scene.canvas.GraphicsContext;
 import java.io.File;
 
 /**
- * This class is responsible for parsing the data from the file.
- * The Parser is used to read the data from the file and return it as a stream of strings,
- * which will be used to draw the racing circuit, by utilizing the parsed coordinates of the track.
+ * A parser responsible for drawing on the canvas.
+ * by default, it has the following commands: {@link DrawingParser#defaultCommands()}
  *
- * @see Interpretable
+ * @see AbstractParser
  * @author Younes Rabeh
  */
 public class DrawingParser extends AbstractParser {
     /** The GraphicsContext used to draw on the canvas.*/
     private GraphicsContext graphicsContext;
 
+    /**
+     * Creates a new DrawingParser with the given file and GraphicsContext.
+     * The {@link DrawingParser#defaultCommands()} are added.
+     * @param file the file to be parsed
+     * @param graphicsContext the GraphicsContext to draw on
+     */
     public DrawingParser(File file, GraphicsContext graphicsContext) {
         super(file);
         this.graphicsContext = graphicsContext;
         defaultCommands();
+    }
+
+    /**
+     * Creates a new DrawingParser with the given file, GraphicsContext.
+     * The {@link DrawingParser#defaultCommands()} are added if the useDefaultCommands is true.
+     *
+     * @param file the file to be parsed
+     * @param graphicsContext the GraphicsContext to draw on
+     * @param useDefaultCommands a boolean value to use the default commands
+     */
+    public DrawingParser(File file, GraphicsContext graphicsContext, boolean useDefaultCommands) {
+        super(file);
+        this.graphicsContext = graphicsContext;
+        if(useDefaultCommands){
+            defaultCommands();
+        }
     }
 
     /**
@@ -39,7 +60,7 @@ public class DrawingParser extends AbstractParser {
     }
 
     /**
-     * Add the default commands to the parser.
+     * The default commands of the parser.
      */
     private void defaultCommands(){
         functionMap.put('B', (command) -> {
@@ -74,5 +95,4 @@ public class DrawingParser extends AbstractParser {
             Graphics.setFill(graphicsContext, command.params());
         });
     }
-
 }

@@ -6,6 +6,12 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
+/**
+ * This utility class provides methods to interact with the canvas.
+ *
+ * @author Younes Rabeh
+ * @version 1.0
+ */
 public final class CanvasTools {
     private CanvasTools() {}
     /**
@@ -57,8 +63,4 @@ public final class CanvasTools {
         gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setLineWidth(1); // reset the line width
     }
-
-
-
-
 }

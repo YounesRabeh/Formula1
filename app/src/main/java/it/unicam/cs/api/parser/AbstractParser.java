@@ -8,34 +8,42 @@ import java.nio.file.Files;
 import java.util.*;
 
 /**
- * A generic parser that reads a file and executes the commands.
+ * An abstract parser that reads a file and executes the commands.
+ * the parser create stores the commands and their corresponding actions.
+ *
+ * <ul>- {@code Identifier:} The first character (Capital for convention) of the line.</ul>
+ * <ul>- {@code Parameters:} The Integers after the identifier.</ul>
+ *
+ * <b>THE PARSER ONLY ACCEPTS INTEGERS AS PARAMETERS </b>
+ * will be changed in the future.
  * @see Interpretable
  * @see Information
+ * @see Command
  * @author Younes Rabeh
- * @version 1.1
+ * @version 1.2
  */
 abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
-    protected final File file;
+    protected File FILE;
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
 
     /**
      * Creates a new parser with the specified file.
      * @param file the file to be parsed
+     * @throws IllegalArgumentException if the file does not exist or is a directory
      */
     AbstractParser(File file) {
-        this.file = file;
+        if (!isFileValid(file)){
+            throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
+        }
+        this.FILE = file;
     }
 
     @Override
-    public void start() throws IOException {
-        if (!isFileValid()) {
-            throw new IOException("File is not valid: " + file.getAbsolutePath());
-        }
-
-        try (BufferedReader reader = getFileData(file).orElseThrow(() ->
-                new IOException("Unable to read file: " + file.getAbsolutePath()))) {
+    public void start() throws IOException, RuntimeException {
+        try (BufferedReader reader = getFileData(FILE).orElseThrow(() ->
+                new IOException("Unable to read file: " + FILE.getAbsolutePath()))) {
             reader.lines()
                     .filter(line -> !line.isEmpty() && !line.startsWith(COMMENT_CHARACTER))
                     .forEach(line -> executeCommand(parseLine(line)));
@@ -61,6 +69,14 @@ abstract class AbstractParser implements Interpretable, Information {
         functionMap.put(identifier, action);
     }
 
+    @Override
+    public void setFile(File file) {
+        if (!isFileValid(file)){
+            throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
+        }
+        this.FILE = file;
+    }
+
     /**
      * Get all the identifiers of all the commands.
      * @return a set of all the identifiers
@@ -71,17 +87,18 @@ abstract class AbstractParser implements Interpretable, Information {
 
     /**
      * Check if the file is valid.
-     * @return true if the file is valid
+     * @return true if the file exists and is not a directory
      */
-    private boolean isFileValid() {
+    private boolean isFileValid(File file) {
         return file.exists() && file.isFile();
     }
 
     /**
      * Execute the command.
      * @param command the command to be executed
+     * @throws RuntimeException if the command execution fails
      */
-    private void executeCommand(Command command) {
+    private void executeCommand(Command command) throws RuntimeException {
         CommandAction action = functionMap.get(command.identifier());
         if (action != null) {
             action.execute(command);

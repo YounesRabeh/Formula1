@@ -4,18 +4,19 @@ import java.io.*;
 import java.util.Optional;
 
 /**
- * An interface responsible for interpreting the commands from a file.
+ * Represents the basic functionality of a parser.
  *
  * @see Command
  * @see CommandAction
  * @author Younes Rabeh
  */
-interface Interpretable {
+public interface Interpretable {
     /**
-     * Start the parsing process.
-     * @throws IOException if the file is not valid
+     * Starts the parsing process.
+     * @throws IOException if the parser file is not readable
+     * @throws RuntimeException if an error occurs during the execution of the command
      */
-    void start() throws IOException;
+    void start() throws IOException, RuntimeException;
 
     /**
      * Parse the data from the file.
@@ -31,6 +32,13 @@ interface Interpretable {
      * @see CommandAction
      */
     void addRule(char identifier, CommandAction action);
+
+    /**
+     * Set a new file to be parsed.
+     * @param file the new file
+     * @throws IllegalArgumentException if the file does not exist or is a directory
+     */
+    void setFile(File file) throws IllegalArgumentException;
 
 
 

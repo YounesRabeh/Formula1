@@ -15,11 +15,13 @@ import static javafx.scene.paint.Color.rgb;
  * @see GraphicsContext
  */
 public final class Graphics {
-
+    /** Prevent instantiation of this utility class. */
     private Graphics() {}
 
     /**
      * Set the stroke color of the graphics context.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the stroke color
      */
     public static void setStroke(GraphicsContext gc, int[] params) {
         gc.setStroke(rgb(params[0], params[1], params[2]));
@@ -27,36 +29,64 @@ public final class Graphics {
 
     /**
      * Set the line width of the graphics context.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the line width
      */
     public static void setLineWidth(GraphicsContext gc, int[] params) {
         gc.setLineWidth(params[0]);
     }
 
-
+    /**
+     * Draw a line on the canvas.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the line
+     */
     public static void strokeLine(GraphicsContext gc, int[] params) {
         gc.strokeLine(params[0], params[1], params[2], params[3]);
     }
 
+    /**
+     * Begin a new path.
+     * @param gc the GraphicsContext
+     */
     public static void beginPath(GraphicsContext gc) {
         gc.beginPath();
     }
 
+    /**
+     * Set the fill color of the graphics context.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the fill color
+     */
     public static void setFill(GraphicsContext gc, int[] params) {
         gc.setFill(rgb(params[0], params[1], params[2]));
     }
 
+    /**
+     * Draw a fill rectangle on the canvas.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the rectangle
+     */
     public static void fillRect(GraphicsContext gc, int[] params) {
         gc.fillRect(params[0], params[1], params[2], params[3]);
     }
 
+    /**
+     * Draw a stroke rectangle (borders only) on the canvas.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the rectangle
+     */
     public static void strokeRect(GraphicsContext gc, int[] params) {
         gc.strokeRect(params[0], params[1], params[2], params[3]);
     }
 
+    /**
+     * Draw a quadratic curve on the canvas.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the curve
+     */
     public static void quadraticCurveTo(GraphicsContext gc, int[] params) {
         gc.quadraticCurveTo(params[0], params[1], params[2], params[3]);
     }
-
-
 
 }
