@@ -1,7 +1,7 @@
 package it.unicam.cs;
 
 import it.unicam.cs.gui.tools.CanvasTools;
-import it.unicam.cs.parser.DrawingParser;
+import it.unicam.cs.api.parser.DrawingParser;
 import it.unicam.cs.gui.map.MapRenderer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Objects;
 
 /**

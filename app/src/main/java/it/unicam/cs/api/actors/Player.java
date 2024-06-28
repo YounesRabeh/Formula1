@@ -1,4 +1,4 @@
-package it.unicam.cs.engine.actors;
+package it.unicam.cs.api.actors;
 
 import javafx.scene.paint.Color;
 
@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
  */
 public class Player extends Driver implements Playable {
 
-
     Player(String name, Color carColor) {
         super(name, carColor);
     }
 }
+

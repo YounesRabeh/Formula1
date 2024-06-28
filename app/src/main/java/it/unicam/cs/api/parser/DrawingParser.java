@@ -1,4 +1,4 @@
-package it.unicam.cs.parser;
+package it.unicam.cs.api.parser;
 
 import it.unicam.cs.gui.tools.Graphics;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,15 +22,25 @@ public class DrawingParser extends AbstractParser {
         defaultCommands();
     }
 
-
+    /**
+     * Get the GraphicsContext.
+     * @return the GraphicsContext
+     */
     public GraphicsContext getGC() {
         return graphicsContext;
     }
 
+    /**
+     * Set the parser's GraphicsContext.
+     * @param graphicsContext the GraphicsContext to be set
+     */
     public void setGraphicsContext(GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
     }
 
+    /**
+     * Add the default commands to the parser.
+     */
     private void defaultCommands(){
         functionMap.put('B', (command) -> {
             Graphics.beginPath(graphicsContext);

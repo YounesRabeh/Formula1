@@ -1,4 +1,4 @@
-package it.unicam.cs.parser;
+package it.unicam.cs.api.parser;
 
 
 import java.io.BufferedReader;
@@ -7,7 +7,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
-
+/**
+ * A generic parser that reads a file and executes the commands.
+ * @see Interpretable
+ * @see Information
+ * @author Younes Rabeh
+ * @version 1.1
+ */
 abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
     protected final File file;
@@ -30,10 +36,8 @@ abstract class AbstractParser implements Interpretable, Information {
 
         try (BufferedReader reader = getFileData(file).orElseThrow(() ->
                 new IOException("Unable to read file: " + file.getAbsolutePath()))) {
-            reader.lines() //FIXME: add the debug line number and the line content if
-                    // an IllegalArgumentException is thrown
+            reader.lines()
                     .filter(line -> !line.isEmpty() && !line.startsWith(COMMENT_CHARACTER))
-                    // the ignoring character , the max line length and the comment character
                     .forEach(line -> executeCommand(parseLine(line)));
         }
     }
@@ -65,10 +69,18 @@ abstract class AbstractParser implements Interpretable, Information {
         return functionMap.keySet();
     }
 
+    /**
+     * Check if the file is valid.
+     * @return true if the file is valid
+     */
     private boolean isFileValid() {
         return file.exists() && file.isFile();
     }
 
+    /**
+     * Execute the command.
+     * @param command the command to be executed
+     */
     private void executeCommand(Command command) {
         CommandAction action = functionMap.get(command.identifier());
         if (action != null) {
@@ -78,9 +90,13 @@ abstract class AbstractParser implements Interpretable, Information {
         }
     }
 
+    /**
+     * Parse the line and create a command containing the identifier and the parameters.
+     * @param line the line to be parsed
+     * @return the command
+     */
     private Command parseLine(String line) {
-        String[] lineSplit = line.split(COMMENT_CHARACTER);
-        String[] parts = lineSplit[0].split(PARSER_SEPARATOR);
+        String[] parts = line.split(COMMENT_CHARACTER)[0].split(PARSER_SEPARATOR);
         char identifier = parts[0].charAt(0); // Get the first character of the line (O_msksdfsdf) is ok
         int[] params = Arrays.stream(parts, 1, parts.length)
                 .mapToInt(Integer::parseInt)
@@ -88,6 +104,4 @@ abstract class AbstractParser implements Interpretable, Information {
 
         return new Command(identifier, params);
     }
-
-
 }

@@ -1,4 +1,4 @@
-package it.unicam.cs.engine.actors;
+package it.unicam.cs.api.actors;
 
 import javafx.scene.paint.Color;
 
@@ -14,9 +14,6 @@ abstract class Driver implements Racing, F1Rules {
     Driver(String name, Color carColor){
         this.NAME = checkName(name);
         this.CAR_COLOR = checkColor(carColor);
-
-
-
 
     }
 

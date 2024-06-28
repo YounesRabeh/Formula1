@@ -8,11 +8,13 @@ public final class MapRenderer {
     private MapRenderer() {}
 
     /**
-     * Draws a squared grid on the canvas.
-     *
+     * Draws a squared grid on the canvas. The grid lines are drawn in the specified color,
+     * and the size of each cell is adjusted to fit the canvas dimensions.
      * @param canvas the canvas on which to draw the grid
      * @param cellSize the size of each cell in the grid
      * @param gridColor the color of the grid lines
+     *
+     * @return the adjusted cell size
      */
     public static double drawGrid(Canvas canvas, double cellSize, Color gridColor) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
