@@ -65,7 +65,7 @@ tasks.named<Jar>("jar") {
 
 tasks.register<JavaExec>("runR") {
   group = "application"
-  description = "Runs the application"
+  description = "Runs the application with javafx"
   classpath = sourceSets["main"].runtimeClasspath
   mainClass.set(application.mainClass)
   jvmArgs = listOf("--module-path", classpath.asPath, "--add-modules", "javafx.controls,javafx.fxml")

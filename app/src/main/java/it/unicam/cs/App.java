@@ -78,11 +78,11 @@ public class App extends Application {
         // Clear the canvas
         gc.clearRect(0, 0, 900, 900);
 
-        String PATH = "it/unicam/cs/test.txt";
+        String PATH = "/it/unicam/cs/test.txt";
         // Get the absolute path of the file
         // NOTE: to get gradle to work, you need to put the file in the resources folder
         String absolutePath = Objects.requireNonNull(
-                getClass().getClassLoader().getResource(PATH)).toURI().getPath();
+                getClass().getResource(PATH)).toURI().getPath();
         // use classLoader
         DrawingParser parser = new DrawingParser(new File(absolutePath), gc);
         parser.start();

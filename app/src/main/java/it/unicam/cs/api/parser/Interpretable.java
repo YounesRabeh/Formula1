@@ -40,6 +40,4 @@ public interface Interpretable {
      */
     void setFile(File file) throws IllegalArgumentException;
 
-
-
 }
