@@ -48,8 +48,4 @@ abstract class Driver implements Racing, F1Rules {
         return color;
     }
 
-
-
-
-
 }

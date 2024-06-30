@@ -33,7 +33,6 @@ public final class CanvasTools {
         // Get the PixelReader from the WritableImage
         PixelReader pixelReader = image.getPixelReader();
 
-        // Get the color of the specified pixel
         return pixelReader.getColor(x, y);
     }
 

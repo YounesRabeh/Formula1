@@ -1,6 +1,8 @@
 package it.unicam.cs.api.parser;
 
 
+import it.unicam.cs.api.exceptions.NoActionFoundException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +35,7 @@ abstract class AbstractParser implements Interpretable, Information {
      * @param file the file to be parsed
      * @throws IllegalArgumentException if the file does not exist or is a directory
      */
-    AbstractParser(File file) {
+    AbstractParser(File file) throws IllegalArgumentException {
         if (!isFileValid(file)){
             throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
         }
@@ -41,7 +43,7 @@ abstract class AbstractParser implements Interpretable, Information {
     }
 
     @Override
-    public void start() throws IOException, RuntimeException {
+    public void start() throws IOException, NoActionFoundException {
         try (BufferedReader reader = getFileData(FILE).orElseThrow(() ->
                 new IOException("Unable to read file: " + FILE.getAbsolutePath()))) {
             reader.lines()
@@ -98,12 +100,12 @@ abstract class AbstractParser implements Interpretable, Information {
      * @param command the command to be executed
      * @throws RuntimeException if the command execution fails
      */
-    private void executeCommand(Command command) throws RuntimeException {
+    private void executeCommand(Command command) throws NoActionFoundException {
         CommandAction action = functionMap.get(command.identifier());
         if (action != null) {
             action.execute(command);
         } else {
-            System.err.println("No action found for command: " + command.identifier());
+            throw new NoActionFoundException(command.identifier());
         }
     }
 

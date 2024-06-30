@@ -1,5 +1,7 @@
 package it.unicam.cs.api.parser;
 
+import it.unicam.cs.api.exceptions.NoActionFoundException;
+
 import java.io.*;
 import java.util.Optional;
 
@@ -14,9 +16,9 @@ public interface Interpretable {
     /**
      * Starts the parsing process.
      * @throws IOException if the parser file is not readable
-     * @throws RuntimeException if an error occurs during the execution of the command
+     * @throws NoActionFoundException if no action is found for the identifier
      */
-    void start() throws IOException, RuntimeException;
+    void start() throws IOException, NoActionFoundException;
 
     /**
      * Parse the data from the file.

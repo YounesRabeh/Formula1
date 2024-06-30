@@ -7,5 +7,4 @@ package it.unicam.cs.api.parser;
  * @param params the parameters of the command
  * @author Younes Rabeh
  */
-public record Command(char identifier, int[] params) {
-}
+public record Command(char identifier, int[] params) { }
