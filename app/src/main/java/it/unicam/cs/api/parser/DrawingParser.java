@@ -94,5 +94,9 @@ public class DrawingParser extends AbstractParser {
         functionMap.put('F', (command) -> {
             Graphics.setFill(graphicsContext, command.params());
         });
+
+        functionMap.put('P', (command) -> {
+            Graphics.strokePoint(graphicsContext, command.params());
+        });
     }
 }

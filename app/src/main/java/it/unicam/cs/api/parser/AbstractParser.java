@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
+
 /**
  * An abstract parser that reads a file and executes the commands.
  * the parser create stores the commands and their corresponding actions.
@@ -40,6 +41,7 @@ abstract class AbstractParser implements Interpretable, Information {
             throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
         }
         this.FILE = file;
+
     }
 
     @Override
@@ -124,3 +126,6 @@ abstract class AbstractParser implements Interpretable, Information {
         return new Command(identifier, params);
     }
 }
+
+
+

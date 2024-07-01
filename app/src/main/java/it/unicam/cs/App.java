@@ -1,10 +1,10 @@
 package it.unicam.cs;
 
+import it.unicam.cs.api.components.map.GridCanvas;
 import it.unicam.cs.gui.tools.CanvasTools;
 import it.unicam.cs.api.parser.DrawingParser;
-import it.unicam.cs.gui.map.MapRenderer;
+import it.unicam.cs.gui.tools.CanvasRenderer;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -29,21 +29,20 @@ public class App extends Application {
     public void start(Stage stage) throws IOException, URISyntaxException {
 //        URL url = getClass().getResource("hello-view.fxml");
 //        System.out.println("url = " + url);
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+//        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         // Create a Canvas
         Canvas trackCanvas = new Canvas(800, 800);
-        Canvas gridCanvas = new Canvas(800, 800);
+        GridCanvas gridCanvas = new GridCanvas(20,800.0, 800.0, Color.GRAY);
 
         // Get the GraphicsContext of the canvas
         GraphicsContext track_gc = trackCanvas.getGraphicsContext2D();
-        GraphicsContext grid_gc = gridCanvas.getGraphicsContext2D();
 
 
         // Draw something on the canvas
 
-        MapRenderer.drawGrid(gridCanvas, 24, Color.GRAY);
-        CanvasTools.drawOutline(gridCanvas, Color.GRAY);
+        CanvasRenderer.RenderGrid(gridCanvas);
+        CanvasRenderer.RenderOutline(gridCanvas);
         drawCircuit(track_gc);
 
         // Create a layout pane to hold the canvas
@@ -56,7 +55,7 @@ public class App extends Application {
         root.getChildren().addAll(trackCanvas, gridCanvas);
 
         // Create a scene with the layout pane
-        //Scene scene = new Scene(root, 1000, 1000);
+        Scene scene = new Scene(root, 1000, 1000);
 
         // Set up the stage and show it
         stage.setTitle("Gagata ");

@@ -89,4 +89,14 @@ public final class Graphics {
         gc.quadraticCurveTo(params[0], params[1], params[2], params[3]);
     }
 
+    /**
+     * Draw a point on the canvas.A point is represented by a small rectangle. 10x10 pixels.
+     * @param gc the GraphicsContext
+     * @param params the parameters of the point
+     */
+    public static void strokePoint(GraphicsContext gc, int[] params){
+        // Draw a small rectangle to represent the point
+        gc.fillRect(params[0], params[1], 10, 10);
+    }
+
 }

@@ -1,4 +1,4 @@
-package it.unicam.cs.api.actors;
+package it.unicam.cs.api.components.actors;
 
 import javafx.scene.paint.Color;
 
