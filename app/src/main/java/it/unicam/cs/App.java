@@ -70,6 +70,7 @@ public class App extends Application {
         stage.show();
         WritableImage trackCanvasImage = getCanvasSnapshot(trackCanvas);
 
+
         // Get the color of a specific pixel on mouse click (example)
         // get the color of the track pixel on mouse click
         gridCanvas.setOnMouseClicked(e -> {
