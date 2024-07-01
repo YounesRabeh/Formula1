@@ -22,8 +22,7 @@ public final class CanvasTools {
      * @param y the y-coordinate of the pixel
      * @return the Color of the specified pixel
      */
-    public static Color getPixelColor(Canvas canvas, int x, int y) {
-        WritableImage image = getCanvasSnapshot(canvas);
+    public static Color getPixelColor(Canvas canvas, int x, int y,  WritableImage image) {
         // Get the PixelReader from the WritableImage
         PixelReader pixelReader = image.getPixelReader();
 
@@ -56,6 +55,4 @@ public final class CanvasTools {
         int b = (int) (color.getBlue() * 255);
         return String.format("RGB(%d, %d, %d)", r, g, b);
     }
-
-
 }

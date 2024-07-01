@@ -96,7 +96,8 @@ public final class Graphics {
      */
     public static void strokePoint(GraphicsContext gc, int[] params){
         // Draw a small rectangle to represent the point
-        gc.fillRect(params[0], params[1], 10, 10);
+        // FIXME: delete the magic numbers
+        gc.fillOval(params[0] - 3, params[1] - 3, 6, 6);
     }
 
 }

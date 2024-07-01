@@ -4,11 +4,13 @@ import it.unicam.cs.api.components.map.GridCanvas;
 import it.unicam.cs.gui.tools.CanvasTools;
 import it.unicam.cs.api.parser.DrawingParser;
 import it.unicam.cs.gui.tools.CanvasRenderer;
+import it.unicam.cs.gui.tools.Graphics;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,7 +19,12 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+
+import static it.unicam.cs.gui.tools.CanvasTools.getCanvasSnapshot;
 
 /**
  * JavaFX App
@@ -42,7 +49,7 @@ public class App extends Application {
         // Draw something on the canvas
 
         CanvasRenderer.RenderGrid(gridCanvas);
-        CanvasRenderer.RenderOutline(gridCanvas);
+        CanvasRenderer.RenderOutline(gridCanvas, Color.GRAY);
         drawCircuit(track_gc);
 
         // Create a layout pane to hold the canvas
@@ -61,16 +68,36 @@ public class App extends Application {
         stage.setTitle("Gagata ");
         stage.setScene(scene);
         stage.show();
+        WritableImage trackCanvasImage = getCanvasSnapshot(trackCanvas);
 
         // Get the color of a specific pixel on mouse click (example)
         // get the color of the track pixel on mouse click
         gridCanvas.setOnMouseClicked(e -> {
             int x = (int) e.getX();
             int y = (int) e.getY();
-            Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y);
+            Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y,trackCanvasImage);
             System.out.println("Pixel color at (" + x + ", " + y + "): " +
                     CanvasTools.colorToRGBString(pixelColor));
         });
+
+        long startTime = System.nanoTime();
+        List<int[]> blackPixels = getBlackPixels(trackCanvas, 20, 20, trackCanvasImage);
+        long endTime = System.nanoTime();
+        System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds\n" +
+                "Number of black pixels: " + blackPixels.size() + "\n" +
+                "or " + (endTime - startTime) / 1000000 + " milliseconds");
+
+        //[
+        printBlackPixels(track_gc, blackPixels);
+
+    }
+
+    private void printBlackPixels(GraphicsContext gc, List<int[]> blackPixels) {
+        Graphics.setFill(gc, new int[]{255, 0, 0});
+        for (int[] coords : blackPixels) {
+            System.out.println("Black pixel found at (" + coords[0] + ", " + coords[1] + ")");
+            Graphics.strokePoint(gc, coords);
+        }
     }
 
     private void drawCircuit(GraphicsContext gc) throws IOException, URISyntaxException {
@@ -86,6 +113,20 @@ public class App extends Application {
         DrawingParser parser = new DrawingParser(new File(absolutePath), gc);
         parser.start();
         System.out.println(parser.getAllIdentifiers());
+    }
+
+
+    private List<int[]> getBlackPixels(Canvas trackCanvas, int stepX, int stepY, WritableImage trackCanvasImage) {
+        List<int[]> blackPixels = new ArrayList<>();
+        for (int x = 0; x < trackCanvas.getWidth(); x += stepX) {
+            for (int y = 0; y < trackCanvas.getHeight(); y += stepY) {
+                Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y, trackCanvasImage);
+                if (pixelColor.equals(Color.BLACK)) {
+                    blackPixels.add(new int[]{x, y});
+                }
+            }
+        }
+        return blackPixels;
     }
 
 

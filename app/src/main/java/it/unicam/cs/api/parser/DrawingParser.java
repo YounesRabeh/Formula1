@@ -14,6 +14,7 @@ import java.io.File;
 public class DrawingParser extends AbstractParser {
     /** The GraphicsContext used to draw on the canvas.*/
     private GraphicsContext graphicsContext;
+    //TODO: Add the ability to switch between graphicsContexts
 
     /**
      * Creates a new DrawingParser with the given file and GraphicsContext.
@@ -67,7 +68,7 @@ public class DrawingParser extends AbstractParser {
             Graphics.beginPath(graphicsContext);
         });
 
-        functionMap.put('S', (command) -> {
+        functionMap.put('K', (command) -> {
             graphicsContext.stroke();
         });
 

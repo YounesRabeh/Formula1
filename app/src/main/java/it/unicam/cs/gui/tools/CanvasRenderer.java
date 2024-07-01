@@ -2,6 +2,7 @@ package it.unicam.cs.gui.tools;
 
 import it.unicam.cs.api.components.map.GridCanvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 
 public final class CanvasRenderer {
@@ -35,12 +36,11 @@ public final class CanvasRenderer {
     /**
      * Draws an outline around the canvas.
      *
-     * @param canvas the canvas on which to draw the outline
-     * @param color the color of the outline
+     * @param gridCanvas the canvas on which to draw the outline
      */
-    public static void RenderOutline(GridCanvas gridCanvas) {
+    public static void RenderOutline(GridCanvas gridCanvas, Color color) {
         GraphicsContext gc = gridCanvas.getGraphicsContext2D();
-        gc.setStroke(gridCanvas.getColor());
+        gc.setStroke(color);
         gc.setLineWidth(10);
         gc.strokeRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
         gc.setLineWidth(1); // reset the line width
