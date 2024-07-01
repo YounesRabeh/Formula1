@@ -45,6 +45,7 @@ public class GridCanvas extends Canvas {
         this.color = color;
     }
 
+
     /**
      * Create a new GridCanvas with the specified cell size,
      * with a specified number of cells in the horizontal and vertical directions.
