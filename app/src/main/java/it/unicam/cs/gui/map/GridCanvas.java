@@ -75,6 +75,7 @@ public class GridCanvas extends Canvas {
         this.color = color;
     }
 
+
     /**
      * Adjust the cell size to fit the canvas dimensions.
      * @param cellSize the size of the cell
