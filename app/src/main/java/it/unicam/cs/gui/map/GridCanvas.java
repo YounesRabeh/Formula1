@@ -1,4 +1,4 @@
-package it.unicam.cs.api.components.map;
+package it.unicam.cs.gui.map;
 
 
 import javafx.scene.canvas.Canvas;
@@ -39,6 +39,7 @@ public class GridCanvas extends Canvas {
      */
     public GridCanvas(int cellSize, int cellNumber_X, int cellNumber_Y, Color color) {
         super(cellNumber_X * cellSize , cellNumber_Y * cellSize);
+        checkNumbers(cellSize, cellNumber_X, cellNumber_Y);
         this.cellNumber_X = cellNumber_X * cellSize;
         this.cellNumber_Y = cellNumber_Y * cellSize;
         this.cellSize = cellSize;
@@ -69,6 +70,7 @@ public class GridCanvas extends Canvas {
      */
     public GridCanvas(int cellSize, double width, double height, Color color) {
         super(width, height);
+        checkNumbers(cellSize);
         this.cellSize = adjustedCellSize(cellSize);
         this.color = color;
     }
@@ -117,6 +119,19 @@ public class GridCanvas extends Canvas {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * Check if the numbers are non-positive. if so, throw an exception.
+     * @param nums the numbers to check
+     * @throws IllegalArgumentException if onr of the numbers is non-positive
+     */
+    private void checkNumbers(Number... nums) throws IllegalArgumentException {
+        for (Number num : nums) {
+            if (num.doubleValue() <= 0){
+                throw new IllegalArgumentException("[!!!] - " + num.doubleValue() + " is non-positive");
+            }
+        }
     }
 
 }

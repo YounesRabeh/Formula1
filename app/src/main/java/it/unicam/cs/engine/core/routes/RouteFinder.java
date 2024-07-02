@@ -1,7 +1,7 @@
 package it.unicam.cs.engine.core.routes;
 
 
-import it.unicam.cs.api.components.map.Waypoint;
+import it.unicam.cs.api.components.nodes.Waypoint;
 
 import java.util.Queue;
 

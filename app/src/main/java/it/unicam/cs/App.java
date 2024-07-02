@@ -1,10 +1,10 @@
 package it.unicam.cs;
 
-import it.unicam.cs.api.components.map.GridCanvas;
-import it.unicam.cs.gui.tools.CanvasTools;
+import it.unicam.cs.gui.map.GridCanvas;
+import it.unicam.cs.gui.util.CanvasTools;
 import it.unicam.cs.api.parser.DrawingParser;
-import it.unicam.cs.gui.tools.CanvasRenderer;
-import it.unicam.cs.gui.tools.Graphics;
+import it.unicam.cs.gui.util.CanvasRenderer;
+import it.unicam.cs.api.components.container.Graphics;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,11 +20,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static it.unicam.cs.gui.tools.CanvasTools.getCanvasSnapshot;
+import static it.unicam.cs.gui.util.CanvasTools.getCanvasSnapshot;
 
 /**
  * JavaFX App
@@ -39,8 +38,9 @@ public class App extends Application {
 //        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         // Create a Canvas
+        int cellSize = 10; //TODO: -> interface
         Canvas trackCanvas = new Canvas(800, 800);
-        GridCanvas gridCanvas = new GridCanvas(20,800.0, 800.0, Color.GRAY);
+        GridCanvas gridCanvas = new GridCanvas(cellSize,800.0, 800.0, Color.GRAY);
 
         // Get the GraphicsContext of the canvas
         GraphicsContext track_gc = trackCanvas.getGraphicsContext2D();
@@ -49,7 +49,7 @@ public class App extends Application {
         // Draw something on the canvas
 
         CanvasRenderer.RenderGrid(gridCanvas);
-        CanvasRenderer.RenderOutline(gridCanvas, Color.GRAY);
+        CanvasRenderer.RenderGridOutline(gridCanvas, Color.GRAY);
         drawCircuit(track_gc);
 
         // Create a layout pane to hold the canvas
@@ -77,16 +77,17 @@ public class App extends Application {
             int x = (int) e.getX();
             int y = (int) e.getY();
             Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y,trackCanvasImage);
-            System.out.println("Pixel color at (" + x + ", " + y + "): " +
-                    CanvasTools.colorToRGBString(pixelColor));
+            System.out.printf("Pixel color at (%d, %d): " +
+                    CanvasTools.colorToRGBString(pixelColor) + "\n", x, y);
         });
 
         long startTime = System.nanoTime();
-        List<int[]> blackPixels = getBlackPixels(trackCanvas, 20, 20, trackCanvasImage);
+        List<int[]> blackPixels = getBlackPixels(trackCanvas, cellSize, trackCanvasImage);
         long endTime = System.nanoTime();
-        System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds\n" +
-                "Number of black pixels: " + blackPixels.size() + "\n" +
-                "or " + (endTime - startTime) / 1000000 + " milliseconds");
+        System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds " +
+                "or " + (float) (endTime - startTime) / 1000000 + " milliseconds\n" +
+                "> Found " + blackPixels.size() + " black pixels"
+        );
 
         //[
         printBlackPixels(track_gc, blackPixels);
@@ -96,7 +97,7 @@ public class App extends Application {
     private void printBlackPixels(GraphicsContext gc, List<int[]> blackPixels) {
         Graphics.setFill(gc, new int[]{255, 0, 0});
         for (int[] coords : blackPixels) {
-            System.out.println("Black pixel found at (" + coords[0] + ", " + coords[1] + ")");
+            System.out.printf("Black pixel found at (%d, %d)\n", coords[0], coords[1]);
             Graphics.strokePoint(gc, coords);
         }
     }
@@ -117,10 +118,10 @@ public class App extends Application {
     }
 
 
-    private List<int[]> getBlackPixels(Canvas trackCanvas, int stepX, int stepY, WritableImage trackCanvasImage) {
+    private List<int[]> getBlackPixels(Canvas trackCanvas, int step, WritableImage trackCanvasImage) {
         List<int[]> blackPixels = new ArrayList<>();
-        for (int x = 0; x < trackCanvas.getWidth(); x += stepX) {
-            for (int y = 0; y < trackCanvas.getHeight(); y += stepY) {
+        for (int x = 0; x < trackCanvas.getWidth(); x += step) {
+            for (int y = 0; y < trackCanvas.getHeight(); y += step) {
                 Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y, trackCanvasImage);
                 if (pixelColor.equals(Color.BLACK)) {
                     blackPixels.add(new int[]{x, y});
@@ -129,7 +130,6 @@ public class App extends Application {
         }
         return blackPixels;
     }
-
 
 
     public static void main(String[] args) {

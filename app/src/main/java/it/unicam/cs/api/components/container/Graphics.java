@@ -1,4 +1,4 @@
-package it.unicam.cs.gui.tools;
+package it.unicam.cs.api.components.container;
 
 
 import javafx.scene.canvas.GraphicsContext;
@@ -90,7 +90,7 @@ public final class Graphics {
     }
 
     /**
-     * Draw a point on the canvas.A point is represented by a small rectangle. 10x10 pixels.
+     * Draw a point on the canvas.A point is represented by a small oval.
      * @param gc the GraphicsContext
      * @param params the parameters of the point
      */

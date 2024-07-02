@@ -1,4 +1,4 @@
-package it.unicam.cs.gui.tools;
+package it.unicam.cs.gui.util;
 
 import javafx.scene.image.PixelReader;
 
@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
  * @version 1.0
  */
 public final class CanvasTools {
+    /** Prevent instantiation of this utility class. */
     private CanvasTools() {}
     /**
      * Gets the RGB color of a specific pixel on the canvas.
@@ -24,7 +25,7 @@ public final class CanvasTools {
      */
     public static Color getPixelColor(Canvas canvas, int x, int y,  WritableImage image) {
         // Get the PixelReader from the WritableImage
-        PixelReader pixelReader = image.getPixelReader();
+        PixelReader pixelReader = image.getPixelReader(); //FIXME: order the params
 
         return pixelReader.getColor(x, y);
     }
