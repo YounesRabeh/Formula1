@@ -54,14 +54,24 @@ public final class CanvasRenderer {
 
 
 
+    /**
+     * Renders the circuit on the canvas.
+     *
+     * @param trackCanvas the canvas on which to render the circuit
+     * @param parser the parser to use for rendering
+     * @throws IOException if an I/O error occurs
+     * @throws NoActionFoundException if no action is found
+     * @throws IllegalStateException if the graphics context is set
+     */
     public static void RenderCircuit(
             TrackCanvas trackCanvas,
             DrawingParser parser
-    ) throws IOException, NoActionFoundException, IllegalCallerException {
+    ) throws IOException, NoActionFoundException, IllegalStateException {
         GraphicsContext parser_gc = parser.getGraphicsContext();
         parser.setGraphicsContext(trackCanvas.getGraphicsContext2D());
 
         parser.start();
+        trackCanvas.setImage(CanvasTools.getCanvasSnapshot(trackCanvas));
         parser.setGraphicsContext(parser_gc);
     }
 

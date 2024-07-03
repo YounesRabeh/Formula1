@@ -50,8 +50,7 @@ public class App extends Application {
 
         int cellSize = 20; //TODO: -> interface
         TrackCanvas trackCanvas = new TrackCanvas(800, 800);
-        GridCanvas gridCanvas = new GridCanvas(cellSize, 20, 20, Color.GRAY);
-
+        GridCanvas gridCanvas = new GridCanvas(cellSize, 40, 40, Color.GRAY);
 
         // Draw something on the canvas
         CanvasRenderer.RenderGrid(gridCanvas);

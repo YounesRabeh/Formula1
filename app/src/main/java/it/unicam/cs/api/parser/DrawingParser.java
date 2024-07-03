@@ -70,9 +70,9 @@ public class DrawingParser extends AbstractParser {
     }
 
     @Override
-    public void start() throws IOException, NoActionFoundException, IllegalCallerException {
+    public void start() throws IOException, NoActionFoundException, IllegalStateException {
         if(graphicsContext == null){
-            throw new IllegalCallerException("[!!!] - No GraphicsContext found");
+            throw new IllegalStateException("[!!!] - No GraphicsContext found");
         }
         super.start();
     }
