@@ -1,6 +1,7 @@
 package it.unicam.cs;
 
 import it.unicam.cs.gui.map.GridCanvas;
+import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasTools;
 import it.unicam.cs.api.parser.DrawingParser;
 import it.unicam.cs.gui.util.CanvasRenderer;
@@ -38,19 +39,24 @@ public class App extends Application {
 //        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         // Create a Canvas
-        int cellSize = 10; //TODO: -> interface
-        Canvas trackCanvas = new Canvas(800, 800);
-        GridCanvas gridCanvas = new GridCanvas(cellSize,800.0, 800.0, Color.GRAY);
 
-        // Get the GraphicsContext of the canvas
-        GraphicsContext track_gc = trackCanvas.getGraphicsContext2D();
+        String PATH = "/it/unicam/cs/test.txt";
+        // Get the absolute path of the file
+        // NOTE: to get gradle to work, you need to put the file in the resources folder
+        String absolutePath = Objects.requireNonNull(
+                getClass().getResource(PATH)).toURI().getPath();
+        // use classLoader
+        DrawingParser parser = new DrawingParser(new File(absolutePath));
+
+        int cellSize = 20; //TODO: -> interface
+        TrackCanvas trackCanvas = new TrackCanvas(800, 800);
+        GridCanvas gridCanvas = new GridCanvas(cellSize, 20, 20, Color.GRAY);
 
 
         // Draw something on the canvas
-
         CanvasRenderer.RenderGrid(gridCanvas);
         CanvasRenderer.RenderGridOutline(gridCanvas, Color.GRAY);
-        drawCircuit(track_gc);
+        CanvasRenderer.RenderCircuit(trackCanvas, parser);
 
         // Create a layout pane to hold the canvas
         StackPane root = new StackPane();
@@ -71,12 +77,11 @@ public class App extends Application {
         WritableImage trackCanvasImage = getCanvasSnapshot(trackCanvas);
 
 
-        // Get the color of a specific pixel on mouse click (example)
         // get the color of the track pixel on mouse click
         gridCanvas.setOnMouseClicked(e -> {
             int x = (int) e.getX();
             int y = (int) e.getY();
-            Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y,trackCanvasImage);
+            Color pixelColor = CanvasTools.getPixelColor(x, y,trackCanvasImage);
             System.out.printf("Pixel color at (%d, %d): " +
                     CanvasTools.colorToRGBString(pixelColor) + "\n", x, y);
         });
@@ -90,7 +95,7 @@ public class App extends Application {
         );
 
         //[
-        printBlackPixels(track_gc, blackPixels);
+        printBlackPixels(trackCanvas.getGraphicsContext2D(), blackPixels);
 
     }
 
@@ -102,27 +107,12 @@ public class App extends Application {
         }
     }
 
-    private void drawCircuit(GraphicsContext gc) throws IOException, URISyntaxException {
-        // Clear the canvas
-        gc.clearRect(0, 0, 900, 900);
-
-        String PATH = "/it/unicam/cs/test.txt";
-        // Get the absolute path of the file
-        // NOTE: to get gradle to work, you need to put the file in the resources folder
-        String absolutePath = Objects.requireNonNull(
-                getClass().getResource(PATH)).toURI().getPath();
-        // use classLoader
-        DrawingParser parser = new DrawingParser(new File(absolutePath), gc);
-        parser.start();
-        System.out.println(parser.getAllIdentifiers());
-    }
-
 
     private List<int[]> getBlackPixels(Canvas trackCanvas, int step, WritableImage trackCanvasImage) {
         List<int[]> blackPixels = new ArrayList<>();
         for (int x = 0; x < trackCanvas.getWidth(); x += step) {
             for (int y = 0; y < trackCanvas.getHeight(); y += step) {
-                Color pixelColor = CanvasTools.getPixelColor(trackCanvas, x, y, trackCanvasImage);
+                Color pixelColor = CanvasTools.getPixelColor(x, y, trackCanvasImage);
                 if (pixelColor.equals(Color.BLACK)) {
                     blackPixels.add(new int[]{x, y});
                 }

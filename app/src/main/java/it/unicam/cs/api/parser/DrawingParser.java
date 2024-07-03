@@ -1,8 +1,10 @@
 package it.unicam.cs.api.parser;
 
 import it.unicam.cs.api.components.container.Graphics;
+import it.unicam.cs.api.exceptions.NoActionFoundException;
 import javafx.scene.canvas.GraphicsContext;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * A parser responsible for drawing on the canvas.
@@ -45,10 +47,42 @@ public class DrawingParser extends AbstractParser {
     }
 
     /**
+     * Creates a new DrawingParser with the given file and <strong>no GraphicsContext</strong>.
+     * The {@link DrawingParser#defaultCommands()} are added.
+     * @param file the file to be parsed
+     */
+    public DrawingParser(File file) {
+        super(file);
+        defaultCommands();
+    }
+
+    /**
+     * Creates a new DrawingParser with the given file and <strong>no GraphicsContext</strong>.
+     * The {@link DrawingParser#defaultCommands()} are added if the useDefaultCommands is true.
+     * @param file the file to be parsed
+     * @param useDefaultCommands a boolean value to use the default commands
+     */
+    public DrawingParser(File file, boolean useDefaultCommands) {
+        super(file);
+        if(useDefaultCommands){
+            defaultCommands();
+        }
+    }
+
+    @Override
+    public void start() throws IOException, NoActionFoundException, IllegalCallerException {
+        if(graphicsContext == null){
+            throw new IllegalCallerException("[!!!] - No GraphicsContext found");
+        }
+        super.start();
+    }
+
+
+    /**
      * Get the GraphicsContext.
      * @return the GraphicsContext
      */
-    public GraphicsContext getGC() {
+    public GraphicsContext getGraphicsContext() {
         return graphicsContext;
     }
 

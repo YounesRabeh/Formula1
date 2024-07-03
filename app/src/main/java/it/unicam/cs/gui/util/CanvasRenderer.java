@@ -1,9 +1,14 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.api.exceptions.NoActionFoundException;
+import it.unicam.cs.api.parser.DrawingParser;
 import it.unicam.cs.gui.map.GridCanvas;
+import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+
+import java.io.IOException;
 
 
 public final class CanvasRenderer {
@@ -45,6 +50,19 @@ public final class CanvasRenderer {
         gc.strokeRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
         gc.setLineWidth(1); // reset the line width
         gc.setStroke(paint); // reset the stroke color
+    }
+
+
+
+    public static void RenderCircuit(
+            TrackCanvas trackCanvas,
+            DrawingParser parser
+    ) throws IOException, NoActionFoundException, IllegalCallerException {
+        GraphicsContext parser_gc = parser.getGraphicsContext();
+        parser.setGraphicsContext(trackCanvas.getGraphicsContext2D());
+
+        parser.start();
+        parser.setGraphicsContext(parser_gc);
     }
 
 

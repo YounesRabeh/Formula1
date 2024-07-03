@@ -18,12 +18,12 @@ import javafx.scene.paint.Color;
 public class GridCanvas extends Canvas {
     /** The size of the grid. */
     private final int cellSize;
+    /** The number of cells in the horizontal direction. */
+    private final int cellNumber_X;
+    /** The number of cells in the vertical direction. */
+    private final int cellNumber_Y;
     /** The color of the grid. */
     private Color color;
-    /** The number of cells in the horizontal direction. */
-    private int cellNumber_X;
-    /** The number of cells in the vertical direction. */
-    private int cellNumber_Y;
 
 
     /**
@@ -40,9 +40,9 @@ public class GridCanvas extends Canvas {
     public GridCanvas(int cellSize, int cellNumber_X, int cellNumber_Y, Color color) {
         super(cellNumber_X * cellSize , cellNumber_Y * cellSize);
         checkNumbers(cellSize, cellNumber_X, cellNumber_Y);
+        this.cellSize = cellSize;
         this.cellNumber_X = cellNumber_X * cellSize;
         this.cellNumber_Y = cellNumber_Y * cellSize;
-        this.cellSize = cellSize;
         this.color = color;
     }
 
@@ -72,6 +72,8 @@ public class GridCanvas extends Canvas {
         super(width, height);
         checkNumbers(cellSize);
         this.cellSize = adjustedCellSize(cellSize);
+        this.cellNumber_X = (int) width / this.cellSize;
+        this.cellNumber_Y = (int) height / this.cellSize;
         this.color = color;
     }
 
@@ -120,6 +122,14 @@ public class GridCanvas extends Canvas {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * Set the color of the grid.
+     * @param color the color of the grid
+     */
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     /**
