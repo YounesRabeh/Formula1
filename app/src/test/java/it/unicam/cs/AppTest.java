@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +23,14 @@ public class AppTest {
 
     @Test
     public void testApp()  {
-        System.out.println("Test App");
+        List list = new LinkedList<String>();
+
+        list.add("Hello");
+        list.add("World");
+        list.add("!");
+        list.add(2, "Java");
+        System.out.println(list);
+
 
     }
 }

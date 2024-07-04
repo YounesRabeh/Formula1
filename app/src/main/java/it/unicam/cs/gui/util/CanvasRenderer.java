@@ -76,6 +76,8 @@ public final class CanvasRenderer {
         parser.start();
         trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(trackCanvas));
         parser.setGraphicsContext(parser_gc);
+        //TODO: used ro reset the GC - when the gc will be
+        // changed by the parser
     }
 
 

@@ -1,10 +1,13 @@
 package it.unicam.cs.gui.map;
 
-import it.unicam.cs.engine.util.Check;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+/**
+ * {@code TrackCanvas} is a canvas that displays a track.
+ */
 public class TrackCanvas extends Canvas {
     /** The snapshot of the canvas */
     private WritableImage snapshot;
@@ -13,13 +16,14 @@ public class TrackCanvas extends Canvas {
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
-     * @param width the width of the canvas
-     * @param height the height of the canvas
+     * @param width the width of the track
+     * @param height the height of the track
+     * @param color the color of the track
      */
-    public TrackCanvas(double width, double height) {
+    TrackCanvas(double width, double height, Color color) {
         super(width, height);
-        Check.checkNumbers(width, height);
-        this.color = Color.BLACK;
+
+        this.color = color;
     }
 
     /**
@@ -29,6 +33,15 @@ public class TrackCanvas extends Canvas {
     public WritableImage getCanvasSnapshot() {
         return snapshot;
     }
+
+    /**
+     * Get the color of the canvas
+     * @return the color of the canvas
+     */
+    public Color getColor() {
+        return color;
+    }
+
 
     /**
      * Set the snapshot of the canvas, use it after drawing on the canvas.
@@ -45,11 +58,4 @@ public class TrackCanvas extends Canvas {
         }
     }
 
-    /**
-     * Get the color of the canvas
-     * @return the color of the canvas
-     */
-    public Color getColor() {
-        return color;
-    }
 }

@@ -1,5 +1,6 @@
 package it.unicam.cs;
 
+import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasTools;
@@ -47,8 +48,9 @@ public class App extends Application {
         DrawingParser parser = new DrawingParser(new File(absolutePath));
 
         int cellSize = 20; //TODO: --> interface
-        TrackCanvas trackCanvas = new TrackCanvas(800, 800);
-        GridCanvas gridCanvas = new GridCanvas(cellSize, 40, 40, Color.GRAY);
+        GameMap gameMap = new GameMap(cellSize, 40, 40);
+        TrackCanvas trackCanvas = gameMap.getTrackCanvas();
+        GridCanvas gridCanvas = gameMap.getGridCanvas();
 
         // Draw something on the canvas
         CanvasRenderer.RenderGrid(gridCanvas);
@@ -103,8 +105,6 @@ public class App extends Application {
             Graphics.strokePoint(gc, coords);
         }
     }
-
-
 
 
     public static void main(String[] args) {
