@@ -52,8 +52,6 @@ public final class CanvasRenderer {
         gc.setStroke(paint); // reset the stroke color
     }
 
-
-
     /**
      * Renders the circuit on the canvas.
      *
@@ -71,10 +69,9 @@ public final class CanvasRenderer {
         parser.setGraphicsContext(trackCanvas.getGraphicsContext2D());
 
         parser.start();
-        trackCanvas.setImage(CanvasTools.getCanvasSnapshot(trackCanvas));
+        trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(trackCanvas));
         parser.setGraphicsContext(parser_gc);
     }
-
 
 
 }

@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 public class TrackCanvas extends Canvas {
     /** The snapshot of the canvas */
-    private WritableImage image;
+    private WritableImage snapshot;
     /** The color of the canvas */
     private final Color color;
 
@@ -14,7 +14,6 @@ public class TrackCanvas extends Canvas {
      * Create a new TrackCanvas with the given width, height, and drawing parser.
      * @param width the width of the canvas
      * @param height the height of the canvas
-     * @param parser the drawing parser to be used
      */
     public TrackCanvas(double width, double height) {
         super(width, height);
@@ -25,12 +24,24 @@ public class TrackCanvas extends Canvas {
      * Get the image of the canvas
      * @return the image of the canvas
      */
-    public WritableImage getImage() {
-        return image;
+    public WritableImage getCanvasSnapshot() {
+        return snapshot;
     }
 
-    public void setImage(WritableImage image) {
-        this.image = image;
+    /**
+     * Set the snapshot of the canvas, use it after drawing on the canvas.
+     * <strong>you can only set the snapshot once</strong>. If you try to set it again, an IllegalStateException will be thrown.
+     *
+     * @param snapshot the snapshot of the canvas
+     * @throws IllegalStateException if the snapshot has already been set
+     */
+    public void setSnapshot(WritableImage snapshot) throws IllegalStateException {
+        if (this.snapshot == null){
+            this.snapshot = snapshot;
+        } else {
+
+            throw new IllegalStateException("[!!]- The snapshot has already been set");
+        }
     }
 
     /**

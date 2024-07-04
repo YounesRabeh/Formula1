@@ -1,6 +1,7 @@
 package it.unicam.cs.gui.map;
 
 
+import it.unicam.cs.engine.util.Check;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
@@ -25,7 +26,6 @@ public class GridCanvas extends Canvas {
     /** The color of the grid. */
     private Color color;
 
-
     /**
      * Create a new GridCanvas with the specified cell size,
      * with a specified number of cells in the horizontal and vertical directions,
@@ -39,7 +39,7 @@ public class GridCanvas extends Canvas {
      */
     public GridCanvas(int cellSize, int cellNumber_X, int cellNumber_Y, Color color) {
         super(cellNumber_X * cellSize , cellNumber_Y * cellSize);
-        checkNumbers(cellSize, cellNumber_X, cellNumber_Y);
+        Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y);
         this.cellSize = cellSize;
         this.cellNumber_X = cellNumber_X * cellSize;
         this.cellNumber_Y = cellNumber_Y * cellSize;
@@ -58,38 +58,6 @@ public class GridCanvas extends Canvas {
      */
     public GridCanvas(int cellSize, int cellNumber_X, int cellNumber_Y) {
        this(cellSize, cellNumber_X, cellNumber_Y, Color.GRAY);
-    }
-
-    /**
-     * Create a new GridCanvas with the specified cell size, width, height, and color.
-     * <b>The cell size is adjusted to fit the canvas dimensions</b> by finding the nearest best-fit (descending).
-     * @param cellSize the size of the cell
-     * @param width the width of the canvas
-     * @param height the height of the canvas
-     * @param color the color of the grid
-     */
-    public GridCanvas(int cellSize, double width, double height, Color color) {
-        super(width, height);
-        checkNumbers(cellSize);
-        this.cellSize = adjustedCellSize(cellSize);
-        this.cellNumber_X = (int) width / this.cellSize;
-        this.cellNumber_Y = (int) height / this.cellSize;
-        this.color = color;
-    }
-
-
-    /**
-     * Adjust the cell size to fit the canvas dimensions.
-     * @param cellSize the size of the cell
-     * @return the adjusted cell size
-     */
-    private int adjustedCellSize(int cellSize){
-        double adjustedCellSize = cellSize;  // Adjust cell size to fit canvas dimensions
-        while (this.getWidth() % adjustedCellSize != 0 || this.getHeight() % adjustedCellSize != 0) {
-            adjustedCellSize--;
-        }
-
-        return (int) adjustedCellSize;
     }
 
     /**
@@ -132,17 +100,5 @@ public class GridCanvas extends Canvas {
         this.color = color;
     }
 
-    /**
-     * Check if the numbers are non-positive. if so, throw an exception.
-     * @param nums the numbers to check
-     * @throws IllegalArgumentException if onr of the numbers is non-positive
-     */
-    private void checkNumbers(Number... nums) throws IllegalArgumentException {
-        for (Number num : nums) {
-            if (num.doubleValue() <= 0){
-                throw new IllegalArgumentException("[!!!] - " + num.doubleValue() + " is non-positive");
-            }
-        }
-    }
 
 }

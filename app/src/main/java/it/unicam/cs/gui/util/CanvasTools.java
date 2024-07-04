@@ -6,6 +6,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This utility class provides methods to interact with the canvas.
  *
@@ -15,18 +18,30 @@ import javafx.scene.paint.Color;
 public final class CanvasTools {
     /** Prevent instantiation of this utility class. */
     private CanvasTools() {}
+
     /**
      * Gets the RGB color of a specific pixel on the canvas.
      *
-     * @param canvas the canvas from which to get the pixel color
+     * @param image the image from which to get the pixel color
      * @param x the x-coordinate of the pixel
      * @param y the y-coordinate of the pixel
      * @return the Color of the specified pixel
      */
     public static Color getPixelColor(int x, int y,  WritableImage image) {
-        // Get the PixelReader from the WritableImage//FIXME: order the params
-
         return image.getPixelReader().getColor(x, y);
+    }
+
+    public static List<int[]> getBlackPixels(Canvas trackCanvas, int step, WritableImage snapshot) {
+        List<int[]> blackPixels = new ArrayList<>();
+        for (int x = 0; x < trackCanvas.getWidth(); x += step) {
+            for (int y = 0; y < trackCanvas.getHeight(); y += step) {
+                Color pixelColor = CanvasTools.getPixelColor(x, y, snapshot);
+                if (pixelColor.equals(Color.BLACK)) {
+                    blackPixels.add(new int[]{x, y});
+                }
+            }
+        }
+        return blackPixels;
     }
 
     /**
@@ -35,9 +50,10 @@ public final class CanvasTools {
      * @param canvas the canvas to take a snapshot of
      * @return the snapshot of the canvas
      */
-    public static WritableImage getCanvasSnapshot(Canvas canvas) {
+    public static WritableImage createCanvasSnapshot(Canvas canvas) {
         int width = (int) canvas.getWidth();
         int height = (int) canvas.getHeight();
+
         WritableImage image = new WritableImage(width, height);
         canvas.snapshot(null, image);
         return image;
