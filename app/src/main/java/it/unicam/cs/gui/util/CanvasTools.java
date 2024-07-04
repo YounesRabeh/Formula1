@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.engine.util.Check;
 import javafx.scene.image.PixelReader;
 
 import javafx.scene.canvas.Canvas;
@@ -28,11 +29,17 @@ public final class CanvasTools {
      * @return the Color of the specified pixel
      */
     public static Color getPixelColor(int x, int y,  WritableImage image) {
+        Check.checkNull(image);
+        Check.checkNumbers(x, y);
+
         return image.getPixelReader().getColor(x, y);
     }
 
     public static List<int[]> getBlackPixels(Canvas trackCanvas, int step, WritableImage snapshot) {
+        Check.checkNull(trackCanvas, snapshot);
+        Check.checkNumbers(step);
         List<int[]> blackPixels = new ArrayList<>();
+
         for (int x = 0; x < trackCanvas.getWidth(); x += step) {
             for (int y = 0; y < trackCanvas.getHeight(); y += step) {
                 Color pixelColor = CanvasTools.getPixelColor(x, y, snapshot);
@@ -51,6 +58,7 @@ public final class CanvasTools {
      * @return the snapshot of the canvas
      */
     public static WritableImage createCanvasSnapshot(Canvas canvas) {
+        Check.checkNull(canvas);
         int width = (int) canvas.getWidth();
         int height = (int) canvas.getHeight();
 
@@ -66,9 +74,11 @@ public final class CanvasTools {
      * @return a string representation of the RGB values
      */
     public static String colorToRGBString(Color color) {
+        Check.checkNull(color);
         int r = (int) (color.getRed() * 255);
         int g = (int) (color.getGreen() * 255);
         int b = (int) (color.getBlue() * 255);
+
         return String.format("RGB(%d, %d, %d)", r, g, b);
     }
 }

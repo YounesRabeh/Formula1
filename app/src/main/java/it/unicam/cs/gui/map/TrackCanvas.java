@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.map;
 
+import it.unicam.cs.engine.util.Check;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -17,6 +18,7 @@ public class TrackCanvas extends Canvas {
      */
     public TrackCanvas(double width, double height) {
         super(width, height);
+        Check.checkNumbers(width, height);
         this.color = Color.BLACK;
     }
 
@@ -39,7 +41,6 @@ public class TrackCanvas extends Canvas {
         if (this.snapshot == null){
             this.snapshot = snapshot;
         } else {
-
             throw new IllegalStateException("[!!]- The snapshot has already been set");
         }
     }

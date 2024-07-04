@@ -2,6 +2,7 @@ package it.unicam.cs.gui.util;
 
 import it.unicam.cs.api.exceptions.NoActionFoundException;
 import it.unicam.cs.api.parser.DrawingParser;
+import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,6 +22,7 @@ public final class CanvasRenderer {
      * @param gridCanvas the canvas on which to draw the grid
      */
     public static void RenderGrid(GridCanvas gridCanvas) {
+        Check.checkNull(gridCanvas);
         GraphicsContext gc = gridCanvas.getGraphicsContext2D();
         final double width = gridCanvas.getWidth();
         final double height = gridCanvas.getHeight();
@@ -43,8 +45,10 @@ public final class CanvasRenderer {
      * @param color the color of the outline
      */
     public static void RenderGridOutline(GridCanvas gridCanvas, Color color) {
+        Check.checkNull(gridCanvas, color);
         GraphicsContext gc = gridCanvas.getGraphicsContext2D();
         Paint paint = gc.getStroke();
+
         gc.setStroke(color);
         gc.setLineWidth(10);
         gc.strokeRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
@@ -65,9 +69,10 @@ public final class CanvasRenderer {
             TrackCanvas trackCanvas,
             DrawingParser parser
     ) throws IOException, NoActionFoundException, IllegalStateException {
+        Check.checkNull(trackCanvas, parser);
         GraphicsContext parser_gc = parser.getGraphicsContext();
-        parser.setGraphicsContext(trackCanvas.getGraphicsContext2D());
 
+        parser.setGraphicsContext(trackCanvas.getGraphicsContext2D());
         parser.start();
         trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(trackCanvas));
         parser.setGraphicsContext(parser_gc);

@@ -39,7 +39,9 @@ public class GridCanvas extends Canvas {
      */
     public GridCanvas(int cellSize, int cellNumber_X, int cellNumber_Y, Color color) {
         super(cellNumber_X * cellSize , cellNumber_Y * cellSize);
+        Check.checkNull(color);
         Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y);
+
         this.cellSize = cellSize;
         this.cellNumber_X = cellNumber_X * cellSize;
         this.cellNumber_Y = cellNumber_Y * cellSize;
@@ -97,6 +99,9 @@ public class GridCanvas extends Canvas {
      * @param color the color of the grid
      */
     public void setColor(Color color) {
+        Check.checkNull(color);
+
+        if (this.color.equals(color)) return;
         this.color = color;
     }
 

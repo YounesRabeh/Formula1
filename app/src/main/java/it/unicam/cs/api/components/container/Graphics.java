@@ -1,6 +1,7 @@
 package it.unicam.cs.api.components.container;
 
 
+import it.unicam.cs.engine.util.Check;
 import javafx.scene.canvas.GraphicsContext;
 
 import static javafx.scene.paint.Color.rgb;
@@ -24,6 +25,7 @@ public final class Graphics {
      * @param params the parameters of the stroke color
      */
     public static void setStroke(GraphicsContext gc, int[] params) {
+        Check.checkNumbers(params);
         gc.setStroke(rgb(params[0], params[1], params[2]));
     }
 
@@ -33,6 +35,7 @@ public final class Graphics {
      * @param params the parameters of the line width
      */
     public static void setLineWidth(GraphicsContext gc, int[] params) {
+        Check.checkNumbers(params);
         gc.setLineWidth(params[0]);
     }
 
@@ -42,6 +45,8 @@ public final class Graphics {
      * @param params the parameters of the line
      */
     public static void strokeLine(GraphicsContext gc, int[] params) {
+        Check.checkNull(gc);
+        Check.checkNumbers(params);
         gc.strokeLine(params[0], params[1], params[2], params[3]);
     }
 
@@ -50,6 +55,7 @@ public final class Graphics {
      * @param gc the GraphicsContext
      */
     public static void beginPath(GraphicsContext gc) {
+        Check.checkNull(gc);
         gc.beginPath();
     }
 
@@ -59,6 +65,8 @@ public final class Graphics {
      * @param params the parameters of the fill color
      */
     public static void setFill(GraphicsContext gc, int[] params) {
+        Check.checkNull(gc);
+        Check.checkNumbers(params);
         gc.setFill(rgb(params[0], params[1], params[2]));
     }
 
@@ -68,6 +76,8 @@ public final class Graphics {
      * @param params the parameters of the rectangle
      */
     public static void fillRect(GraphicsContext gc, int[] params) {
+        Check.checkNull(gc);
+        Check.checkNumbers(params);
         gc.fillRect(params[0], params[1], params[2], params[3]);
     }
 
@@ -77,6 +87,8 @@ public final class Graphics {
      * @param params the parameters of the rectangle
      */
     public static void strokeRect(GraphicsContext gc, int[] params) {
+        Check.checkNull(gc);
+        Check.checkNumbers(params);
         gc.strokeRect(params[0], params[1], params[2], params[3]);
     }
 
@@ -86,6 +98,8 @@ public final class Graphics {
      * @param params the parameters of the curve
      */
     public static void quadraticCurveTo(GraphicsContext gc, int[] params) {
+        Check.checkNull(gc);
+        Check.checkNumbers(params);
         gc.quadraticCurveTo(params[0], params[1], params[2], params[3]);
     }
 
@@ -95,6 +109,8 @@ public final class Graphics {
      * @param params the parameters of the point
      */
     public static void strokePoint(GraphicsContext gc, int[] params){
+        Check.checkNull(gc);
+        Check.checkNumbers(params);
         // Draw a small rectangle to represent the point
         // FIXME: delete the magic numbers
         gc.fillOval(params[0] - 3, params[1] - 3, 6, 6);
