@@ -91,10 +91,10 @@ public class DrawingParser extends AbstractParser {
         });
 
         functionMap.put('@', command -> {
-            if (!isTrackDrawn && currentCanvas instanceof TrackCanvas){
+            if (!isTrackDrawn && currentCanvas instanceof TrackCanvas trackCanvas){
+                Graphics.setStroke(currentGC, trackCanvas.getColor());
                 currentGC.stroke();
-                ((TrackCanvas) currentCanvas).setSnapshot(
-                        CanvasTools.createCanvasSnapshot(currentCanvas));
+                trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
                 isTrackDrawn = true;
             }
 

@@ -3,6 +3,7 @@ package it.unicam.cs.api.components.container;
 
 import it.unicam.cs.engine.util.Check;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import static javafx.scene.paint.Color.rgb;
 
@@ -27,6 +28,15 @@ public final class Graphics {
     public static void setStroke(GraphicsContext gc, int[] params) {
         Check.checkNumbers(params);
         gc.setStroke(rgb(params[0], params[1], params[2]));
+    }
+    /**
+     * Set the stroke color of the graphics context.
+     * @param gc the GraphicsContext
+     * @param color the stroke color
+     */
+    public static void setStroke(GraphicsContext gc, Color color) {
+        Check.checkNull(color);
+        gc.setStroke(color);
     }
 
     /**

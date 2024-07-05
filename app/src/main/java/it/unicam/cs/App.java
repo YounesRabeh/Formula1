@@ -70,7 +70,6 @@ public class App extends Application {
         stage.setTitle("Gagata ");
         stage.setScene(scene);
         stage.show();
-        WritableImage trackCanvasSnapshot = gameMap.getTrackCanvas().getCanvasSnapshot();
 
         // - 3 to get @Waypoints canvas
         printWaypoints(canvases[canvases.length-3].getGraphicsContext2D(), exe(gameMap));
@@ -101,8 +100,6 @@ public class App extends Application {
             StackPane.setAlignment(node, pos);
         }
     }
-
-
 
     public static void main(String[] args) {
         launch();
