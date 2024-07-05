@@ -54,6 +54,7 @@ public class App extends Application {
 
         Canvas[] canvases = gameMap.getCanvases();
 
+
         // Create a layout pane to hold the canvas
         StackPane root = new StackPane();
         root.setBackground(Background.fill(Color.rgb(0 ,200, 0)));
