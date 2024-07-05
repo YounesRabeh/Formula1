@@ -15,10 +15,11 @@ import java.util.Optional;
 public interface Interpretable {
     /**
      * Starts the parsing process.
+     * @return an optional object, the result of the parsing
      * @throws IOException if the parser file is not readable
      * @throws NoActionFoundException if no action is found for the identifier
      */
-    void start() throws IOException, NoActionFoundException;
+    Optional<?> start() throws IOException, NoActionFoundException;
 
     /**
      * Parse the data from the file.

@@ -5,7 +5,6 @@ import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
-import it.unicam.cs.gui.util.CanvasRenderer;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -15,7 +14,7 @@ import java.util.List;
 
 /**
  *
- * @autor Younes Rabeh
+ * @author Younes Rabeh
  */
 public final class RouteTools {
     /** Prevent instantiation of this utility class. */
@@ -29,7 +28,7 @@ public final class RouteTools {
      *
      * @param gameMap the game map
      * @return the waypoints of the game map
-     * @throws IllegalStateException if the track is not yet drawn, using the {@link CanvasRenderer#RenderCircuit} method
+     * @throws IllegalStateException if the track is not yet drawn
      * @see Waypoint
      */
     public static List<Waypoint> getGameMapWaypoints(GameMap gameMap) {

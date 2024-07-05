@@ -23,7 +23,7 @@ import java.util.*;
  * @see Information
  * @see Command
  * @author Younes Rabeh
- * @version 1.2
+ * @version 2.0
  */
 abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
@@ -45,13 +45,14 @@ abstract class AbstractParser implements Interpretable, Information {
     }
 
     @Override
-    public void start() throws IOException, NoActionFoundException {
+    public Optional<?> start() throws IOException, NoActionFoundException {
         try (BufferedReader reader = getFileData(FILE).orElseThrow(() ->
                 new IOException("Unable to read file: " + FILE.getAbsolutePath()))) {
             reader.lines()
                     .filter(line -> !line.isEmpty() && !line.startsWith(COMMENT_CHARACTER))
                     .forEach(line -> executeCommand(parseLine(line)));
         }
+        return Optional.empty();
     }
 
     @Override
@@ -125,6 +126,7 @@ abstract class AbstractParser implements Interpretable, Information {
 
         return new Command(identifier, params);
     }
+
 }
 
 

@@ -45,6 +45,11 @@ public class TrackCanvas extends Canvas {
     }
 
 
+    public int getLayer(){
+        return Integer.MIN_VALUE;
+    }
+
+
     /**
      * Set the snapshot of the canvas, use it after drawing on the canvas.
      * <strong>you can only set the snapshot once</strong>. If you try to set it again, an IllegalStateException will be thrown.

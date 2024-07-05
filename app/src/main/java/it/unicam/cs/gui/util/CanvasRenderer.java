@@ -1,22 +1,17 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.api.exceptions.NoActionFoundException;
-import it.unicam.cs.api.parser.DrawingParser;
 import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.map.GridCanvas;
-import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-import java.io.IOException;
 
 import static it.unicam.cs.engine.util.Check.checkNumbers;
 
 /**
  * A utility class for rendering on canvases.
  * @author  Younes Rabeh
- * @version 1.2
+ * @version 1.3
  */
 public final class CanvasRenderer {
     /** Prevent instantiation of this utility class. */
@@ -53,6 +48,9 @@ public final class CanvasRenderer {
     public static void RenderGridOutline(GridCanvas gridCanvas, int width) {
         Check.checkNull(gridCanvas);
         checkNumbers(width);
+        if (width > gridCanvas.getCellSize()) {
+            throw new IllegalArgumentException("The width of the outline cannot be greater than the cell size.");
+        }
         GraphicsContext gc = gridCanvas.getGraphicsContext2D();
         Paint paint = gc.getStroke();
 
@@ -63,29 +61,6 @@ public final class CanvasRenderer {
         gc.setStroke(paint); // reset the stroke color
     }
 
-    /**
-     * Renders the circuit on the canvas.
-     *
-     * @param trackCanvas the canvas on which to render the circuit
-     * @param parser the parser to use for rendering
-     * @throws IOException if an I/O error occurs
-     * @throws NoActionFoundException if no action is found
-     * @throws IllegalStateException if the graphics context is not set
-     */
-    public static void RenderCircuit(
-            TrackCanvas trackCanvas,
-            DrawingParser parser
-    ) throws IOException, NoActionFoundException, IllegalStateException {
-        Check.checkNull(trackCanvas, parser);
-        GraphicsContext parser_gc = parser.getGraphicsContext();
-
-        parser.setGraphicsContext(trackCanvas.getGraphicsContext2D());
-        parser.start();
-        trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(trackCanvas));
-        parser.setGraphicsContext(parser_gc);
-        //TODO: used ro reset the GC - when the gc will be
-        // changed by the parser
-    }
 
 
 }

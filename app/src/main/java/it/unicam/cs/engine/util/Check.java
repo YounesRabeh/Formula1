@@ -45,7 +45,7 @@ public final class Check {
      */
     public static void checkNull(Object... objects) {
         for (Object obj : objects) {
-            if (obj == null) throw new NullPointerException("[!!!] - null value");
+            if (obj == null) throw new NullPointerException("[!!!] -null value");
         }
     }
 }

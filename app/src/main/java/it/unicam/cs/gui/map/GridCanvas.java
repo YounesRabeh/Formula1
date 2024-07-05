@@ -78,6 +78,10 @@ public class GridCanvas extends Canvas {
         return color;
     }
 
+    public int getLayer() {
+        return Integer.MAX_VALUE;
+    }
+
 
 
 }
