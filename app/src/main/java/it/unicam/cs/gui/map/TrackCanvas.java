@@ -29,8 +29,10 @@ public class TrackCanvas extends Canvas {
     /**
      * Get the image of the canvas
      * @return the image of the canvas
+     * @throws IllegalStateException if the snapshot has not been set
      */
     public WritableImage getCanvasSnapshot() {
+        if (snapshot == null) throw new IllegalStateException("[!!]- The snapshot has not been set");
         return snapshot;
     }
 

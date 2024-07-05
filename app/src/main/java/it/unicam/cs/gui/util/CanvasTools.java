@@ -7,8 +7,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This utility class provides methods to interact with the canvas.
@@ -33,22 +31,6 @@ public final class CanvasTools {
         Check.checkNumbers(x, y);
 
         return image.getPixelReader().getColor(x, y);
-    }
-
-    public static List<int[]> getBlackPixels(Canvas trackCanvas, int step, WritableImage snapshot) {
-        Check.checkNull(trackCanvas, snapshot);
-        Check.checkNumbers(step);
-        List<int[]> blackPixels = new ArrayList<>();
-
-        for (int x = 0; x < trackCanvas.getWidth(); x += step) {
-            for (int y = 0; y < trackCanvas.getHeight(); y += step) {
-                Color pixelColor = CanvasTools.getPixelColor(x, y, snapshot);
-                if (pixelColor.equals(Color.BLACK)) {
-                    blackPixels.add(new int[]{x, y});
-                }
-            }
-        }
-        return blackPixels;
     }
 
     /**

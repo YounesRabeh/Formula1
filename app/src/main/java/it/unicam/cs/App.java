@@ -1,5 +1,7 @@
 package it.unicam.cs;
 
+import it.unicam.cs.api.components.nodes.Waypoint;
+import it.unicam.cs.engine.core.routes.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -10,7 +12,6 @@ import it.unicam.cs.api.components.container.Graphics;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Background;
@@ -21,7 +22,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,13 +49,15 @@ public class App extends Application {
 
         int cellSize = 20; //TODO: --> interface
         GameMap gameMap = new GameMap(cellSize, 40, 40);
+        //TODO: add the manual st of the with & height
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
         GridCanvas gridCanvas = gameMap.getGridCanvas();
 
         // Draw something on the canvas
         CanvasRenderer.RenderGrid(gridCanvas);
-        CanvasRenderer.RenderGridOutline(gridCanvas, Color.GRAY);
+        CanvasRenderer.RenderGridOutline(gridCanvas, 8);
         CanvasRenderer.RenderCircuit(trackCanvas, parser);
+
 
         // Create a layout pane to hold the canvas
         StackPane root = new StackPane();
@@ -80,29 +82,29 @@ public class App extends Application {
         gridCanvas.setOnMouseClicked(e -> {
             int x = (int) e.getX();
             int y = (int) e.getY();
-            Color pixelColor = CanvasTools.getPixelColor(-3, -4, trackCanvasSnapshot);
+            Color pixelColor = CanvasTools.getPixelColor(x, y, trackCanvasSnapshot);
             System.out.printf("Pixel color at (%d, %d): " +
                     CanvasTools.colorToRGBString(pixelColor) + "\n", x, y);
         });
 
         long startTime = System.nanoTime();
-        List<int[]> blackPixels = CanvasTools.getBlackPixels(trackCanvas, cellSize, trackCanvasSnapshot);
+        List<Waypoint> waypoints = RouteTools.getGameMapWaypoints(gameMap);
         long endTime = System.nanoTime();
         System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds " +
                 "or " + (float) (endTime - startTime) / 1000000 + " milliseconds\n" +
-                "> Found " + blackPixels.size() + " black pixels"
+                "> Found " + waypoints.size() + " black pixels"
         );
 
         //[
-        printBlackPixels(trackCanvas.getGraphicsContext2D(), blackPixels);
+        printWaypoints(trackCanvas.getGraphicsContext2D(), waypoints);
 
     }
 
-    private void printBlackPixels(GraphicsContext gc, List<int[]> blackPixels) {
+    private void printWaypoints(GraphicsContext gc, List<Waypoint> waypoints) {
         Graphics.setFill(gc, new int[]{255, 0, 0});
-        for (int[] coords : blackPixels) {
-            System.out.printf("Black pixel found at (%d, %d)\n", coords[0], coords[1]);
-            Graphics.strokePoint(gc, coords);
+        for (Waypoint coords : waypoints) {
+            System.out.printf("Black pixel found at (%d, %d)\n", (int) coords.getX(), (int) coords.getY());
+            Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
         }
     }
 

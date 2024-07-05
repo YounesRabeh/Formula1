@@ -12,6 +12,7 @@ import java.io.IOException;
  *
  * @see AbstractParser
  * @author Younes Rabeh
+ * @version 1.5
  */
 public class DrawingParser extends AbstractParser {
     /** The GraphicsContext used to draw on the canvas.*/

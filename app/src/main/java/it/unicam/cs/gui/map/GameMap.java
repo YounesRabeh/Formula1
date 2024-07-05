@@ -1,16 +1,16 @@
 package it.unicam.cs.gui.map;
 
 import it.unicam.cs.engine.util.Check;
-import javafx.scene.canvas.Canvas;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.TreeSet;
 
 public class GameMap implements Characteristics {
+    /** The grid canvas */
     GridCanvas gridCanvas;
+    /** The track canvas */
     TrackCanvas trackCanvas;
-
-    List<Canvas> inertCanvases = new LinkedList<>();
+    /** The inert canvases */
+    TreeSet<InertCanvas> inertCanvas = new TreeSet<>();
 
     private int width;
     private int height;
@@ -28,6 +28,7 @@ public class GameMap implements Characteristics {
         Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y);
         this.width = cellSize * cellNumber_X;
         this.height = cellSize * cellNumber_Y;
+        inertCanvas.removeFirst();
 
         gridCanvas = new GridCanvas(cellSize, cellNumber_X, cellNumber_Y, GRID_COLOR);
         trackCanvas = new TrackCanvas(width, height, TRACK_COLOR);
@@ -65,4 +66,6 @@ public class GameMap implements Characteristics {
     public int getHeight() {
         return height;
     }
+
+
 }

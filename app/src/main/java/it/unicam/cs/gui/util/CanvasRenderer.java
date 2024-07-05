@@ -11,7 +11,13 @@ import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
+import static it.unicam.cs.engine.util.Check.checkNumbers;
 
+/**
+ * A utility class for rendering on canvases.
+ * @author  Younes Rabeh
+ * @version 1.2
+ */
 public final class CanvasRenderer {
     /** Prevent instantiation of this utility class. */
     private CanvasRenderer() {}
@@ -42,15 +48,16 @@ public final class CanvasRenderer {
      *
      *
      * @param gridCanvas the canvas on which to draw the outline
-     * @param color the color of the outline
+     * @param width the width of the outline
      */
-    public static void RenderGridOutline(GridCanvas gridCanvas, Color color) {
-        Check.checkNull(gridCanvas, color);
+    public static void RenderGridOutline(GridCanvas gridCanvas, int width) {
+        Check.checkNull(gridCanvas);
+        checkNumbers(width);
         GraphicsContext gc = gridCanvas.getGraphicsContext2D();
         Paint paint = gc.getStroke();
 
-        gc.setStroke(color);
-        gc.setLineWidth(10);
+        gc.setStroke(gridCanvas.getColor());
+        gc.setLineWidth(width);
         gc.strokeRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
         gc.setLineWidth(1); // reset the line width
         gc.setStroke(paint); // reset the stroke color
@@ -63,7 +70,7 @@ public final class CanvasRenderer {
      * @param parser the parser to use for rendering
      * @throws IOException if an I/O error occurs
      * @throws NoActionFoundException if no action is found
-     * @throws IllegalStateException if the graphics context is set
+     * @throws IllegalStateException if the graphics context is not set
      */
     public static void RenderCircuit(
             TrackCanvas trackCanvas,
