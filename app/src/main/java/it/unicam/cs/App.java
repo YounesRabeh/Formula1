@@ -1,12 +1,10 @@
 package it.unicam.cs;
 
+import it.unicam.cs.api.components.container.DebugData;
+
 import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.engine.core.routes.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
-import it.unicam.cs.gui.map.GridCanvas;
-import it.unicam.cs.gui.map.InertCanvas;
-import it.unicam.cs.gui.map.TrackCanvas;
-import it.unicam.cs.gui.util.CanvasTools;
 import it.unicam.cs.api.parser.DrawingParser;
 import it.unicam.cs.api.components.container.Graphics;
 import javafx.application.Application;
@@ -15,24 +13,21 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.Serial;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
+
+
+import static it.unicam.cs.api.components.container.Resources.getParserFile;
 
 /**
  * JavaFX App
  * @author Younes Rabeh
  */
-public class App extends Application {
+public class App extends Application implements DebugData {
 
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
@@ -42,14 +37,7 @@ public class App extends Application {
 //        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         // Create a Canvas
 
-
-        String PATH = "/it/unicam/cs/test.txt";
-        // NOTE: to get gradle to work, you need to put the file in the resources folder
-        String absolutePath = Objects.requireNonNull(
-                getClass().getResource(PATH)).toURI().getPath();
-        File parserFile = new File(absolutePath);
-        // use classLoader
-        DrawingParser parser = new DrawingParser(parserFile);
+        DrawingParser parser = new DrawingParser(getParserFile(PATH));
         GameMap gameMap = parser.start().get();
 
         Canvas[] canvases = gameMap.getCanvases();
@@ -57,7 +45,7 @@ public class App extends Application {
 
         // Create a layout pane to hold the canvas
         StackPane root = new StackPane();
-        root.setBackground(Background.fill(Color.rgb(0 ,200, 0)));
+        //root.setBackground(Background.fill(Color.rgb(0 ,200, 0)));
 
         // Align the canvases to the left side
         alignAll(Pos.CENTER_LEFT, canvases);
@@ -72,7 +60,7 @@ public class App extends Application {
         stage.show();
 
         // - 3 to get @Waypoints canvas
-        printWaypoints(canvases[canvases.length-3].getGraphicsContext2D(), exe(gameMap));
+        printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
 
     }
 

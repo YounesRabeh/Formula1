@@ -4,7 +4,8 @@
 >MAP 20 40 40 3
 
 
-@TRACK
+@TRACK  # the track color is specified in the interface (default is black)
+# the command C in Track is ignored
 # THE BACKGROUND
 F 0 0 190
 R 0 0 900 900
@@ -70,4 +71,4 @@ P 400 70
 
 @GRID
 #G
-O 2
+O 10
