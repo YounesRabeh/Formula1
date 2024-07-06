@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudocode Documentation</title>
+    <style>
+        body {
+            font-family: Arial, "Inter ExtraBold";
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header, footer {
+            background: #cb4e;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        main {
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+            color: #c7254e;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Pseudocode Documentation</h1>
+</header>
+<main>
+    <section>
+        <p>This file defines a simple pseudocode language for rendering graphics on a canvas. Below are the instructions for using the commands available in this language:</p>
+    </section>
+
+    <section>
+        <h2>General Structure:</h2>
+        <p>The file is divided into sections by commands starting with special characters:</p>
+        <ul>
+            <li>The <code>&gt;</code> command initializes the map and canvas properties.</li>
+            <li>The <code>@</code> command switches to the next canvas.</li>
+            <li>Drawing commands follow to render shapes and lines on the canvas.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Commands:</h2>
+
+        <h3>1. Initialization and Canvas Switching:</h3>
+        <pre><code>&gt;MAP &lt;cell size&gt; &lt;n° of cells in x&gt; &lt;n° of cells in y&gt; &lt;n° layer&gt;</code></pre>
+        <p>Initializes a new map with the specified cell size, number of cells in x and y directions, and layer.</p>
+
+        <pre><code>@TRACK</code></pre>
+        <p>To draw the track & start line. The track color is specified in the interface (default is black), so the command <code>C</code> in Track is ignored.</p>
+
+        <pre><code>@GRID</code></pre>
+        <p>To draw the grid. The grid represents the cells of the map (available moves).</p>
+    </section>
+
+    <section>
+        <h3>2. Track Drawing Commands:</h3>
+        <pre><code>W &lt;width&gt;</code></pre>
+        <p>Sets the width of the track lines.</p>
+
+        <pre><code>Q &lt;xc&gt; &lt;yc&gt; &lt;endX&gt; &lt;endY&gt;</code></pre>
+        <p>Draws a quadratic curve from the current position to <code>(endX, endY)</code> with control point <code>(xc, yc)</code>.</p>
+
+        <pre><code>$&lt;command&gt;</code></pre>
+        <p>Special track-related command such as starting line.</p>
+    </section>
+
+    <section>
+        <h3>3. Background and Grid Commands:</h3>
+        <pre><code>F &lt;r&gt; &lt;g&gt; &lt;b&gt;</code></pre>
+        <p>Sets the fill color using RGB values.</p>
+
+        <pre><code>R &lt;x&gt; &lt;y&gt; &lt;width&gt; &lt;height&gt;</code></pre>
+        <p>Draws a filled rectangle with the specified position and dimensions.</p>
+
+        <pre><code>O &lt;size&gt;</code></pre>
+        <p>Renders the grid outline with the specified size.</p>
+    </section>
+
+    <section>
+        <h3>4. Checkpoints:</h3>
+        <pre><code>P &lt;x&gt; &lt;y&gt;</code></pre>
+        <p>Draws a checkpoint at the specified coordinates.</p>
+    </section>
+
+    <section>
+        <h2>Example:</h2>
+        <pre><code>&gt;MAP 20 40 40 3
+
+@TRACK
+# THE BACKGROUND
+F 0 0 190
+R 0 0 900 900
+
+# THE TRACK
+W 90 # default width is 50
+# xc yc endX endY
+Q 100 200 100 500 # 4 params
+Q 100 700 200 700
+Q 200 700 600 700
+Q 800 700 600 500
+Q 500 400 600 300
+Q 800 100 400 70
+Q 100 30 100 150
+$TART_LINE 100 300
+$TART_LINE 300 700
+
+@EXTRA
+
+
+@WAYPOINTS
+# to draw the waypoints by the debug mode (using max layer - 2)
+
+
+@CHECKPOINTS
+## CHECKPOINTS (MAIN)
+F 200 0 170
+#P 300 700
+#P 100 200
+#P 100 150
+#P 200 700
+#P 600 700
+##P 600 500
+#P 600 300
+##P 400 70
+
+
+@GRID
+#G
+O 10</code></pre>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Pseudocode Documentation. All rights reserved.</p>
+</footer>
+</body>
+</html>
