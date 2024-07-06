@@ -49,6 +49,11 @@ public final class Graphics {
         gc.setLineWidth(params[0]);
     }
 
+    public static void moveTo(GraphicsContext gc, int[] params) {
+        Check.checkNumbers(params);
+        gc.moveTo(params[0], params[1]);
+    }
+
     /**
      * Draw a line on the canvas.
      * @param gc the GraphicsContext

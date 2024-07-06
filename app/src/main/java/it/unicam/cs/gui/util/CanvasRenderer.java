@@ -1,7 +1,10 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.api.components.container.Graphics;
+import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.map.GridCanvas;
+import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
@@ -59,6 +62,70 @@ public final class CanvasRenderer {
         gc.strokeRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
         gc.setLineWidth(1); // reset the line width
         gc.setStroke(paint); // reset the stroke color
+    }
+
+    public static void renderStartingLine(TrackCanvas trackCanvas, Waypoint waypoint, int width){
+        final int strokeDistance = trackCanvas.getTrackWidth() / 2;
+        final int strokeThickness = width / 2;
+        final int errorMargin = 2;
+        int[] coords = new int[4];
+
+        int X1 = (int) waypoint.getX() - strokeDistance;
+        int X2 = (int) waypoint.getX() + strokeDistance;
+
+
+        int Y1 = (int) waypoint.getY() - strokeDistance;
+        int Y2 = (int) waypoint.getY() + strokeDistance;
+
+        if (CanvasTools.getPixelColor((int) waypoint.getX(), (int) waypoint.getY(), trackCanvas.getCanvasSnapshot())
+                .equals(trackCanvas.getColor())) {
+            System.out.println("X = " + waypoint.getX() + " Y= " + waypoint.getY());
+            if (!CanvasTools.getPixelColor(X1 - errorMargin, (int) waypoint.getY(), trackCanvas.getCanvasSnapshot())
+                    .equals(trackCanvas.getColor())) {
+                System.out.println("X1 = " + X1 + " Y = " + waypoint.getY() +
+                        " " + CanvasTools.colorToRGBString(CanvasTools.getPixelColor(X1, (int) waypoint.getY(), trackCanvas.getCanvasSnapshot())));
+                coords[0] = X1 + strokeThickness;
+                coords[1] = (int) waypoint.getY();
+            } if (!CanvasTools.getPixelColor(X2 + errorMargin, (int) waypoint.getY(), trackCanvas.getCanvasSnapshot())
+                    .equals(trackCanvas.getColor())) {
+                System.out.println("X2 = " + X2 + " Y = " + waypoint.getY() +
+                        " " + CanvasTools.colorToRGBString(CanvasTools.getPixelColor(X2, (int) waypoint.getY(), trackCanvas.getCanvasSnapshot())));
+                coords[2] = X2 - strokeThickness;
+                coords[3] = (int) waypoint.getY();
+            }
+
+            if (!CanvasTools.getPixelColor((int) waypoint.getX(), Y1 - errorMargin, trackCanvas.getCanvasSnapshot())
+                    .equals(trackCanvas.getColor())) {
+                System.out.println("X = " + waypoint.getX() + " Y1 = " + Y1 +
+                        " " + CanvasTools.colorToRGBString(CanvasTools.getPixelColor((int) waypoint.getX(), Y1, trackCanvas.getCanvasSnapshot())));
+                coords[0] = (int) waypoint.getX();
+                coords[1] = Y1  + strokeThickness;
+            } if (!CanvasTools.getPixelColor((int) waypoint.getX(), Y2 + errorMargin, trackCanvas.getCanvasSnapshot())
+                    .equals(trackCanvas.getColor())) {
+                System.out.println("X = " + waypoint.getX() + " Y2 = " + Y2 +
+                        " " + CanvasTools.colorToRGBString(CanvasTools.getPixelColor((int) waypoint.getX(), Y2, trackCanvas.getCanvasSnapshot())));
+                coords[2] = (int) waypoint.getX();
+                coords[3] = Y2 - strokeThickness;
+            }
+
+            if (coords[0] == 0 || coords[1] == 0 || coords[2] == 0 || coords[3] == 0) {
+                System.out.println("No coords found");
+                return;
+            }
+
+
+            Graphics.strokeLine(trackCanvas.getGraphicsContext2D(), coords);
+
+
+        }
+
+
+
+
+
+
+
+
     }
 
 

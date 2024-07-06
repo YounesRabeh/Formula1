@@ -7,12 +7,17 @@ import javafx.scene.paint.Color;
 
 /**
  * {@code TrackCanvas} is a canvas that displays a track.
+ * It is used to draw the track on the map.
+ * @author Younes Rabeh
+ * @version 1.4
  */
 public class TrackCanvas extends Canvas {
     /** The snapshot of the canvas */
     private WritableImage snapshot;
     /** The color of the canvas */
     private final Color color;
+    /** The width of the track */
+    private int trackWidth;
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -34,6 +39,14 @@ public class TrackCanvas extends Canvas {
     public WritableImage getCanvasSnapshot() {
         if (snapshot == null) throw new IllegalStateException("[!!]- The snapshot has not been set");
         return snapshot;
+    }
+
+    /**
+     * Get the track width
+     * @return the track width
+     */
+    public int getTrackWidth() {
+        return trackWidth;
     }
 
     /**
@@ -63,6 +76,16 @@ public class TrackCanvas extends Canvas {
         } else {
             throw new IllegalStateException("[!!]- The snapshot has already been set");
         }
+    }
+
+    /**
+     * Set the track width, (the width of the track to be drawn on the canvas)
+     * @param trackWidth the width of the track
+     */
+    public void setTrackWidth(int trackWidth) {
+        if (trackWidth < 0) throw new IllegalArgumentException("[!!]- The track width must be non-negative");
+        this.trackWidth = trackWidth;
+        System.out.println("trackWidth = " + trackWidth);
     }
 
 }

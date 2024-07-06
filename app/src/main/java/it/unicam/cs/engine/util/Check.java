@@ -24,6 +24,21 @@ public final class Check {
     }
 
     /**
+     * Check if the numbers are smaller than the given value. if so, throw an exception.
+     * @param value the value to compare
+     * @param nums the numbers to check
+     * @throws IndexOutOfBoundsException if one of the numbers is smaller than the given value
+     */
+    public static void checkNumbersMin(double value, Number... nums) {
+        for (Number num : nums) {
+            if (num == null) throw new NullPointerException("[!!!] - null value");
+            if (num.doubleValue() < value){
+                throw new IndexOutOfBoundsException("[!!!] - " + num.doubleValue() + " is non-positive");
+            }
+        }
+    }
+
+    /**
      * Check if the numbers are non-positive. if so, throw an exception.
      * @param nums the numbers to check
      * @throws IndexOutOfBoundsException if one of the numbers is non-positive
@@ -48,4 +63,5 @@ public final class Check {
             if (obj == null) throw new NullPointerException("[!!!] -null value");
         }
     }
+
 }

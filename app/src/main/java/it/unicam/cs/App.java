@@ -42,7 +42,6 @@ public class App extends Application implements DebugData {
 
         Canvas[] canvases = gameMap.getCanvases();
 
-
         // Create a layout pane to hold the canvas
         StackPane root = new StackPane();
         //root.setBackground(Background.fill(Color.rgb(0 ,200, 0)));
@@ -60,7 +59,7 @@ public class App extends Application implements DebugData {
         stage.show();
 
         // - 3 to get @Waypoints canvas
-        printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
+        //printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
 
     }
 

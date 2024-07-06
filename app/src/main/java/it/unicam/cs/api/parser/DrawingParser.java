@@ -1,7 +1,9 @@
 package it.unicam.cs.api.parser;
 
 import it.unicam.cs.api.components.container.Graphics;
+import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.NoActionFoundException;
+import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -9,6 +11,8 @@ import it.unicam.cs.gui.util.CanvasRenderer;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -30,10 +34,8 @@ public class DrawingParser extends AbstractParser {
     private GraphicsContext currentGC;
     /** A map of GraphicsContexts */
     private Stack<? extends Canvas> canvasStack;
-
+    /** The game map */
     private GameMap map;
-    /** A boolean value to check if the track is drawn */
-    private boolean isTrackDrawn = false;
 
 
     /**
@@ -91,11 +93,8 @@ public class DrawingParser extends AbstractParser {
         });
 
         functionMap.put('@', command -> {
-            if (!isTrackDrawn && currentCanvas instanceof TrackCanvas trackCanvas){
-                Graphics.setStroke(currentGC, trackCanvas.getColor());
-                currentGC.stroke();
-                trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
-                isTrackDrawn = true;
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+
             }
 
             this.currentCanvas = canvasStack.pop();
@@ -121,6 +120,29 @@ public class DrawingParser extends AbstractParser {
             }
         });
 
+        functionMap.put('$', (command) -> {
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+                Graphics.setStroke(currentGC, trackCanvas.getColor());
+                currentGC.stroke();
+                trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
+                //int[] customParams = new int[4];
+                Graphics.setStroke(currentGC, Color.WHITE);
+                Graphics.setLineWidth(currentGC, new int[]{6});
+                //int[] customParams = {
+                //        command.params()[0] - trackCanvas.getTrackWidth() / 2 + (int) currentGC.getLineWidth() / 2 ,
+                //        command.params()[1],
+                //        command.params()[0] + trackCanvas.getTrackWidth() / 2 - (int) currentGC.getLineWidth() / 2,
+                //        command.params()[1]
+                //};
+                //System.out.println(CanvasTools.colorToRGBString(CanvasTools.getPixelColor(
+                //        command.params()[0] - trackCanvas.getTrackWidth() / 2
+                //        , command.params()[1], trackCanvas.getCanvasSnapshot())));
+//
+                //Graphics.strokeLine(currentGC, customParams);
+                CanvasRenderer.renderStartingLine(trackCanvas, new Waypoint(command.params()[0], command.params()[1]), 6);
+            }
+        });
+
         functionMap.put('B', (command) -> {
             Graphics.beginPath(currentGC);
         });
@@ -134,7 +156,15 @@ public class DrawingParser extends AbstractParser {
         });
 
         functionMap.put('W', (command) -> {
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+                Check.checkNumbersMin(50, command.params()[0]);
+                trackCanvas.setTrackWidth(command.params()[0]);
+            }
             Graphics.setLineWidth(currentGC, command.params());
+        });
+
+        functionMap.put('M', (command) -> {
+            Graphics.moveTo(currentGC, command.params());
         });
 
         functionMap.put('Q', (command) -> {
