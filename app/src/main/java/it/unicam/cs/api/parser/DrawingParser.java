@@ -4,6 +4,7 @@ import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.NoActionFoundException;
 import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -11,7 +12,6 @@ import it.unicam.cs.gui.util.CanvasRenderer;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,6 +85,13 @@ public class DrawingParser extends AbstractParser {
     }
 
 
+    /**
+     * The base commands of the drawing parser. contains the following commands:
+     * <ul>
+     *     <li> {@code >} - create a new canvas with the given cell size, cell number x, cell number y</li>
+     *     <li> {@code @} - switch to the next canvas</li>
+     *
+     */
     private void baseCommand(){
         // cell size, cell number x, cell number y
         functionMap.put('>', command -> {
@@ -93,10 +100,14 @@ public class DrawingParser extends AbstractParser {
         });
 
         functionMap.put('@', command -> {
-            if (currentCanvas instanceof TrackCanvas trackCanvas){
-
+            if (this.currentGC == null){
+                this.currentCanvas = canvasStack.pop();
+                this.currentGC = currentCanvas.getGraphicsContext2D();
+                if (this.currentCanvas instanceof TrackCanvas trackCanvas){
+                    trackCanvas.setTrackWidth(Characteristics.DEFAULT_TRACK_WIDTH);
+                }
+                return;
             }
-
             this.currentCanvas = canvasStack.pop();
             this.currentGC = currentCanvas.getGraphicsContext2D();
         });
@@ -144,7 +155,7 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('W', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
-                Check.checkNumbersMin(50, command.params()[0]);
+                Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, command.params()[0]);
                 trackCanvas.setTrackWidth(command.params()[0]);
             }
             Graphics.setLineWidth(currentGC, command.params());

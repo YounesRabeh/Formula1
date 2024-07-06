@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.map;
 
+import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.scene.canvas.Canvas;
@@ -7,6 +8,9 @@ import javafx.scene.paint.Color;
 
 import java.util.Stack;
 import java.util.TreeSet;
+
+import static it.unicam.cs.api.components.container.Characteristics.GRID_COLOR;
+import static it.unicam.cs.api.components.container.Characteristics.TRACK_COLOR;
 
 /**
  * {@code GameMap} is a map that contains a grid canvas, a track canvas, and inert canvases.
@@ -20,7 +24,7 @@ import java.util.TreeSet;
  * @author Younes Rabeh
  * @version 2.0
  */
-public class GameMap implements Characteristics {
+public class GameMap {
     /** The grid canvas */
     private final GridCanvas gridCanvas;
     /** The track canvas */

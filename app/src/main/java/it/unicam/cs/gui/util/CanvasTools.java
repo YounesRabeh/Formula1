@@ -2,6 +2,7 @@ package it.unicam.cs.gui.util;
 
 import it.unicam.cs.engine.util.Check;
 
+import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -62,4 +63,22 @@ public final class CanvasTools {
 
         return String.format("RGB(%d, %d, %d)", r, g, b);
     }
+
+    /**
+     * Checks if a specific pixel on the canvas has the specified color.
+     *
+     * @param x the x-coordinate of the pixel
+     * @param y the y-coordinate of the pixel
+     * @param image the image to check
+     * @param color the color to check for
+     * @return true if the pixel has the specified color, false otherwise
+     */
+    public static boolean isTrackPixel(int x, int y, WritableImage image, Color color) {
+        return getPixelColor(x, y, image).equals(color);
+    }
+
+    public static boolean isTrackPixel(int x, int y, TrackCanvas trackCanvas) {
+        return isTrackPixel(x, y, trackCanvas.getCanvasSnapshot(), trackCanvas.getColor());
+    }
+
 }

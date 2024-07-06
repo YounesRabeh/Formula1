@@ -1,6 +1,10 @@
 package it.unicam.cs.gui.map;
 
 
+import it.unicam.cs.api.components.container.Characteristics;
+import it.unicam.cs.api.components.nodes.Waypoint;
+import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.gui.util.CanvasTools;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -32,6 +36,20 @@ public class TrackCanvas extends Canvas {
     }
 
     /**
+     * Check if the waypoint is contained in the track.
+     * @param waypoint the waypoint to check
+     * @return true if the waypoint is contained in the track, false otherwise
+     */
+    public boolean contains(Waypoint waypoint) {
+        return CanvasTools.isTrackPixel(
+                (int) waypoint.getX(),
+                (int) waypoint.getY(),
+                this.getCanvasSnapshot(),
+                this.getColor()
+        );
+    }
+
+    /**
      * Get the image of the canvas
      * @return the image of the canvas
      * @throws IllegalStateException if the snapshot has not been set
@@ -57,7 +75,10 @@ public class TrackCanvas extends Canvas {
         return color;
     }
 
-
+    /**
+     * Get the layer of the canvas
+     * @return the layer of the canvas
+     */
     public int getLayer(){
         return Integer.MIN_VALUE;
     }
@@ -83,9 +104,9 @@ public class TrackCanvas extends Canvas {
      * @param trackWidth the width of the track
      */
     public void setTrackWidth(int trackWidth) {
-        if (trackWidth < 0) throw new IllegalArgumentException("[!!]- The track width must be non-negative");
-        this.trackWidth = trackWidth;
-        System.out.println("trackWidth = " + trackWidth);
+        Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, trackWidth);
+        this.trackWidth = (int) trackWidth;
+        this.getGraphicsContext2D().setLineWidth(trackWidth);
     }
 
 }
