@@ -125,21 +125,8 @@ public class DrawingParser extends AbstractParser {
                 Graphics.setStroke(currentGC, trackCanvas.getColor());
                 currentGC.stroke();
                 trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
-                //int[] customParams = new int[4];
-                Graphics.setStroke(currentGC, Color.WHITE);
-                Graphics.setLineWidth(currentGC, new int[]{6});
-                //int[] customParams = {
-                //        command.params()[0] - trackCanvas.getTrackWidth() / 2 + (int) currentGC.getLineWidth() / 2 ,
-                //        command.params()[1],
-                //        command.params()[0] + trackCanvas.getTrackWidth() / 2 - (int) currentGC.getLineWidth() / 2,
-                //        command.params()[1]
-                //};
-                //System.out.println(CanvasTools.colorToRGBString(CanvasTools.getPixelColor(
-                //        command.params()[0] - trackCanvas.getTrackWidth() / 2
-                //        , command.params()[1], trackCanvas.getCanvasSnapshot())));
-//
-                //Graphics.strokeLine(currentGC, customParams);
-                CanvasRenderer.renderStartingLine(trackCanvas, new Waypoint(command.params()[0], command.params()[1]), 6);
+                CanvasRenderer.renderStartingLine(trackCanvas,
+                        new Waypoint(command.params()[0], command.params()[1]), 6);
             }
         });
 
