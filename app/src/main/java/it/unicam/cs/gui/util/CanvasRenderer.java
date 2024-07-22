@@ -75,19 +75,23 @@ public final class CanvasRenderer {
      * @throws IllegalArgumentException if the starting line is not valid
      */
     public static void renderStartingLine(TrackCanvas trackCanvas, Waypoint waypoint, int width) {
-        final int strokeDistance = trackCanvas.getTrackWidth() / 2;
-        final int X = (int) waypoint.getX();
-        final int Y = (int) waypoint.getY();
-        final int X1 = X - strokeDistance, X2 = X + strokeDistance;
-        final int Y1 = Y - strokeDistance, Y2 = Y + strokeDistance;
-
-        // Check the center pixel color first
         if (trackCanvas.contains(waypoint)) {
-            // Check horizontal points
+            final int strokeDistance = trackCanvas.getTrackWidth() / 2;
+            final int X = (int) waypoint.getX();
+            final int Y = (int) waypoint.getY();
+            final int X1 = X - strokeDistance, X2 = X + strokeDistance;
+            final int Y1 = Y - strokeDistance, Y2 = Y + strokeDistance;
+
+            GraphicsContext gc = trackCanvas.getGraphicsContext2D();
+            final double lineWidth = gc.getLineWidth();
+            gc.setLineWidth(width);
+
             if (verifyStartLineV(trackCanvas, X1, X2, Y)) return;
             if (verifyStartLineH(trackCanvas, Y1, Y2, X)) return;
-            // TODO: Check diagonal points (maybe)
+
+            gc.setLineWidth(lineWidth); // reset the line width
         }
+
         throw new IllegalArgumentException("[!!]- The starting line is not valid.");
     }
 

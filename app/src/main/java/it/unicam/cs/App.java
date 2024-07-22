@@ -32,10 +32,9 @@ public class App extends Application implements DebugData {
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
         FXMLLoader fxmlLoader = new FXMLLoader(getResourceURL(FXML_FILE_PATH));
-        // Create a Canvas
         DrawingParser parser = new DrawingParser(getResourceFile(PARSER_FILE_PATH));
-        GameMap gameMap = parser.start().get();
 
+        GameMap gameMap = parser.start().get();
         Canvas[] canvases = gameMap.getCanvases();
 
         // Create a layout pane to hold the canvas
@@ -59,7 +58,7 @@ public class App extends Application implements DebugData {
         stage.show();
 
         // - 3 to get @Waypoints canvas
-        printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
+        //printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
         drawSegments(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
 
 

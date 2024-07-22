@@ -25,7 +25,7 @@ import java.util.Stack;
  *
  * @see AbstractParser
  * @author Younes Rabeh
- * @version 2.2
+ * @version 2.3
  */
 public class DrawingParser extends AbstractParser {
     /** The current canvas to draw on.*/
@@ -115,6 +115,23 @@ public class DrawingParser extends AbstractParser {
 
     /**
      * The default commands of the parser.
+     * Contains the following commands:
+     * <ul>
+     *     <li> {@code G} - render the grid</li>
+     *     <li> {@code O} - render the grid outline</li>
+     *     <li> {@code $} - render the starting line</li>
+     *     <li> {@code £} - render the finish line <b>(not yet implemented)</b></li>
+     *     <li> {@code B} - begin a new path</li>
+     *     <li> {@code K} - stroke the path</li>
+     *     <li> {@code C} - set the stroke color</li>
+     *     <li> {@code W} - set the line width</li>
+     *     <li> {@code M} - move to the given coordinates</li>
+     *     <li> {@code Q} - draw a quadratic curve</li>
+     *     <li> {@code L} - draw a line</li>
+     *     <li> {@code R} - fill a rectangle</li>
+     *     <li> {@code F} - set the fill color</li>
+     *     <li> {@code P} - draw a point</li>
+     *</ul>
      */
     private void defaultCommands(){
         // Render the grid
@@ -141,6 +158,7 @@ public class DrawingParser extends AbstractParser {
             }
         });
 
+        //TODO: add the non oval circuit, the starting line and the finish line do not coincide
         functionMap.put('£', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
                 Graphics.setStroke(currentGC, trackCanvas.getColor());
@@ -150,10 +168,6 @@ public class DrawingParser extends AbstractParser {
                 } catch (IllegalStateException snapshotException) {
 
                 }
-
-
-//                CanvasRenderer.renderStartingLine(trackCanvas,
-//                        new Waypoint(command.params()[0], command.params()[1]), 6);
             }
         });
 
