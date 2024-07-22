@@ -12,7 +12,7 @@ public interface Characteristics {
     /** The color of the grid */
     Color GRID_COLOR = Color.GRAY;
     /** The width of the start line */
-    int START_LINE_WIDTH = 6;
+    int DEFAULT_STARTING_LINE_WIDTH = 6;
     /** The width of the track */
     int DEFAULT_TRACK_WIDTH = 50;
 }

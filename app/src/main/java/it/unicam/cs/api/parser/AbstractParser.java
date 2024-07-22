@@ -1,7 +1,7 @@
 package it.unicam.cs.api.parser;
 
 
-import it.unicam.cs.api.exceptions.NoActionFoundException;
+import it.unicam.cs.api.exception.NoActionFoundException;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -102,7 +102,7 @@ public final class CanvasRenderer {
      */
     private static boolean verifyStartLineH(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
-        final int strokeThickness = Characteristics.START_LINE_WIDTH / 2;
+        final int strokeThickness = Characteristics.DEFAULT_STARTING_LINE_WIDTH / 2;
         if (!CanvasTools.isTrackPixel(still, var1 - strokeThickness, trackCanvas)) {
             coords[0] = still;
             coords[1] = var1 + strokeThickness;
@@ -126,7 +126,7 @@ public final class CanvasRenderer {
      */
     private static boolean verifyStartLineV(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
-        final int strokeThickness = Characteristics.START_LINE_WIDTH / 2;
+        final int strokeThickness = Characteristics.DEFAULT_STARTING_LINE_WIDTH / 2;
         if (!CanvasTools.isTrackPixel(var1 - strokeThickness, still, trackCanvas)) {
             coords[0] = var1 + strokeThickness;
             coords[1] = still;
@@ -147,7 +147,7 @@ public final class CanvasRenderer {
      */
     private static void strokeExistingStartLine(GraphicsContext gc, int[] coords) {
         Graphics.setStroke(gc, Color.WHITE);
-        Graphics.setLineWidth(gc, new int[]{Characteristics.START_LINE_WIDTH});
+        Graphics.setLineWidth(gc, new int[]{Characteristics.DEFAULT_STARTING_LINE_WIDTH});
         Graphics.strokeLine(gc, coords);
     }
 

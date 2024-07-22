@@ -1,4 +1,4 @@
-package it.unicam.cs.engine.core.routes;
+package it.unicam.cs.engine.core.route;
 
 
 import it.unicam.cs.api.components.nodes.Waypoint;

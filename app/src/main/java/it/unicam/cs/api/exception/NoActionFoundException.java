@@ -1,4 +1,4 @@
-package it.unicam.cs.api.exceptions;
+package it.unicam.cs.api.exception;
 
 public class NoActionFoundException extends RuntimeException {
     public NoActionFoundException(String message) {

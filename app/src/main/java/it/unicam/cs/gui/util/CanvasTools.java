@@ -77,6 +77,13 @@ public final class CanvasTools {
         return getPixelColor(x, y, image).equals(color);
     }
 
+    /**
+     * Checks if a specific pixel on the canvas has the specified color.
+     * @param x the x-coordinate of the pixel
+     * @param y the y-coordinate of the pixel
+     * @param trackCanvas the canvas to check
+     * @return true if the pixel has the specified color, false otherwise
+     */
     public static boolean isTrackPixel(int x, int y, TrackCanvas trackCanvas) {
         return isTrackPixel(x, y, trackCanvas.getCanvasSnapshot(), trackCanvas.getColor());
     }

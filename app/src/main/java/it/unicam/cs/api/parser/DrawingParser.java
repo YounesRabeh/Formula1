@@ -2,7 +2,7 @@ package it.unicam.cs.api.parser;
 
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.api.exceptions.NoActionFoundException;
+import it.unicam.cs.api.exception.NoActionFoundException;
 import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.gui.map.GameMap;
@@ -138,6 +138,22 @@ public class DrawingParser extends AbstractParser {
                 trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
                 CanvasRenderer.renderStartingLine(trackCanvas,
                         new Waypoint(command.params()[0], command.params()[1]), 6);
+            }
+        });
+
+        functionMap.put('£', (command) -> {
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+                Graphics.setStroke(currentGC, trackCanvas.getColor());
+                currentGC.stroke();
+                try {
+                    trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
+                } catch (IllegalStateException snapshotException) {
+
+                }
+
+
+//                CanvasRenderer.renderStartingLine(trackCanvas,
+//                        new Waypoint(command.params()[0], command.params()[1]), 6);
             }
         });
 
