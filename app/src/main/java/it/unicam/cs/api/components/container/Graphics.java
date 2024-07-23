@@ -26,7 +26,8 @@ public final class Graphics {
      * @param params the parameters of the stroke color
      */
     public static void setStroke(GraphicsContext gc, int[] params) {
-        Check.checkNumbers(params);
+        Check.checkNull(gc);
+        Check.checkParams(params, 3);
         gc.setStroke(rgb(params[0], params[1], params[2]));
     }
     /**
@@ -35,7 +36,7 @@ public final class Graphics {
      * @param color the stroke color
      */
     public static void setStroke(GraphicsContext gc, Color color) {
-        Check.checkNull(color);
+        Check.checkNull(gc, color);
         gc.setStroke(color);
     }
 
@@ -45,12 +46,14 @@ public final class Graphics {
      * @param params the parameters of the line width
      */
     public static void setLineWidth(GraphicsContext gc, int[] params) {
-        Check.checkNumbers(params);
+        Check.checkNull(gc);
+        Check.checkParams(params, 1);
         gc.setLineWidth(params[0]);
     }
 
     public static void moveTo(GraphicsContext gc, int[] params) {
-        Check.checkNumbers(params);
+        Check.checkNull(gc);
+        Check.checkParams(params, 2);
         gc.moveTo(params[0], params[1]);
     }
 
@@ -61,7 +64,7 @@ public final class Graphics {
      */
     public static void strokeLine(GraphicsContext gc, int[] params) {
         Check.checkNull(gc);
-        Check.checkNumbers(params);
+        Check.checkParams(params, 4);
         gc.strokeLine(params[0], params[1], params[2], params[3]);
     }
 
@@ -81,7 +84,7 @@ public final class Graphics {
      */
     public static void setFill(GraphicsContext gc, int[] params) {
         Check.checkNull(gc);
-        Check.checkNumbers(params);
+        Check.checkParams(params, 3);
         gc.setFill(rgb(params[0], params[1], params[2]));
     }
 
@@ -92,7 +95,7 @@ public final class Graphics {
      */
     public static void fillRect(GraphicsContext gc, int[] params) {
         Check.checkNull(gc);
-        Check.checkNumbers(params);
+        Check.checkParams(params, 4);
         gc.fillRect(params[0], params[1], params[2], params[3]);
     }
 
@@ -103,7 +106,7 @@ public final class Graphics {
      */
     public static void strokeRect(GraphicsContext gc, int[] params) {
         Check.checkNull(gc);
-        Check.checkNumbers(params);
+        Check.checkParams(params, 4);
         gc.strokeRect(params[0], params[1], params[2], params[3]);
     }
 
@@ -114,7 +117,7 @@ public final class Graphics {
      */
     public static void quadraticCurveTo(GraphicsContext gc, int[] params) {
         Check.checkNull(gc);
-        Check.checkNumbers(params);
+        Check.checkParams(params, 4);
         gc.quadraticCurveTo(params[0], params[1], params[2], params[3]);
     }
 
@@ -125,7 +128,7 @@ public final class Graphics {
      */
     public static void strokePoint(GraphicsContext gc, int[] params){
         Check.checkNull(gc);
-        Check.checkNumbers(params);
+        Check.checkParams(params, 2);
         // Draw a small rectangle to represent the point
         // FIXME: delete the magic numbers
         gc.fillOval(params[0] - 3, params[1] - 3, 6, 6);

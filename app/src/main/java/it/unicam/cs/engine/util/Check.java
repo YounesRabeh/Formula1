@@ -1,6 +1,8 @@
 package it.unicam.cs.engine.util;
 
 
+import it.unicam.cs.api.exception.NotEnoughParametersException;
+
 /**
  * A utility class that provides methods to check if value are in a valid range.
  * 
@@ -52,6 +54,14 @@ public final class Check {
             }
         }
     }
+
+    public static void checkParams(int[] params, int expectedLength) {
+        if (params.length != expectedLength){
+            throw new NotEnoughParametersException(params.length);
+        }
+        checkNumbers(params);
+    }
+
 
     /**
      * Check if the objects are null. if so, throw an exception.

@@ -5,9 +5,13 @@ import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.engine.util.Check;
 import it.unicam.cs.gui.util.CanvasTools;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * {@code TrackCanvas} is a canvas that displays a track.
@@ -22,6 +26,8 @@ public class TrackCanvas extends Canvas {
     private final Color color;
     /** The width of the track */
     private int trackWidth;
+    /** The parsed end points of the track*/
+    private Set<Point2D> parsedEndPoints;
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -31,7 +37,6 @@ public class TrackCanvas extends Canvas {
      */
     TrackCanvas(double width, double height, Color color) {
         super(width, height);
-
         this.color = color;
     }
 
@@ -73,6 +78,14 @@ public class TrackCanvas extends Canvas {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * Get the parsed end points of the track
+     * @return the parsed end points of the track
+     */
+    public Set<Point2D> getParsedEndPoints() {
+        return parsedEndPoints;
     }
 
     /**

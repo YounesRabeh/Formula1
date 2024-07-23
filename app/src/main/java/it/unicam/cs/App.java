@@ -78,7 +78,7 @@ public class App extends Application implements DebugData {
     private void printWaypoints(GraphicsContext gc, List<Waypoint> waypoints) {
         Graphics.setFill(gc, new int[]{255, 0, 0});
         for (Waypoint coords : waypoints) {
-            System.out.printf("Black pixel found at (%d, %d)\n", (int) coords.getX(), (int) coords.getY());
+            //System.out.printf("Black pixel found at (%d, %d)\n", (int) coords.getX(), (int) coords.getY());
             Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
         }
     }

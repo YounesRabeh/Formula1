@@ -23,7 +23,7 @@ import java.util.*;
  * @see Information
  * @see Command
  * @author Younes Rabeh
- * @version 2.0
+ * @version 2.1
  */
 abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
@@ -121,6 +121,7 @@ abstract class AbstractParser implements Interpretable, Information {
         String[] parts = line.split(COMMENT_CHARACTER)[0].split(PARSER_SEPARATOR);
         char identifier = parts[0].charAt(0); // Get the first character of the line (O_msksdfsdf) is ok
         int[] params = Arrays.stream(parts, 1, parts.length)
+                .filter(part -> !part.trim().isEmpty()) // Filter out empty strings (leading a param number)
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
