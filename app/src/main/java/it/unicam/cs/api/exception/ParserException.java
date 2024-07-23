@@ -6,14 +6,14 @@ package it.unicam.cs.api.exception;
  */
 public abstract class ParserException extends RuntimeException {
     /**
-     * Constructs a new exception with a default message.
+     * Constructs a new parsing exception.
      */
     public ParserException() {
         super();
     }
 
     /**
-     * Constructs a new exception with a custom message.
+     * Constructs a new parsing exception with a custom message.
      * @param message the custom message
      */
     public ParserException(String message) {

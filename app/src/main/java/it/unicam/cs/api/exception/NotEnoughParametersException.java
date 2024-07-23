@@ -4,6 +4,7 @@ package it.unicam.cs.api.exception;
  * An exception that is thrown when the number of parameters is not enough.
  * @see ParserException
  * @author Younes Rabeh
+ * @version 1.0
  */
 public class NotEnoughParametersException extends ParserException {
     /**
