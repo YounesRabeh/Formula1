@@ -18,7 +18,7 @@ public class NotEnoughParametersException extends ParserException {
      * @param expectedLength the expected length of the parameters
      */
     public NotEnoughParametersException(int expectedLength){
-        super("- invalid number of parameters, expected: " + expectedLength);
+        super("Invalid number of parameters, expected: " + expectedLength);
     }
 
 }

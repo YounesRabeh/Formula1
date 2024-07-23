@@ -17,7 +17,7 @@ public abstract class ParserException extends RuntimeException {
      * @param message the custom message
      */
     public ParserException(String message) {
-        super("\n[!!!] > Parser Exception:\n" + message);
+        super("\n[!!!] > Parser Exception: " + message);
     }
 
 }

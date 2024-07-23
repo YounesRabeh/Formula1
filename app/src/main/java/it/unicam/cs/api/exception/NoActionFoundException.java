@@ -18,6 +18,6 @@ public class NoActionFoundException extends ParserException {
      * @param identifier the identifier that caused the exception
      */
     public NoActionFoundException(char identifier) {
-        super("- No action found for identifier: " + identifier);
+        super("No action found for identifier " + "\"" + identifier + "\" ");
     }
 }
