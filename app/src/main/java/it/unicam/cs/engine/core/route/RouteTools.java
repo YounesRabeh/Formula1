@@ -2,7 +2,7 @@ package it.unicam.cs.engine.core.route;
 
 
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasTools;

@@ -6,7 +6,7 @@ package it.unicam.cs;
 
  */
 public interface DebugData {
-    boolean FXML_TEST = true;
+    boolean FXML_TEST = false;
     int WIDTH = 1000;
     int HEIGHT = 900;
 

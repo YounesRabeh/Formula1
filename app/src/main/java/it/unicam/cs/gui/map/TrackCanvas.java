@@ -3,14 +3,13 @@ package it.unicam.cs.gui.map;
 
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-import java.util.List;
 import java.util.Set;
 
 /**

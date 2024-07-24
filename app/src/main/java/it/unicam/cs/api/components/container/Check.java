@@ -1,7 +1,7 @@
-package it.unicam.cs.engine.util;
+package it.unicam.cs.api.components.container;
 
 
-import it.unicam.cs.api.exception.NotEnoughParametersException;
+import it.unicam.cs.api.exception.parser.NotEnoughParametersException;
 
 /**
  * A utility class that provides methods to check certain conditions.
@@ -68,6 +68,15 @@ public final class Check {
         checkNumbers(params);
     }
 
+    /**
+     * Check if the file extension is correct.
+     * @param expectedExtension the expected file extension
+     * @param fileExtension the file extension to check
+     * @return true if the file extension is correct
+     */
+    public static boolean isFileExtensionCorrect(String expectedExtension, String fileExtension) {
+        return fileExtension.equals(expectedExtension);
+    }
 
     /**
      * Check if the objects are null. if so, throw an exception.

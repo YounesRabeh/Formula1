@@ -1,4 +1,4 @@
-package it.unicam.cs.api.exception;
+package it.unicam.cs.api.exception.parser;
 
 /**
  * An exception that is thrown when an identifier is already mapped to a command.

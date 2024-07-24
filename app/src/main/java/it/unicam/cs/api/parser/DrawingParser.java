@@ -2,8 +2,8 @@ package it.unicam.cs.api.parser;
 
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.api.exception.NoActionFoundException;
-import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.api.exception.parser.NoActionFoundException;
+import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
@@ -46,7 +46,7 @@ public class DrawingParser extends AbstractParser {
      * @param useDefaultCommands a boolean value to use the default commands
      */
     public DrawingParser(File file, boolean useDefaultCommands) {
-        super(file);
+        super(file, F1_MAP_FILE_EXTENSION);
         this.canvasStack = new Stack<>();
         baseCommand();
         if(useDefaultCommands) defaultCommands();

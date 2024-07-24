@@ -36,8 +36,8 @@ public class App extends Application implements DebugData {
 
         AtomicReference<GameMap> gameMap = new AtomicReference<>();
         parser.start().ifPresentOrElse(
-                gameMap::set,
-                () -> {System.err.println("No game map found"); System.exit(0);}
+            gameMap::set,
+            () -> {System.err.println("No game map found"); System.exit(0);}
         );
 
         Canvas[] canvases = gameMap.get().getCanvases();

@@ -1,6 +1,6 @@
 package it.unicam.cs.gui.map;
 
-import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.api.components.container.Check;
 import javafx.scene.canvas.Canvas;
 
 /**

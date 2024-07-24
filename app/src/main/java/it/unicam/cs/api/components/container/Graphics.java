@@ -1,7 +1,6 @@
 package it.unicam.cs.api.components.container;
 
 
-import it.unicam.cs.engine.util.Check;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

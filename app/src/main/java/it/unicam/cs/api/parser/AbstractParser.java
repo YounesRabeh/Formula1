@@ -1,15 +1,18 @@
 package it.unicam.cs.api.parser;
 
 
-import it.unicam.cs.api.exception.AlreadyMappedException;
-import it.unicam.cs.api.exception.NoActionFoundException;
-import it.unicam.cs.api.exception.ParsingException;
+import it.unicam.cs.api.components.container.Check;
+import it.unicam.cs.api.exception.parser.AlreadyMappedException;
+import it.unicam.cs.api.exception.parser.NoActionFoundException;
+import it.unicam.cs.api.exception.parser.ParsingException;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+
+import static it.unicam.cs.api.components.container.Resources.getFileExtension;
 
 
 /**
@@ -30,6 +33,8 @@ import java.util.*;
 public abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
     private File FILE;
+    /** The file extension.*/
+    private String fileExtension = "";
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
 
@@ -38,7 +43,8 @@ public abstract class AbstractParser implements Interpretable, Information {
      * @param file the file to be parsed
      * @throws IllegalArgumentException if the file does not exist or is a directory
      */
-    AbstractParser(File file) throws IllegalArgumentException {
+    AbstractParser(File file, String fileExtension) throws IllegalArgumentException {
+        this.fileExtension = fileExtension;
         setFile(file);
     }
 
@@ -89,6 +95,14 @@ public abstract class AbstractParser implements Interpretable, Information {
         this.FILE = file;
     }
 
+    @Override
+    public void setFileExtension(String fileExtension) {
+        if (fileExtension == null || fileExtension.isEmpty()) {
+            throw new IllegalArgumentException("[!!!] - file extension cannot be null or empty");
+        }
+        this.fileExtension = fileExtension;
+    }
+
     /**
      * Get the current file to be parsed.
      * @return the file
@@ -110,7 +124,8 @@ public abstract class AbstractParser implements Interpretable, Information {
      * @return true if the file exists and is not a directory
      */
     private boolean isFileValid(File file) {
-        return file.exists() && file.isFile();
+        return file.exists() && file.isFile() &&
+                Check.isFileExtensionCorrect(fileExtension, getFileExtension(file));
     }
 
     /**

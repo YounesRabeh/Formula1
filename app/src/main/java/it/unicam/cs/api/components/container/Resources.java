@@ -39,4 +39,18 @@ public final class Resources {
         return Objects.requireNonNull(
                 App.class.getResource(path));
     }
+
+    /**
+     * Gets the extension of the file.
+     * @param fileName the name of the file
+     * @return the extension of the file
+     */
+    public static String getFileExtension(File file) {
+        String fileName = file.getName();
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex == -1 || lastDotIndex == fileName.length() - 1) {
+            return ""; // No extension found or dot is the last character
+        }
+        return fileName.substring(lastDotIndex + 1);
+    }
 }

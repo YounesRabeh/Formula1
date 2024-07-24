@@ -2,7 +2,7 @@ package it.unicam.cs.gui.util;
 
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.engine.util.Check;
+import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 
-import static it.unicam.cs.engine.util.Check.checkNumbers;
+import static it.unicam.cs.api.components.container.Check.checkNumbers;
 
 /**
  * A utility class for rendering on canvases.

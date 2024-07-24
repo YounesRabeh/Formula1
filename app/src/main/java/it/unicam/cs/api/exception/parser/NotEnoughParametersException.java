@@ -1,4 +1,4 @@
-package it.unicam.cs.api.exception;
+package it.unicam.cs.api.exception.parser;
 
 /**
  * An exception that is thrown when the number of parameters is not enough.

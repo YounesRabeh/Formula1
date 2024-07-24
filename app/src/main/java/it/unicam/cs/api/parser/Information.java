@@ -11,5 +11,9 @@ public interface Information {
     String COMMENT_CHARACTER = "#";
     /** The separator used to separate the command identifier and its parameters.*/
     String PARSER_SEPARATOR = " ";
+    /** The file extension of the drawing parser (f1Map file).*/
+    String F1_MAP_FILE_EXTENSION = "f1m";
+    /** The file extension of the player parser (f1Player file).*/
+    String F1_PLAYER_FILE_EXTENSION = "f1p";
 
 }
