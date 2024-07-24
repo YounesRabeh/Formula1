@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * A utility class that provides tools to work with routes.
  * @author Younes Rabeh
+ * @version 1.2
  */
 public final class RouteTools {
     /** Prevent instantiation of this utility class. */
