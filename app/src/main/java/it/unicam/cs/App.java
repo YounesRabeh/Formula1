@@ -1,20 +1,18 @@
 package it.unicam.cs;
 
 import javafx.application.Application;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.List;
 
 
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.engine.core.route.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.api.parser.DrawingParser;
-import it.unicam.cs.api.components.container.Graphics;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -22,6 +20,7 @@ import java.net.URISyntaxException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static it.unicam.cs.api.components.container.Resources.*;
+import static it.unicam.cs.engine.util.Useful.*;
 
 /**
  * JavaFX App
@@ -43,9 +42,6 @@ public class App extends Application implements DebugData {
         Canvas[] canvases = gameMap.get().getCanvases();
         // Create a layout pane to hold the canvas
         StackPane root = new StackPane();
-        //root.setBackground(Background.fill(Color.rgb(0 ,200, 0)));
-
-        // Align the canvases to the left side
         alignAll(root ,Pos.CENTER_LEFT, canvases);
 
         // NOTE: THE APP SCENE
@@ -62,40 +58,16 @@ public class App extends Application implements DebugData {
         stage.show();
 
         // - 3 to get @Waypoints canvas
+        List<Waypoint> waypoints = exe(gameMap.get());
+        List<Point2D> segmentsEndPoints = gameMap.get().getTrackCanvas().getSegmentsEndPoints();
         //printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
-        drawSegments(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap.get()));
+        drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
+        //drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        drawConnections(canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        //drawSegments(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap.get()));
     }
 
-    private List<Waypoint> exe(GameMap gameMap){
-        long startTime = System.nanoTime();
-        List<Waypoint> waypoints = RouteTools.getGameMapWaypoints(gameMap);
-        long endTime = System.nanoTime();
-        System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds " +
-                "or " + (float) (endTime - startTime) / 1000000 + " milliseconds\n" +
-                "> Found " + waypoints.size() + " black pixels"
-        );
-        return waypoints;
-    }
 
-    private void printWaypoints(GraphicsContext gc, List<Waypoint> waypoints) {
-        Graphics.setFill(gc, new int[]{255, 0, 0});
-        for (Waypoint coords : waypoints) {
-            //System.out.printf("Black pixel found at (%d, %d)\n", (int) coords.getX(), (int) coords.getY());
-            Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
-        }
-    }
-
-    private void drawSegments(GraphicsContext gc, List<Waypoint> waypoints){
-
-
-    }
-
-    private void alignAll(StackPane root, Pos pos, Node[] nodes){
-        for (Node node : nodes) {
-            StackPane.setAlignment(node, pos);
-        }
-        root.getChildren().addAll(nodes);
-    }
 
     public static void main(String[] args) {
         launch();

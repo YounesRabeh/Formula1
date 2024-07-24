@@ -1,6 +1,6 @@
 package it.unicam.cs.api.parser;
 
-import it.unicam.cs.api.exception.parser.NoActionFoundException;
+import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 
 import java.io.*;
 import java.util.Optional;

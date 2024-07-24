@@ -1,7 +1,7 @@
 package it.unicam.cs.api.components.container;
 
 
-import it.unicam.cs.api.exception.parser.NotEnoughParametersException;
+import it.unicam.cs.api.exceptions.parser.NotEnoughParametersException;
 
 /**
  * A utility class that provides methods to check certain conditions.

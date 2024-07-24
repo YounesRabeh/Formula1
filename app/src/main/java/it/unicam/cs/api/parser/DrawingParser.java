@@ -2,7 +2,7 @@ package it.unicam.cs.api.parser;
 
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.api.exception.parser.NoActionFoundException;
+import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.gui.map.GameMap;
@@ -10,6 +10,7 @@ import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasRenderer;
 import it.unicam.cs.gui.util.CanvasTools;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -196,6 +197,9 @@ public class DrawingParser extends AbstractParser {
         });
 
         functionMap.put('Q', (command) -> {
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+                trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[2], command.params()[3]));
+            }
             Graphics.quadraticCurveTo(currentGC, command.params());
         });
 

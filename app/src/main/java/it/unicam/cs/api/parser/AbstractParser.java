@@ -2,9 +2,9 @@ package it.unicam.cs.api.parser;
 
 
 import it.unicam.cs.api.components.container.Check;
-import it.unicam.cs.api.exception.parser.AlreadyMappedException;
-import it.unicam.cs.api.exception.parser.NoActionFoundException;
-import it.unicam.cs.api.exception.parser.ParsingException;
+import it.unicam.cs.api.exceptions.parser.AlreadyMappedException;
+import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
+import it.unicam.cs.api.exceptions.parser.ParsingException;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package it.unicam.cs.api.exception.parser;
+package it.unicam.cs.api.exceptions.parser;
 
 /**
  * An exception that is thrown when no action is found for a given identifier.

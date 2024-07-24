@@ -52,7 +52,7 @@
 
 >MAP 20 40 40 3
 
-@TRACK
+@TRACK #0
 # THE BACKGROUND
 F 0 190 0
 R 0 0 900 900
@@ -72,24 +72,24 @@ $TART_LINE 100 300
 
 #$TART_LINE 300 700 # add the end line for non circular tracks
 
-@EXTRA
+@EXTRA #1
 
 
-@WAYPOINTS
+@WAYPOINTS #2
 # to draw the waypoints by the debug mode (using max layer - 2)
 
 
-@CHECKPOINTS
+@END_POINTS #3
 ## CHECKPOINTS (MAIN)
 F 200 0 170
-P 100 500
-P 200 700
-P 600 700
-P 600 500
-P 600 300
-P 400 70
-P 100 200
+#P 100 500
+#P 200 700
+#P 600 700
+#P 600 500
+#P 600 300
+#P 400 70
+#P 100 200
 
-@GRID
+@GRID #4
 G
 O 10

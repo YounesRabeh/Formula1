@@ -10,6 +10,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,7 +29,7 @@ public class TrackCanvas extends Canvas {
     /** The width of the track */
     private int trackWidth;
     /** The parsed end points of the track*/
-    private Set<Point2D> segmentsEndPoints;
+    private final List<Point2D> segmentsEndPoints = new LinkedList<>();
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -83,7 +86,7 @@ public class TrackCanvas extends Canvas {
      * Get the parsed end points of the track's segments
      * @return the parsed end points of the track's segments
      */
-    public Set<Point2D> getSegmentsEndPoints() {
+    public List<Point2D> getSegmentsEndPoints() {
         return segmentsEndPoints;
     }
 
@@ -95,6 +98,9 @@ public class TrackCanvas extends Canvas {
         return Integer.MIN_VALUE;
     }
 
+    public void addSegmentsEndPoints(Point2D segmentsEndPoint) {
+        this.segmentsEndPoints.add(segmentsEndPoint);
+    }
 
     /**
      * Set the snapshot of the canvas, use it after drawing on the canvas.
