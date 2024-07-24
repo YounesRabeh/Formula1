@@ -9,4 +9,5 @@ package it.unicam.cs.api.components.nodes;
  * @version 1.0
  */
 public class Route {
+    
 }

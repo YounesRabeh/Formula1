@@ -27,7 +27,7 @@ public class TrackCanvas extends Canvas {
     /** The width of the track */
     private int trackWidth;
     /** The parsed end points of the track*/
-    private Set<Point2D> parsedEndPoints;
+    private Set<Point2D> segmentsEndPoints;
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -81,11 +81,11 @@ public class TrackCanvas extends Canvas {
     }
 
     /**
-     * Get the parsed end points of the track
-     * @return the parsed end points of the track
+     * Get the parsed end points of the track's segments
+     * @return the parsed end points of the track's segments
      */
-    public Set<Point2D> getParsedEndPoints() {
-        return parsedEndPoints;
+    public Set<Point2D> getSegmentsEndPoints() {
+        return segmentsEndPoints;
     }
 
     /**

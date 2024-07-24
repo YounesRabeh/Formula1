@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * This interface provides the characteristics of the map.
  * better keep the numerical values even.
+ * @author Younes Rabeh
  */
 public interface Characteristics {
     /** The color of the track */

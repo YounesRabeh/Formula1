@@ -18,7 +18,7 @@ public final class Check {
      */
     public static void checkNumbers(Number... nums) {
         for (Number num : nums) {
-            if (num == null) throw new NullPointerException("[!!!] - null value");
+            if (num == null) throw new NullPointerException();
             if (num.doubleValue() < 0){
                 throw new IndexOutOfBoundsException("[!!] - " + num.doubleValue() + " is non-positive");
             }
@@ -62,8 +62,8 @@ public final class Check {
      * @throws IndexOutOfBoundsException if one of the parameters is non-positive
      */
     public static void checkParams(int[] params, int expectedParamNumber) {
-        if (params.length >= expectedParamNumber){
-            throw new NotEnoughParametersException(params.length);
+        if (params.length < expectedParamNumber){
+            throw new NotEnoughParametersException(expectedParamNumber, params.length);
         }
         checkNumbers(params);
     }
@@ -76,7 +76,7 @@ public final class Check {
      */
     public static void checkNull(Object... objects) {
         for (Object obj : objects) {
-            if (obj == null) throw new NullPointerException("[!!!] -null value");
+            if (obj == null) throw new NullPointerException();
         }
     }
 

@@ -57,6 +57,7 @@
 F 0 190 0
 R 0 0 900 900
 
+
 # THE TRACK
 W 90 # default width is 50
 # xc yc endX endY
@@ -88,7 +89,6 @@ P 600 500
 P 600 300
 P 400 70
 P 100 200
-J
 
 @GRID
 G

@@ -31,7 +31,6 @@ public class GameMap {
     private final TrackCanvas trackCanvas;
     /** The inert canvases */
     private final TreeSet<InertCanvas> inertCanvases;
-
     /** The width of the map */
     private int width;
     /** The height of the map */

@@ -1,7 +1,9 @@
 package it.unicam.cs.api.parser;
 
 
+import it.unicam.cs.api.exception.AlreadyMappedException;
 import it.unicam.cs.api.exception.NoActionFoundException;
+import it.unicam.cs.api.exception.ParsingException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,11 +25,11 @@ import java.util.*;
  * @see Information
  * @see Command
  * @author Younes Rabeh
- * @version 2.1
+ * @version 2.2
  */
-abstract class AbstractParser implements Interpretable, Information {
+public abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
-    protected File FILE;
+    private File FILE;
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
 
@@ -37,20 +39,26 @@ abstract class AbstractParser implements Interpretable, Information {
      * @throws IllegalArgumentException if the file does not exist or is a directory
      */
     AbstractParser(File file) throws IllegalArgumentException {
-        if (!isFileValid(file)){
-            throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
-        }
-        this.FILE = file;
-
+        setFile(file);
     }
 
     @Override
     public Optional<?> start() throws IOException, NoActionFoundException {
         try (BufferedReader reader = getFileData(FILE).orElseThrow(() ->
                 new IOException("Unable to read file: " + FILE.getAbsolutePath()))) {
-            reader.lines()
-                    .filter(line -> !line.isEmpty() && !line.startsWith(COMMENT_CHARACTER))
-                    .forEach(line -> executeCommand(parseLine(line)));
+            Iterator<String> lineIterator = reader.lines().iterator();
+            int lineNumber = 0;
+            while (lineIterator.hasNext()) {
+                String line = lineIterator.next();
+                lineNumber++;
+                if (!line.isEmpty() && !line.startsWith(COMMENT_CHARACTER)) {
+                    try {
+                        executeCommand(parseLine(line));
+                    } catch (Exception e) {
+                        throw new ParsingException(lineNumber, e.getMessage());
+                    }
+                }
+            }
         }
         return Optional.empty();
     }
@@ -68,8 +76,7 @@ abstract class AbstractParser implements Interpretable, Information {
     @Override
     public void addRule(char identifier, CommandAction action) {
         if (functionMap.containsKey(identifier)) {
-            throw new IllegalArgumentException("[!!!] - THE IDENTIFIER \"" + identifier +
-                    "\" IS ALREADY MAPPED TO A COMMAND");
+            throw new AlreadyMappedException(identifier);
         }
         functionMap.put(identifier, action);
     }
@@ -77,9 +84,17 @@ abstract class AbstractParser implements Interpretable, Information {
     @Override
     public void setFile(File file) {
         if (!isFileValid(file)){
-            throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
+            throw new IllegalArgumentException("[!!!] - \"" + file.getAbsolutePath() + "\"" + " is not a valid file");
         }
         this.FILE = file;
+    }
+
+    /**
+     * Get the current file to be parsed.
+     * @return the file
+     */
+    public File getFile() {
+        return FILE;
     }
 
     /**

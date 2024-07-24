@@ -2,24 +2,19 @@ package it.unicam.cs.api.exception;
 
 /**
  * An exception that is thrown when the number of parameters is not enough.
- * @see ParserException
+ * @see ParsingException
  * @author Younes Rabeh
  * @version 1.0
  */
-public class NotEnoughParametersException extends ParserException {
-    /**
-     * Constructs a new exception with a default message.
-     */
-    public NotEnoughParametersException() {
-        super();
-    }
+public class NotEnoughParametersException extends RuntimeException {
 
     /**
      * Constructs a new exception with a custom message.
      * @param expectedLength the expected length of the parameters
+     * @param foundLength the found length of the parameters
      */
-    public NotEnoughParametersException(int expectedLength){
-        super("Invalid number of parameters, expected: " + expectedLength);
+    public NotEnoughParametersException(int expectedLength, int foundLength) {
+        super("Invalid number of parameters. expected " + expectedLength + ", found " + foundLength);
     }
 
 }

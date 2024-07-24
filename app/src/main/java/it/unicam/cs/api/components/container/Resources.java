@@ -10,6 +10,7 @@ import java.util.Objects;
 /**
  * Utility class for getting resources.
  * @author Younes Rabeh
+ * @version 1.1
  */
 public final class Resources {
     /** Prevent instantiation of this utility class. */

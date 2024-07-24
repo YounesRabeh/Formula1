@@ -13,7 +13,7 @@ import static javafx.scene.paint.Color.rgb;
  * target function are stored in an array, thus we can't pass them directly.
  *
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  * @see GraphicsContext
  */
 public final class Graphics {
