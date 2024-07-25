@@ -198,6 +198,9 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('Q', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
+                if (trackCanvas.getSegmentsEndPoints().isEmpty()){
+                    trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[0], command.params()[1]));
+                }
                 trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[2], command.params()[3]));
             }
             Graphics.quadraticCurveTo(currentGC, command.params());
@@ -217,6 +220,12 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('P', (command) -> {
             Graphics.strokePoint(currentGC, command.params());
+        });
+
+        functionMap.put('§', command -> {
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+                trackCanvas.setTrackState(true);
+            }
         });
     }
 }

@@ -1,12 +1,15 @@
 package it.unicam.cs.engine.util;
 
+import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.engine.core.route.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
+import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 
@@ -67,21 +70,25 @@ public final class Useful {
 
     /**
      * Draw the connections between the endpoints.
-     * @param gc the GraphicsContext
+     * @param trackCanvas the track canvas
+     * @param drawingGC the Graphics context to drw the connections on
      * @param points2D the points to connect
      */
-    public static void drawConnections(GraphicsContext gc, List<Point2D> points2D){
-        Graphics.setStroke(gc, new int[]{0, 0, 255});
-        Graphics.setLineWidth(gc, new int[]{10});
+    public static void drawConnections(TrackCanvas trackCanvas, GraphicsContext drawingGC, List<Point2D> points2D){
+        Check.checkNull(trackCanvas, drawingGC, points2D);
+        Graphics.setStroke(drawingGC, new int[]{0, 0, 255});
+        Graphics.setLineWidth(drawingGC, new int[]{8});
         for(int i = 0; i < points2D.size() - 1; i++){
             Point2D p1 = points2D.get(i);
             Point2D p2 = points2D.get(i + 1);
-            Graphics.strokeLine(gc, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
+            Graphics.quadraticCurveTo(drawingGC, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
         } // close the circuit
-        Point2D p1 = points2D.getLast();
-        Point2D p2 = points2D.getFirst();
-        Graphics.strokeLine(gc, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
-
+        if (trackCanvas.getTrackState()){
+            Point2D p1 = points2D.getLast();
+            Point2D p2 = points2D.getFirst();
+            Graphics.quadraticCurveTo(drawingGC, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
+        }
+        drawingGC.stroke();
     }
 
 

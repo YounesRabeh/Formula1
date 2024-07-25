@@ -39,9 +39,11 @@ public class GameMap {
 
     /**
      * Create a new map with the given cell size and number of cells in the x and y directions.
+     * a map always create a grid and a track canvas. The inert canvases are created based on the layer number.
      * @param cellSize the size of each cell
      * @param cellNumber_X the number of cells in the x direction
      * @param cellNumber_Y the number of cells in the y direction
+     * @param layerNumber the number of inert layers
      */
     public GameMap(int cellSize, int cellNumber_X, int cellNumber_Y, int layerNumber) {
         Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y, layerNumber);
@@ -58,8 +60,10 @@ public class GameMap {
 
     /**
      * Create a new square map with the given cell size and number of cells.
+     *  a map always create a grid and a track canvas. The inert canvases are created based on the layer number.
      * @param cellSize the size of each cell
      * @param cellNumber the number of cells in the x,y direction
+     * @param layerNumber the number of inert layers
      */
     public GameMap(int cellSize, int cellNumber, int layerNumber) {
         this(cellSize, cellNumber, cellNumber, layerNumber);
@@ -67,6 +71,7 @@ public class GameMap {
 
     /**
      * Create a new map with the given parameters. used by the parser.
+     * A map always create a grid and a track canvas. The inert canvases are created based on the layer number.
      * @param params the parameters of the map
      */
     public GameMap(int[] params) {

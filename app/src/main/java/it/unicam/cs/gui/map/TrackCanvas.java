@@ -30,6 +30,8 @@ public class TrackCanvas extends Canvas {
     private int trackWidth;
     /** The parsed end points of the track*/
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
+    /** To see if the track is closed (a circular track) **/
+    private boolean isTrackClosed = false;
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -91,6 +93,14 @@ public class TrackCanvas extends Canvas {
     }
 
     /**
+     * Get the state of the track (closed or not)
+     * @return true if the track is closed, false otherwise
+     */
+    public boolean getTrackState() {
+        return isTrackClosed;
+    }
+
+    /**
      * Get the layer of the canvas
      * @return the layer of the canvas
      */
@@ -98,6 +108,11 @@ public class TrackCanvas extends Canvas {
         return Integer.MIN_VALUE;
     }
 
+    /**
+     * Add the segments end points to the track canvas,
+     * (the parsed end points of the track's segments)
+     * @param segmentsEndPoint the segments end points
+     */
     public void addSegmentsEndPoints(Point2D segmentsEndPoint) {
         this.segmentsEndPoints.add(segmentsEndPoint);
     }
@@ -125,6 +140,14 @@ public class TrackCanvas extends Canvas {
         Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, trackWidth);
         this.trackWidth = (int) trackWidth;
         this.getGraphicsContext2D().setLineWidth(trackWidth);
+    }
+
+    /**
+     * Set the track state (closed or not)
+     * @param isTrackClosed the new state of the track
+     */
+    public void setTrackState(boolean isTrackClosed){
+        this.isTrackClosed = isTrackClosed;
     }
 
 }

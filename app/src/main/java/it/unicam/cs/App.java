@@ -2,7 +2,6 @@ package it.unicam.cs;
 
 import javafx.application.Application;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import java.util.List;
 
 
@@ -17,7 +16,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static it.unicam.cs.api.components.container.Resources.*;
 import static it.unicam.cs.engine.util.Useful.*;
@@ -28,44 +29,60 @@ import static it.unicam.cs.engine.util.Useful.*;
  * @author Younes Rabeh
  */
 public class App extends Application implements DebugData {
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
     @Override
-    public void start(Stage stage) throws IOException, URISyntaxException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getResourceURL(FXML_FILE_PATH));
+    public void start(Stage stage) {
+        try {
+            initializeAndShowStage(stage);
+        } catch (IOException | URISyntaxException e) {
+            LOGGER.log(Level.WARNING, e.getMessage());
+        }
+    }
+
+
+    private void initializeAndShowStage(Stage stage) throws IOException, URISyntaxException {
         DrawingParser parser = new DrawingParser(getResourceFile(PARSER_FILE_PATH));
+        Optional<GameMap> optionalGameMap = parser.start();
 
-        AtomicReference<GameMap> gameMap = new AtomicReference<>();
-        parser.start().ifPresentOrElse(
-            gameMap::set,
-            () -> {System.err.println("No game map found"); System.exit(0);}
-        );
-
-        Canvas[] canvases = gameMap.get().getCanvases();
-        // Create a layout pane to hold the canvas
-        StackPane root = new StackPane();
-        alignAll(root ,Pos.CENTER_LEFT, canvases);
-
-        // NOTE: THE APP SCENE
-        Scene scene;
-        if (FXML_TEST){
-            scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
-        } else {
-            scene = new Scene(root, WIDTH, HEIGHT);
+        if (optionalGameMap.isEmpty()) {
+            LOGGER.severe("No game map found");
+            return;
         }
 
-        // Set up the stage and show it
-        stage.setTitle("Gagata ");
+        GameMap gameMap = optionalGameMap.get();
+        Canvas[] canvases = gameMap.getCanvases();
+
+        StackPane root = new StackPane();
+        alignAll(root, Pos.CENTER_LEFT, canvases);
+
+        Scene scene = createScene(root);
+        configureStage(stage, scene);
+
+        drawGameElements(gameMap, canvases);
+    }
+
+    private Scene createScene(StackPane root) throws IOException {
+        if (FXML_TEST) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getResourceURL(FXML_FILE_PATH));
+            return new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        } else {
+            return new Scene(root, WIDTH, HEIGHT);
+        }
+    }
+
+    private void configureStage(Stage stage, Scene scene) {
+        stage.setTitle("Gagata");
         stage.setScene(scene);
         stage.show();
+    }
 
-        // - 3 to get @Waypoints canvas
-        List<Waypoint> waypoints = exe(gameMap.get());
-        List<Point2D> segmentsEndPoints = gameMap.get().getTrackCanvas().getSegmentsEndPoints();
-        //printWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap));
+    private void drawGameElements(GameMap gameMap, Canvas[] canvases) {
+        List<Waypoint> waypoints = exe(gameMap);
+        List<Point2D> segmentsEndPoints = gameMap.getTrackCanvas().getSegmentsEndPoints();
+
         drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
-        //drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
-        drawConnections(canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
-        //drawSegments(canvases[WAYPOINT_LVL].getGraphicsContext2D(), exe(gameMap.get()));
+        drawConnections(gameMap.getTrackCanvas(), canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
 
 
