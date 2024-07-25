@@ -3,6 +3,7 @@ package it.unicam.cs.api.components.container;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 import static javafx.scene.paint.Color.rgb;
 

@@ -1,13 +1,11 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.api.components.container.Graphics;
-import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
+import it.unicam.cs.api.components.container.Check;
+import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 
@@ -27,7 +25,7 @@ public final class CanvasRenderer {
      * and the size of each cell is adjusted to fit the canvas dimensions.
      * @param gridCanvas the canvas on which to draw the grid
      */
-    public static void RenderGrid(GridCanvas gridCanvas) {
+    public static void renderGrid(GridCanvas gridCanvas) {
         Check.checkNull(gridCanvas);
         GraphicsContext gc = gridCanvas.getGraphicsContext2D();
         final double width = gridCanvas.getWidth();
@@ -51,7 +49,7 @@ public final class CanvasRenderer {
      * @param width the width of the outline
      * @throws IllegalArgumentException if the width of the outline is greater than the cell size
      */
-    public static void RenderGridOutline(GridCanvas gridCanvas, int width) {
+    public static void renderGridOutline(GridCanvas gridCanvas, int width) {
         Check.checkNull(gridCanvas);
         checkNumbers(width);
         if (width > gridCanvas.getCellSize()) {
@@ -67,92 +65,17 @@ public final class CanvasRenderer {
         gc.setStroke(paint); // reset the stroke color
     }
 
-    /**
-     * Renders the starting line on the track canvas.
-     * @param trackCanvas the canvas on which to render the starting line
-     * @param waypoint the waypoint of the starting line
-     * @param width the width of the starting line
-     * @throws IllegalArgumentException if the starting line is not valid
-     */
-    public static void renderStartingLine(TrackCanvas trackCanvas, Waypoint waypoint, int width) {
-        if (trackCanvas.contains(waypoint)) {
-            final int strokeDistance = trackCanvas.getTrackWidth() / 2;
-            final int X = (int) waypoint.getX();
-            final int Y = (int) waypoint.getY();
-            final int X1 = X - strokeDistance, X2 = X + strokeDistance;
-            final int Y1 = Y - strokeDistance, Y2 = Y + strokeDistance;
 
-            GraphicsContext gc = trackCanvas.getGraphicsContext2D();
-            final double lineWidth = gc.getLineWidth();
-            gc.setLineWidth(width);
+    public static void renderTrackLineMarker(TrackCanvas trackCanvas, int[] lineCoords){
+        GraphicsContext gc = trackCanvas.getGraphicsContext2D();
+        final double lineWidth = gc.getLineWidth();
+        final Paint gcColor = gc.getStroke();
+        gc.setLineWidth(Characteristics.TRACK_MARKER_LINE_WIDTH);
+        gc.setStroke(Characteristics.TRACK_LINE_MARKER_COLOR);
 
-            if (verifyStartLineV(trackCanvas, X1, X2, Y)) return;
-            if (verifyStartLineH(trackCanvas, Y1, Y2, X)) return;
-
-            gc.setLineWidth(lineWidth); // reset the line width
-        }
-
-        throw new IllegalArgumentException("[!!]- The starting line is not valid.");
-    }
-
-
-    /**
-     * Verifies the legitimacy of a Horizontal start line on the track canvas.
-     * @param trackCanvas the canvas on which to verify the start line
-     * @param var1 the first variable
-     * @param var2 the second variable
-     * @param still the still variable
-     * @return true if the start line is legit, false otherwise
-     */
-    private static boolean verifyStartLineH(TrackCanvas trackCanvas, int var1, int var2, int still) {
-        final int[] coords = new int[4];
-        final int strokeThickness = Characteristics.DEFAULT_STARTING_LINE_WIDTH / 2;
-        if (!CanvasTools.isTrackPixel(still, var1 - strokeThickness, trackCanvas)) {
-            coords[0] = still;
-            coords[1] = var1 + strokeThickness;
-            if (!CanvasTools.isTrackPixel(still, var2 + strokeThickness, trackCanvas)) {
-                coords[2] = still;
-                coords[3] =  var2 - strokeThickness;
-                strokeExistingStartLine(trackCanvas.getGraphicsContext2D(), coords);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Verifies the legitimacy of a Vertical start line on the track canvas.
-     * @param trackCanvas the canvas on which to verify the start line
-     * @param var1 the first variable
-     * @param var2 the second variable
-     * @param still the still variable
-     * @return true if the start line is legit, false otherwise
-     */
-    private static boolean verifyStartLineV(TrackCanvas trackCanvas, int var1, int var2, int still) {
-        final int[] coords = new int[4];
-        final int strokeThickness = Characteristics.DEFAULT_STARTING_LINE_WIDTH / 2;
-        if (!CanvasTools.isTrackPixel(var1 - strokeThickness, still, trackCanvas)) {
-            coords[0] = var1 + strokeThickness;
-            coords[1] = still;
-            if (!CanvasTools.isTrackPixel(var2 + strokeThickness, still, trackCanvas)) {
-                coords[2] = var2 - strokeThickness;
-                coords[3] = still;
-                strokeExistingStartLine(trackCanvas.getGraphicsContext2D(), coords);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Strokes the existing start line on the track canvas.
-     * @param gc the GraphicsContext
-     * @param coords the coordinates of the start line
-     */
-    private static void strokeExistingStartLine(GraphicsContext gc, int[] coords) {
-        Graphics.setStroke(gc, Color.WHITE);
-        Graphics.setLineWidth(gc, new int[]{Characteristics.DEFAULT_STARTING_LINE_WIDTH});
-        Graphics.strokeLine(gc, coords);
+        Graphics.strokeLine(gc, lineCoords);
+        gc.setLineWidth(lineWidth);
+        gc.setStroke(gcColor);
     }
 
 }

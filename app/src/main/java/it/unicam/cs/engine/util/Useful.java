@@ -65,7 +65,6 @@ public final class Useful {
         for (Point2D coords : segmentsEndPoints) {
             Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
         }
-
     }
 
     /**

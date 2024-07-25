@@ -1,8 +1,10 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 
 import it.unicam.cs.gui.map.TrackCanvas;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -85,7 +87,57 @@ public final class CanvasTools {
      * @return true if the pixel has the specified color, false otherwise
      */
     public static boolean isTrackPixel(int x, int y, TrackCanvas trackCanvas) {
-        return isTrackPixel(x, y, trackCanvas.getCanvasSnapshot(), trackCanvas.getColor());
+        return isTrackPixel(x, y, trackCanvas.getTrackSnapshot(), trackCanvas.getColor());
+    }
+
+    public static int[] createLineFromPoint(TrackCanvas trackCanvas, Point2D point2D){
+        final int strokeDistance = trackCanvas.getTrackWidth() / 2;
+        final int X = (int) point2D.getX();
+        final int Y = (int) point2D.getY();
+        final int X1 = X - strokeDistance, X2 = X + strokeDistance;
+        final int Y1 = Y - strokeDistance, Y2 = Y + strokeDistance;
+
+
+
+        int[] lineCoords = verifyLineV(trackCanvas, X1, X2, Y);
+        if (lineCoords == null){
+            lineCoords = verifyLineH(trackCanvas, Y1, Y2, X);
+            if (lineCoords == null) {
+                throw new IllegalArgumentException("not a valide line");
+            }
+        } return lineCoords;
+    }
+
+
+    private static int[] verifyLineH(TrackCanvas trackCanvas, int var1, int var2, int still) {
+        final int[] coords = new int[4];
+        final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
+        if (!CanvasTools.isTrackPixel(still, var1 - strokeThickness, trackCanvas)) {
+            coords[0] = still;
+            coords[1] = var1 + strokeThickness;
+            if (!CanvasTools.isTrackPixel(still, var2 + strokeThickness, trackCanvas)) {
+                coords[2] = still;
+                coords[3] =  var2 - strokeThickness;
+                return coords;
+            }
+        }
+        return null;
+    }
+
+
+    private static int[] verifyLineV(TrackCanvas trackCanvas, int var1, int var2, int still) {
+        final int[] coords = new int[4];
+        final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
+        if (!CanvasTools.isTrackPixel(var1 - strokeThickness, still, trackCanvas)) {
+            coords[0] = var1 + strokeThickness;
+            coords[1] = still;
+            if (!CanvasTools.isTrackPixel(var2 + strokeThickness, still, trackCanvas)) {
+                coords[2] = var2 - strokeThickness;
+                coords[3] = still;
+                return coords;
+            }
+        }
+        return null;
     }
 
 }

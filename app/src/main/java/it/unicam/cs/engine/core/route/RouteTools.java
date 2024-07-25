@@ -35,7 +35,7 @@ public final class RouteTools {
     public static List<Waypoint> getGameMapWaypoints(GameMap gameMap) {
         Check.checkNull(gameMap);
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
-        WritableImage snapshot = trackCanvas.getCanvasSnapshot();
+        WritableImage snapshot = trackCanvas.getTrackSnapshot();
         final int step = gameMap.getGridCanvas().getCellSize();
         List<Waypoint> waypoints = new ArrayList<>();
 

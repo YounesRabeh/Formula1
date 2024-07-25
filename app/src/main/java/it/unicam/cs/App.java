@@ -40,7 +40,6 @@ public class App extends Application implements DebugData {
         }
     }
 
-
     private void initializeAndShowStage(Stage stage) throws IOException, URISyntaxException {
         DrawingParser parser = new DrawingParser(getResourceFile(PARSER_FILE_PATH));
         Optional<GameMap> optionalGameMap = parser.start();
@@ -84,7 +83,6 @@ public class App extends Application implements DebugData {
         drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
         drawConnections(gameMap.getTrackCanvas(), canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
-
 
 
     public static void main(String[] args) {

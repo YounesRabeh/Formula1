@@ -1,7 +1,6 @@
 package it.unicam.cs.api.parser;
 
 import it.unicam.cs.api.components.container.Graphics;
-import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
@@ -109,6 +108,7 @@ public class DrawingParser extends AbstractParser {
                 }
                 return;
             }
+
             this.currentCanvas = canvasStack.pop();
             this.currentGC = currentCanvas.getGraphicsContext2D();
         });
@@ -138,37 +138,46 @@ public class DrawingParser extends AbstractParser {
         // Render the grid
         functionMap.put('G', (command) -> {
             if (currentCanvas instanceof GridCanvas) {
-                CanvasRenderer.RenderGrid((GridCanvas) currentCanvas);
+                CanvasRenderer.renderGrid((GridCanvas) currentCanvas);
             }
         });
 
         // Render the grid outline
         functionMap.put('O', (command) -> {
             if (currentCanvas instanceof GridCanvas) {
-                CanvasRenderer.RenderGridOutline((GridCanvas) currentCanvas, command.params()[0]);
+                CanvasRenderer.renderGridOutline((GridCanvas) currentCanvas, command.params()[0]);
             }
         });
 
         functionMap.put('$', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
-                Graphics.setStroke(currentGC, trackCanvas.getColor());
+                this.makeSnapshot(trackCanvas, currentGC);
                 currentGC.stroke();
-                trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
-                CanvasRenderer.renderStartingLine(trackCanvas,
-                        new Waypoint(command.params()[0], command.params()[1]), 6);
+                int[] startingLine = CanvasTools.createLineFromPoint(
+                        trackCanvas, new Point2D(command.params()[0], command.params()[1])
+                );
+                trackCanvas.setStartingLine(startingLine);
+                CanvasRenderer.renderTrackLineMarker(trackCanvas, startingLine);
             }
         });
 
-        //TODO: add the non oval circuit, the starting line and the finish line do not coincide
         functionMap.put('£', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
-                Graphics.setStroke(currentGC, trackCanvas.getColor());
-                currentGC.stroke();
-                try {
-                    trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
-                } catch (IllegalStateException snapshotException) {
-
+                if (trackCanvas.getStartingLine() == null){
+                    throw new IllegalStateException("[!!]- NO STARTING LINE");
                 }
+                this.makeSnapshot(trackCanvas, currentGC);
+                int[] endingLine = CanvasTools.createLineFromPoint(
+                        trackCanvas, new Point2D(command.params()[0], command.params()[1])
+                );
+                trackCanvas.setEndingLine(endingLine);
+                CanvasRenderer.renderTrackLineMarker(trackCanvas, endingLine);
+            }
+        });
+
+        functionMap.put('§', command -> {
+            if (currentCanvas instanceof TrackCanvas trackCanvas){
+                trackCanvas.setTrackState(true);
             }
         });
 
@@ -222,10 +231,14 @@ public class DrawingParser extends AbstractParser {
             Graphics.strokePoint(currentGC, command.params());
         });
 
-        functionMap.put('§', command -> {
-            if (currentCanvas instanceof TrackCanvas trackCanvas){
-                trackCanvas.setTrackState(true);
-            }
-        });
+
+    }
+
+    private void makeSnapshot(TrackCanvas trackCanvas, GraphicsContext currentGC){
+        try {
+            trackCanvas.getTrackSnapshot();
+        } catch (IllegalStateException noSnapshot){
+            trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
+        }
     }
 }

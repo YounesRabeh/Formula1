@@ -9,11 +9,10 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * {@code TrackCanvas} is a canvas that displays a track.
@@ -32,6 +31,10 @@ public class TrackCanvas extends Canvas {
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
     /** To see if the track is closed (a circular track) **/
     private boolean isTrackClosed = false;
+    /** The starting line of the track */
+    private Line startingLine;
+    /** The ending line of the track */
+    private Line endingLine;
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -53,7 +56,7 @@ public class TrackCanvas extends Canvas {
         return CanvasTools.isTrackPixel(
                 (int) waypoint.getX(),
                 (int) waypoint.getY(),
-                this.getCanvasSnapshot(),
+                this.getTrackSnapshot(),
                 this.getColor()
         );
     }
@@ -63,7 +66,7 @@ public class TrackCanvas extends Canvas {
      * @return the image of the canvas
      * @throws IllegalStateException if the snapshot has not been set
      */
-    public WritableImage getCanvasSnapshot() {
+    public WritableImage getTrackSnapshot() {
         if (snapshot == null) throw new IllegalStateException("[!!]- The snapshot has not been set");
         return snapshot;
     }
@@ -84,6 +87,7 @@ public class TrackCanvas extends Canvas {
         return color;
     }
 
+
     /**
      * Get the parsed end points of the track's segments
      * @return the parsed end points of the track's segments
@@ -98,6 +102,14 @@ public class TrackCanvas extends Canvas {
      */
     public boolean getTrackState() {
         return isTrackClosed;
+    }
+
+    public Line getStartingLine() {
+        return startingLine;
+    }
+
+    public Line getEndingLine() {
+        return endingLine;
     }
 
     /**
@@ -150,4 +162,13 @@ public class TrackCanvas extends Canvas {
         this.isTrackClosed = isTrackClosed;
     }
 
+    public void setStartingLine(int[] startingLineCoords) {
+        this.startingLine =
+                new Line(startingLineCoords[0], startingLineCoords[1], startingLineCoords[2], startingLineCoords[3]);
+    }
+
+    public void setEndingLine(int[] endingLineCoords) {
+        this.endingLine =
+                new Line(endingLineCoords[0], endingLineCoords[1], endingLineCoords[2], endingLineCoords[3]);
+    }
 }

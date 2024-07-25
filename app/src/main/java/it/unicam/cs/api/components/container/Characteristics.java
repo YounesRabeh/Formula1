@@ -9,11 +9,13 @@ import javafx.scene.paint.Color;
  */
 public interface Characteristics {
     /** The color of the track */
-    Color TRACK_COLOR = Color.BLACK;
+    Color TRACK_COLOR = Color.YELLOW;
     /** The color of the grid */
     Color GRID_COLOR = Color.GRAY;
-    /** The width of the start line */
-    int DEFAULT_STARTING_LINE_WIDTH = 6;
+
+    Color TRACK_LINE_MARKER_COLOR = Color.WHITE;
+    /** The width of the track markers line */
+    int TRACK_MARKER_LINE_WIDTH = 6;
     /** The width of the track */
     int DEFAULT_TRACK_WIDTH = 50;
 }

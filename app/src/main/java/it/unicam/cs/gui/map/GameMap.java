@@ -83,14 +83,13 @@ public class GameMap {
         gridCanvas.setOnMouseClicked(e -> {
             int x = (int) e.getX();
             int y = (int) e.getY();
-            Color pixelColor = CanvasTools.getPixelColor(x, y, trackCanvas.getCanvasSnapshot());
+            Color pixelColor = CanvasTools.getPixelColor(x, y, trackCanvas.getTrackSnapshot());
             if (pixelColor.equals(TRACK_COLOR)){
                 System.out.printf("(%d, %d) is a TRACK pixel\n", x, y);
             } else {
                 System.out.printf("(%d, %d) is NOT A TRACK pixel, having %s as a color.\n",
                         x, y, CanvasTools.colorToRGBString(pixelColor));
             }
-
         });
     }
 
