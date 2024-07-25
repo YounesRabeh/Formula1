@@ -4,6 +4,7 @@ import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
+import it.unicam.cs.engine.util.Useful;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -152,7 +153,6 @@ public class DrawingParser extends AbstractParser {
         functionMap.put('$', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
                 this.makeSnapshot(trackCanvas, currentGC);
-                currentGC.stroke();
                 int[] startingLine = CanvasTools.createLineFromPoint(
                         trackCanvas, new Point2D(command.params()[0], command.params()[1])
                 );
@@ -166,7 +166,7 @@ public class DrawingParser extends AbstractParser {
                 if (trackCanvas.getStartingLine() == null){
                     throw new IllegalStateException("[!!]- NO STARTING LINE");
                 }
-                this.makeSnapshot(trackCanvas, currentGC);
+
                 int[] endingLine = CanvasTools.createLineFromPoint(
                         trackCanvas, new Point2D(command.params()[0], command.params()[1])
                 );
@@ -238,7 +238,9 @@ public class DrawingParser extends AbstractParser {
         try {
             trackCanvas.getTrackSnapshot();
         } catch (IllegalStateException noSnapshot){
+            currentGC.stroke();
             trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
+            trackCanvas.addWaypoints(Useful.exe(this.map));
         }
     }
 }

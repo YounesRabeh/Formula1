@@ -75,47 +75,58 @@ public final class CanvasTools {
      * @param color the color to check for
      * @return true if the pixel has the specified color, false otherwise
      */
-    public static boolean isTrackPixel(int x, int y, WritableImage image, Color color) {
+    public static boolean isPixel(int x, int y, WritableImage image, Color color) {
         return getPixelColor(x, y, image).equals(color);
     }
 
     /**
-     * Checks if a specific pixel on the canvas has the specified color.
-     * @param x the x-coordinate of the pixel
-     * @param y the y-coordinate of the pixel
+     * Checks if a specific point on the canvas is on the track.
+     * @param x the x-coordinate of the point
+     * @param y the y-coordinate of the point
      * @param trackCanvas the canvas to check
-     * @return true if the pixel has the specified color, false otherwise
+     * @return true if the point (pixel) has the specified track color, false otherwise
      */
-    public static boolean isTrackPixel(int x, int y, TrackCanvas trackCanvas) {
-        return isTrackPixel(x, y, trackCanvas.getTrackSnapshot(), trackCanvas.getColor());
+    public static boolean isTrackPoint(int x, int y, TrackCanvas trackCanvas) {
+        return isPixel(x, y, trackCanvas.getTrackSnapshot(), trackCanvas.getColor());
+    }
+
+    /**
+     * Checks if a specific point on the canvas is on the track.
+     * @param point2D the point to check
+     * @param trackCanvas the canvas to check
+     * @return true if the point (pixel) has the specified track color, false otherwise
+     */
+    public static boolean isTrackPoint(TrackCanvas trackCanvas, Point2D point2D){
+        return isTrackPoint((int) point2D.getX(), (int) point2D.getY(), trackCanvas);
     }
 
     public static int[] createLineFromPoint(TrackCanvas trackCanvas, Point2D point2D){
-        final int strokeDistance = trackCanvas.getTrackWidth() / 2;
-        final int X = (int) point2D.getX();
-        final int Y = (int) point2D.getY();
-        final int X1 = X - strokeDistance, X2 = X + strokeDistance;
-        final int Y1 = Y - strokeDistance, Y2 = Y + strokeDistance;
+        if (isTrackPoint(trackCanvas, point2D)){
+            final int strokeDistance = trackCanvas.getTrackWidth() / 2;
+            final int X = (int) point2D.getX();
+            final int Y = (int) point2D.getY();
+            final int X1 = X - strokeDistance, X2 = X + strokeDistance;
+            final int Y1 = Y - strokeDistance, Y2 = Y + strokeDistance;
 
-
-
-        int[] lineCoords = verifyLineV(trackCanvas, X1, X2, Y);
-        if (lineCoords == null){
-            lineCoords = verifyLineH(trackCanvas, Y1, Y2, X);
-            if (lineCoords == null) {
-                throw new IllegalArgumentException("not a valide line");
-            }
-        } return lineCoords;
+            int[] lineCoords = verifyLineV(trackCanvas, X1, X2, Y);
+            if (lineCoords == null){
+                lineCoords = verifyLineH(trackCanvas, Y1, Y2, X);
+                if (lineCoords == null) {
+                    throw new IllegalArgumentException("not a valide line");
+                }
+            } return lineCoords;
+        }
+        throw new IllegalArgumentException("[!!]- THE POINT IS NOT IN TRACK");
     }
 
 
     private static int[] verifyLineH(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
         final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
-        if (!CanvasTools.isTrackPixel(still, var1 - strokeThickness, trackCanvas)) {
+        if (!CanvasTools.isTrackPoint(still, var1 - strokeThickness, trackCanvas)) {
             coords[0] = still;
             coords[1] = var1 + strokeThickness;
-            if (!CanvasTools.isTrackPixel(still, var2 + strokeThickness, trackCanvas)) {
+            if (!CanvasTools.isTrackPoint(still, var2 + strokeThickness, trackCanvas)) {
                 coords[2] = still;
                 coords[3] =  var2 - strokeThickness;
                 return coords;
@@ -128,10 +139,10 @@ public final class CanvasTools {
     private static int[] verifyLineV(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
         final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
-        if (!CanvasTools.isTrackPixel(var1 - strokeThickness, still, trackCanvas)) {
+        if (!CanvasTools.isTrackPoint(var1 - strokeThickness, still, trackCanvas)) {
             coords[0] = var1 + strokeThickness;
             coords[1] = still;
-            if (!CanvasTools.isTrackPixel(var2 + strokeThickness, still, trackCanvas)) {
+            if (!CanvasTools.isTrackPoint(var2 + strokeThickness, still, trackCanvas)) {
                 coords[2] = var2 - strokeThickness;
                 coords[3] = still;
                 return coords;

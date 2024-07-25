@@ -11,6 +11,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class TrackCanvas extends Canvas {
     private final Color color;
     /** The width of the track */
     private int trackWidth;
+
+    private List<Waypoint> waypoints = new ArrayList<>();
     /** The parsed end points of the track*/
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
     /** To see if the track is closed (a circular track) **/
@@ -53,7 +56,7 @@ public class TrackCanvas extends Canvas {
      * @return true if the waypoint is contained in the track, false otherwise
      */
     public boolean contains(Waypoint waypoint) {
-        return CanvasTools.isTrackPixel(
+        return CanvasTools.isPixel(
                 (int) waypoint.getX(),
                 (int) waypoint.getY(),
                 this.getTrackSnapshot(),
@@ -87,6 +90,9 @@ public class TrackCanvas extends Canvas {
         return color;
     }
 
+    public List<Waypoint> getWaypoints(){
+        return this.waypoints;
+    }
 
     /**
      * Get the parsed end points of the track's segments
@@ -118,6 +124,11 @@ public class TrackCanvas extends Canvas {
      */
     public int getLayer(){
         return Integer.MIN_VALUE;
+    }
+
+    public void addWaypoints(List<Waypoint> calculatedWaypoints){
+        Check.checkNull(calculatedWaypoints);
+        this.waypoints.addAll(calculatedWaypoints);
     }
 
     /**
