@@ -157,6 +157,7 @@ public class DrawingParser extends AbstractParser {
                         trackCanvas, new Point2D(command.params()[0], command.params()[1])
                 );
                 trackCanvas.setStartingLine(startingLine);
+                trackCanvas.addFirstSegmentsEndPoint(new Point2D(command.params()[0],command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, startingLine);
             }
         });
@@ -171,6 +172,7 @@ public class DrawingParser extends AbstractParser {
                         trackCanvas, new Point2D(command.params()[0], command.params()[1])
                 );
                 trackCanvas.setEndingLine(endingLine);
+                trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[0],command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, endingLine);
             }
         });

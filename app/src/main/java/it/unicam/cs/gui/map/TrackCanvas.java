@@ -134,10 +134,14 @@ public class TrackCanvas extends Canvas {
     /**
      * Add the segments end points to the track canvas,
      * (the parsed end points of the track's segments)
-     * @param segmentsEndPoint the segments end points
+     * @param segmentEndPoint the segments end points
      */
-    public void addSegmentsEndPoints(Point2D segmentsEndPoint) {
-        this.segmentsEndPoints.add(segmentsEndPoint);
+    public void addSegmentsEndPoints(Point2D segmentEndPoint) {
+        this.segmentsEndPoints.add(segmentEndPoint);
+    }
+
+    public void addFirstSegmentsEndPoint(Point2D segmentEndPoint){
+        this.segmentsEndPoints.addFirst(segmentEndPoint);
     }
 
     /**
