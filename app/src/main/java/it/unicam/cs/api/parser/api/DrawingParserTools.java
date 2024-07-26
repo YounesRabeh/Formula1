@@ -1,7 +1,6 @@
 package it.unicam.cs.api.parser.api;
 
 
-import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.engine.core.route.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -53,11 +52,9 @@ public final class DrawingParserTools {
      * @return the generated line
      */
     public static Line generateTrackMarker(TrackCanvas trackCanvas, int[] params){
-        Line line = CanvasTools.createLineFromPoint(
+        return CanvasTools.createLineFromPoint(
                 trackCanvas, new Point2D(params[0], params[1])
         );
-
-        return line;
     }
 
     /**

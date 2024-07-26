@@ -62,7 +62,7 @@ public final class Useful {
     public static void drawConnections(TrackCanvas trackCanvas, GraphicsContext drawingGC, List<Point2D> points2D){
         Check.checkNull(trackCanvas, drawingGC, points2D);
         Graphics.setStroke(drawingGC, new int[]{0, 0, 255});
-        Graphics.setLineWidth(drawingGC, new int[]{8});
+        Graphics.setLineWidth(drawingGC, new int[]{5});
         for(int i = 0; i < points2D.size() - 1; i++){
             Point2D p1 = points2D.get(i);
             Point2D p2 = points2D.get(i + 1);

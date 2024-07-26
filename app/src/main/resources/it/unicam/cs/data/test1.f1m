@@ -14,8 +14,8 @@ Q 800 700 600 500
 Q 600 500 600 400
 Q 600 400 500 300
 Q 500 300 500 100
-Q 100 100 100 200 # add to see if a track is admissible
-§
+#Q 100 100 100 200 # add to see if a track is admissible
+
 
 # fix ztocazzo che not aligned w/ safe area
 $TART_LINE 100 300 # the snapshot is set here
