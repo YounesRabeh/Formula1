@@ -5,7 +5,7 @@ import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
-import it.unicam.cs.api.parser.api.Information;
+import it.unicam.cs.api.parser.Information;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Stack;
 
-import static it.unicam.cs.api.parser.api.DrawingParserTools.*;
+import static it.unicam.cs.api.parser.DrawingParserTools.*;
 
 
 /**

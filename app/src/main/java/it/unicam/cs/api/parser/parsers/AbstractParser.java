@@ -5,10 +5,10 @@ import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.exceptions.parser.AlreadyMappedException;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.exceptions.parser.ParsingException;
-import it.unicam.cs.api.parser.api.Command;
-import it.unicam.cs.api.parser.api.CommandAction;
-import it.unicam.cs.api.parser.api.Information;
-import it.unicam.cs.api.parser.api.Interpretable;
+import it.unicam.cs.api.parser.Command;
+import it.unicam.cs.api.parser.CommandAction;
+import it.unicam.cs.api.parser.Information;
+import it.unicam.cs.api.parser.Interpretable;
 
 import java.io.BufferedReader;
 import java.io.File;

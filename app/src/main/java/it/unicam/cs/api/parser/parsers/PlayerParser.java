@@ -1,7 +1,7 @@
 package it.unicam.cs.api.parser.parsers;
 
 
-import it.unicam.cs.api.parser.api.Information;
+import it.unicam.cs.api.parser.Information;
 
 import java.io.File;
 
