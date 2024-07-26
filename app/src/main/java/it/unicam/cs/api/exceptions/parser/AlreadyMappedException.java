@@ -1,8 +1,10 @@
 package it.unicam.cs.api.exceptions.parser;
 
+import it.unicam.cs.api.parser.parsers.AbstractParser;
+
 /**
  * An exception that is thrown when an identifier is already mapped to a command.
- * @see it.unicam.cs.api.parser.AbstractParser
+ * @see AbstractParser
  * @see ParsingException
  * @author Younes Rabeh
  * @version 1.0

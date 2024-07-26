@@ -1,4 +1,4 @@
-package it.unicam.cs.api.parser;
+package it.unicam.cs.api.parser.api;
 
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 
@@ -11,6 +11,7 @@ import java.util.Optional;
  * @see Command
  * @see CommandAction
  * @author Younes Rabeh
+ * @version 1.2
  */
 public interface Interpretable {
     /**

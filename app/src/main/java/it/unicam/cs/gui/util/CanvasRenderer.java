@@ -7,6 +7,7 @@ import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 
 
 import static it.unicam.cs.api.components.container.Check.checkNumbers;
@@ -14,7 +15,7 @@ import static it.unicam.cs.api.components.container.Check.checkNumbers;
 /**
  * A utility class for rendering on canvases.
  * @author  Younes Rabeh
- * @version 1.5
+ * @version 1.7
  */
 public final class CanvasRenderer {
     /** Prevent instantiation of this utility class. */
@@ -76,6 +77,18 @@ public final class CanvasRenderer {
         Graphics.strokeLine(gc, lineCoords);
         gc.setLineWidth(lineWidth);
         gc.setStroke(gcColor);
+    }
+
+    public static void renderTrackLineMarker(TrackCanvas trackCanvas, Line line){
+        renderTrackLineMarker(
+                trackCanvas,
+                new int[]{
+                        (int) line.getStartX(),
+                        (int) line.getStartY(),
+                        (int) line.getEndX(),
+                        (int) line.getEndY()
+                }
+        );
     }
 
 }

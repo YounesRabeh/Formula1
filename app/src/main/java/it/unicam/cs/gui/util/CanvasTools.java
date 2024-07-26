@@ -8,6 +8,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 
 /**
@@ -100,7 +101,12 @@ public final class CanvasTools {
         return isTrackPoint((int) point2D.getX(), (int) point2D.getY(), trackCanvas);
     }
 
-    public static int[] createLineFromPoint(TrackCanvas trackCanvas, Point2D point2D){
+    public static Line createLineFromPoint(TrackCanvas trackCanvas, Point2D point2D){
+        int[] line = createLineCoordsFromPoint(trackCanvas, point2D);
+        return new Line(line[0], line[1], line[2], line[3]);
+    }
+
+    public static int[] createLineCoordsFromPoint(TrackCanvas trackCanvas, Point2D point2D){
         if (isTrackPoint(trackCanvas, point2D)){
             final int strokeDistance = trackCanvas.getTrackWidth() / 2;
             final int X = (int) point2D.getX();

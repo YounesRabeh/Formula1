@@ -1,23 +1,26 @@
-package it.unicam.cs.api.parser;
+package it.unicam.cs.api.parser.parsers;
 
 import it.unicam.cs.api.components.container.Graphics;
+import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
-import it.unicam.cs.engine.util.Useful;
+import it.unicam.cs.api.parser.api.Information;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasRenderer;
-import it.unicam.cs.gui.util.CanvasTools;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Line;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Stack;
+
+import static it.unicam.cs.api.parser.api.DrawingParserTools.*;
 
 
 /**
@@ -47,7 +50,7 @@ public class DrawingParser extends AbstractParser {
      * @param useDefaultCommands a boolean value to use the default commands
      */
     public DrawingParser(File file, boolean useDefaultCommands) {
-        super(file, F1_MAP_FILE_EXTENSION);
+        super(file, Information.F1_MAP_FILE_EXTENSION);
         this.canvasStack = new Stack<>();
         baseCommand();
         if(useDefaultCommands) defaultCommands();
@@ -101,18 +104,20 @@ public class DrawingParser extends AbstractParser {
         });
 
         functionMap.put('@', command -> {
-            if (this.currentGC == null){
-                this.currentCanvas = canvasStack.pop();
-                this.currentGC = currentCanvas.getGraphicsContext2D();
-                if (this.currentCanvas instanceof TrackCanvas trackCanvas){
-                    trackCanvas.setTrackWidth(Characteristics.DEFAULT_TRACK_WIDTH);
-                }
-                return;
+            if (this.currentCanvas instanceof TrackCanvas trackCanvas){
+                checkFinishLineBeforeSwitchingContext(trackCanvas);
             }
-
-            this.currentCanvas = canvasStack.pop();
-            this.currentGC = currentCanvas.getGraphicsContext2D();
+            nextCanvas();
         });
+    }
+
+    /**
+     * Switch to the next canvas. (in the stack)
+     * @throws java.util.EmptyStackException if the stack is empty (no more canvases to switch to)
+     */
+    private void nextCanvas(){
+        this.currentCanvas = canvasStack.pop();
+        this.currentGC = currentCanvas.getGraphicsContext2D();
     }
 
     /**
@@ -152,34 +157,30 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('$', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
-                this.makeSnapshot(trackCanvas, currentGC);
-                int[] startingLine = CanvasTools.createLineFromPoint(
-                        trackCanvas, new Point2D(command.params()[0], command.params()[1])
-                );
-                trackCanvas.setStartingLine(startingLine);
-                trackCanvas.addFirstSegmentsEndPoint(new Point2D(command.params()[0],command.params()[1]));
-                CanvasRenderer.renderTrackLineMarker(trackCanvas, startingLine);
+                generateTrackSnapshot(this.map, trackCanvas, currentGC);
+
+                Line startLine = generateTrackMarker(trackCanvas, command.params());
+                trackCanvas.setStartLine(startLine);
+                trackCanvas.addFirstSegmentsEndPoint(new Waypoint(command.params()[0], command.params()[1]));
+                CanvasRenderer.renderTrackLineMarker(trackCanvas, startLine);
             }
         });
 
         functionMap.put('£', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
-                if (trackCanvas.getStartingLine() == null){
-                    throw new IllegalStateException("[!!]- NO STARTING LINE");
-                }
+                checkIfDrawingFinishLineIsAdmissible(trackCanvas);
 
-                int[] endingLine = CanvasTools.createLineFromPoint(
-                        trackCanvas, new Point2D(command.params()[0], command.params()[1])
-                );
-                trackCanvas.setEndingLine(endingLine);
-                trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[0],command.params()[1]));
-                CanvasRenderer.renderTrackLineMarker(trackCanvas, endingLine);
+                Line finishLine = generateTrackMarker(trackCanvas, command.params());
+                trackCanvas.setFinishLine(finishLine);
+                trackCanvas.addSegmentsEndPoint(new Waypoint(command.params()[0], command.params()[1]));
+                CanvasRenderer.renderTrackLineMarker(trackCanvas, finishLine);
             }
         });
 
         functionMap.put('§', command -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
                 trackCanvas.setTrackState(true);
+                trackCanvas.setFinishLine(trackCanvas.getStartLine());
             }
         });
 
@@ -210,9 +211,9 @@ public class DrawingParser extends AbstractParser {
         functionMap.put('Q', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
                 if (trackCanvas.getSegmentsEndPoints().isEmpty()){
-                    trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[0], command.params()[1]));
+                    trackCanvas.addSegmentsEndPoint(new Point2D(command.params()[0], command.params()[1]));
                 }
-                trackCanvas.addSegmentsEndPoints(new Point2D(command.params()[2], command.params()[3]));
+                trackCanvas.addSegmentsEndPoint(new Point2D(command.params()[2], command.params()[3]));
             }
             Graphics.quadraticCurveTo(currentGC, command.params());
         });
@@ -232,17 +233,5 @@ public class DrawingParser extends AbstractParser {
         functionMap.put('P', (command) -> {
             Graphics.strokePoint(currentGC, command.params());
         });
-
-
-    }
-
-    private void makeSnapshot(TrackCanvas trackCanvas, GraphicsContext currentGC){
-        try {
-            trackCanvas.getTrackSnapshot();
-        } catch (IllegalStateException noSnapshot){
-            currentGC.stroke();
-            trackCanvas.setSnapshot(CanvasTools.createCanvasSnapshot(currentCanvas));
-            trackCanvas.addWaypoints(Useful.exe(this.map));
-        }
     }
 }

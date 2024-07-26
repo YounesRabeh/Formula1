@@ -1,10 +1,13 @@
-package it.unicam.cs.api.parser;
+package it.unicam.cs.api.parser.api;
+
+import it.unicam.cs.api.parser.parsers.AbstractParser;
 
 /**
  * The information used by the parser.
  * change the values of the constants to change the behavior of the parser.
  * @see AbstractParser
  * @author Younes Rabeh
+ * @version 1.0
  */
 public interface Information {
     /** The character used to indicate the start of a comment.*/

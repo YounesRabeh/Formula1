@@ -1,10 +1,14 @@
-package it.unicam.cs.api.parser;
+package it.unicam.cs.api.parser.parsers;
 
 
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.exceptions.parser.AlreadyMappedException;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.exceptions.parser.ParsingException;
+import it.unicam.cs.api.parser.api.Command;
+import it.unicam.cs.api.parser.api.CommandAction;
+import it.unicam.cs.api.parser.api.Information;
+import it.unicam.cs.api.parser.api.Interpretable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +38,7 @@ public abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
     private File FILE;
     /** The file extension.*/
-    private String fileExtension = "";
+    private String fileExtension;
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
 
@@ -90,7 +94,7 @@ public abstract class AbstractParser implements Interpretable, Information {
     @Override
     public void setFile(File file) {
         if (!isFileValid(file)){
-            throw new IllegalArgumentException("[!!!] - \"" + file.getAbsolutePath() + "\"" + " is not a valid file");
+            throw new IllegalArgumentException("[!!!]- \"" + file.getAbsolutePath() + "\"" + " IS NOT A VALID FILE");
         }
         this.FILE = file;
     }
@@ -98,7 +102,7 @@ public abstract class AbstractParser implements Interpretable, Information {
     @Override
     public void setFileExtension(String fileExtension) {
         if (fileExtension == null || fileExtension.isEmpty()) {
-            throw new IllegalArgumentException("[!!!] - file extension cannot be null or empty");
+            throw new IllegalArgumentException("[!!!]- FILE EXTENSION CANNOT BE EMPTY");
         }
         this.fileExtension = fileExtension;
     }

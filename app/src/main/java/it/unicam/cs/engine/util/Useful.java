@@ -16,21 +16,7 @@ import javafx.scene.layout.StackPane;
 import java.util.List;
 
 public final class Useful {
-    /**
-     * Get the waypoints of the game map.
-     * @param gameMap the game map
-     * @return the waypoints of the game map
-     */
-    public static List<Waypoint> exe(GameMap gameMap){
-        long startTime = System.nanoTime();
-        List<Waypoint> waypoints = RouteTools.getGameMapWaypoints(gameMap);
-        long endTime = System.nanoTime();
-        System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds " +
-                "or " + (float) (endTime - startTime) / 1000000 + " milliseconds\n" +
-                "> Found " + waypoints.size() + " black pixels"
-        );
-        return waypoints;
-    }
+
 
     /**
      * Print the waypoints of the game map.

@@ -1,4 +1,4 @@
-package it.unicam.cs.api.parser;
+package it.unicam.cs.api.parser.api;
 
 
 /**
@@ -6,5 +6,6 @@ package it.unicam.cs.api.parser;
  * @param identifier the identifier of the command
  * @param params the parameters of the command
  * @author Younes Rabeh
+ * @version 1.0
  */
 public record Command(char identifier, int[] params) { }

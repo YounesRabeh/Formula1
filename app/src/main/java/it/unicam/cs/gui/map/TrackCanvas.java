@@ -28,16 +28,16 @@ public class TrackCanvas extends Canvas {
     private final Color color;
     /** The width of the track */
     private int trackWidth;
-
-    private List<Waypoint> waypoints = new ArrayList<>();
-    /** The parsed end points of the track*/
+    /** The parsed waypoints of the track */
+    private final List<Waypoint> waypoints = new ArrayList<>();
+    /** The parsed segments end points of the track */
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
     /** To see if the track is closed (a circular track) **/
     private boolean isTrackClosed = false;
-    /** The starting line of the track */
-    private Line startingLine;
-    /** The ending line of the track */
-    private Line endingLine;
+    /** The start line of the track */
+    private Line startLine;
+    /** The end line of the track */
+    private Line finishLine;
 
     /**
      * Create a new TrackCanvas with the given width, height, and drawing parser.
@@ -110,12 +110,12 @@ public class TrackCanvas extends Canvas {
         return isTrackClosed;
     }
 
-    public Line getStartingLine() {
-        return startingLine;
+    public Line getStartLine() {
+        return startLine;
     }
 
-    public Line getEndingLine() {
-        return endingLine;
+    public Line getFinishLine() {
+        return finishLine;
     }
 
     /**
@@ -131,12 +131,8 @@ public class TrackCanvas extends Canvas {
         this.waypoints.addAll(calculatedWaypoints);
     }
 
-    /**
-     * Add the segments end points to the track canvas,
-     * (the parsed end points of the track's segments)
-     * @param segmentEndPoint the segments end points
-     */
-    public void addSegmentsEndPoints(Point2D segmentEndPoint) {
+
+    public void addSegmentsEndPoint(Point2D segmentEndPoint) {
         this.segmentsEndPoints.add(segmentEndPoint);
     }
 
@@ -165,7 +161,7 @@ public class TrackCanvas extends Canvas {
      */
     public void setTrackWidth(int trackWidth) {
         Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, trackWidth);
-        this.trackWidth = (int) trackWidth;
+        this.trackWidth = trackWidth;
         this.getGraphicsContext2D().setLineWidth(trackWidth);
     }
 
@@ -177,13 +173,20 @@ public class TrackCanvas extends Canvas {
         this.isTrackClosed = isTrackClosed;
     }
 
-    public void setStartingLine(int[] startingLineCoords) {
-        this.startingLine =
-                new Line(startingLineCoords[0], startingLineCoords[1], startingLineCoords[2], startingLineCoords[3]);
+    /**
+     * Set the start line of the track, Every track needs a start line.
+     * In the case of a closed track, the start line is the same as the ending line.
+     * @param startLine the start line of the track
+     */
+    public void setStartLine(Line startLine){
+        this.startLine = startLine;
     }
 
-    public void setEndingLine(int[] endingLineCoords) {
-        this.endingLine =
-                new Line(endingLineCoords[0], endingLineCoords[1], endingLineCoords[2], endingLineCoords[3]);
+    /**
+     * Set the finish line of the track,
+     * @param finishLine the finish line of the track
+     */
+    public void setFinishLine(Line finishLine){
+        this.finishLine = finishLine;
     }
 }
