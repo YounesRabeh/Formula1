@@ -161,6 +161,7 @@ public class DrawingParser extends AbstractParser {
 
                 Line startLine = generateTrackMarker(trackCanvas, command.params());
                 trackCanvas.setStartLine(startLine);
+                trackCanvas.removeFirstSegmentsEndPoint();
                 trackCanvas.addFirstSegmentsEndPoint(new Waypoint(command.params()[0], command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, startLine);
             }

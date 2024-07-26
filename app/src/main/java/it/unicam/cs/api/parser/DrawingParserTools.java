@@ -28,7 +28,7 @@ public final class DrawingParserTools {
      */
     public static void checkFinishLineBeforeSwitchingContext(TrackCanvas trackCanvas){
         if (!trackCanvas.getTrackState() && (trackCanvas.getFinishLine() == null)){
-            throw new IllegalStateException("[!!]- NO FINISH LINE FOUND FOR THE NON CLOSED TRACK");
+            throw new IllegalStateException("NO FINISH LINE FOUND FOR THE NON-CLOSED TRACK");
         }
     }
 
@@ -39,9 +39,9 @@ public final class DrawingParserTools {
      */
     public static void checkIfDrawingFinishLineIsAdmissible(TrackCanvas trackCanvas){
         if (trackCanvas.getStartLine() == null){
-            throw new IllegalStateException("[!!]- NO STARTING LINE");
+            throw new IllegalStateException("NO STARTING LINE");
         } else if (trackCanvas.getTrackState()) {
-            throw new IllegalStateException("[!!]- THE FINISH LINE CAN'T BE DRAWN ON A CLOSED TRACK");
+            throw new IllegalStateException("THE FINISH LINE CAN'T BE DRAWN ON A CLOSED TRACK");
         }
     }
 

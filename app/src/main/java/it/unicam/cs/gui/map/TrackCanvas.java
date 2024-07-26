@@ -28,7 +28,7 @@ public class TrackCanvas extends Canvas {
     private final Color color;
     /** The width of the track */
     private int trackWidth;
-    /** The parsed waypoints of the track */
+    /** The admissible waypoints of the track */
     private final List<Waypoint> waypoints = new ArrayList<>();
     /** The parsed segments end points of the track */
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
@@ -90,6 +90,10 @@ public class TrackCanvas extends Canvas {
         return color;
     }
 
+    /**
+     * Get the parsed waypoints of the track
+     * @return the parsed waypoints of the track
+     */
     public List<Waypoint> getWaypoints(){
         return this.waypoints;
     }
@@ -110,10 +114,18 @@ public class TrackCanvas extends Canvas {
         return isTrackClosed;
     }
 
+    /**
+     * Get the start line of the track
+     * @return the start line of the track
+     */
     public Line getStartLine() {
         return startLine;
     }
 
+    /**
+     * Get the finish line of the track
+     * @return the finish line of the track
+     */
     public Line getFinishLine() {
         return finishLine;
     }
@@ -126,18 +138,36 @@ public class TrackCanvas extends Canvas {
         return Integer.MIN_VALUE;
     }
 
+    /**
+     * Add the calculated waypoints to the track
+     * @param calculatedWaypoints the calculated waypoints
+     */
     public void addWaypoints(List<Waypoint> calculatedWaypoints){
         Check.checkNull(calculatedWaypoints);
         this.waypoints.addAll(calculatedWaypoints);
     }
 
-
+    /**
+     * Add the segment end point to the track
+     * @param segmentEndPoint the segment end point
+     */
     public void addSegmentsEndPoint(Point2D segmentEndPoint) {
         this.segmentsEndPoints.add(segmentEndPoint);
     }
 
+    /**
+     * Add the first segment end point to the track
+     * @param segmentEndPoint the segment end point
+     */
     public void addFirstSegmentsEndPoint(Point2D segmentEndPoint){
         this.segmentsEndPoints.addFirst(segmentEndPoint);
+    }
+
+    /**
+     * Delete the first segment end point of the track
+     */
+    public void removeFirstSegmentsEndPoint(){
+        this.segmentsEndPoints.removeFirst();
     }
 
     /**

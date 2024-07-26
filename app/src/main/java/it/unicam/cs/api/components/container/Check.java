@@ -20,7 +20,7 @@ public final class Check {
         for (Number num : nums) {
             if (num == null) throw new NullPointerException();
             if (num.doubleValue() < 0){
-                throw new IndexOutOfBoundsException("[!!]- " + num.doubleValue() + " IS NON-POSITIVE");
+                throw new IndexOutOfBoundsException(num.doubleValue() + " IS NON-POSITIVE");
             }
         }
     }
@@ -35,7 +35,7 @@ public final class Check {
         for (Number num : nums) {
             if (num == null) throw new NullPointerException();
             if (num.doubleValue() < value){
-                throw new IndexOutOfBoundsException("[!!]- " + num.doubleValue() + " IS LESS THAN " + value);
+                throw new IndexOutOfBoundsException(num.doubleValue() + " IS LESS THAN " + value);
             }
         }
     }
@@ -48,7 +48,7 @@ public final class Check {
     public static void checkNumbers(int[] nums) {
         for (int num : nums) {
             if (num < 0){
-                throw new IndexOutOfBoundsException("[!!]- " + num + " IS NON-POSITIVE");
+                throw new IndexOutOfBoundsException(num + " IS NON-POSITIVE");
             }
         }
     }

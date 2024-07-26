@@ -11,7 +11,7 @@ public class ParsingException extends RuntimeException {
      * @param message the custom message
      */
     public ParsingException(String message) {
-        super("\n[!!!] > Parser Exception: " + message);
+        super("[!!!] > Parser Exception: " + message);
     }
 
     /**
@@ -20,7 +20,7 @@ public class ParsingException extends RuntimeException {
      * @param message the custom message
      */
     public ParsingException(int lineNumber, String message) {
-        super("\n[!!!] > Parsing Exception (line " + lineNumber + "): " + message);
+        super("[!!!] > Parsing Exception (line " + lineNumber + "): " + message);
     }
 
 }

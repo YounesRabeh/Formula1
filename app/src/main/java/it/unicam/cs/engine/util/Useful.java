@@ -9,15 +9,12 @@ import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 
 import java.util.List;
 
 public final class Useful {
-
-
     /**
      * Print the waypoints of the game map.
      * @param waypoints the waypoints of the game map
