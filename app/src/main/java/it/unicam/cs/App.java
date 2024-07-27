@@ -6,7 +6,6 @@ import java.util.logging.Level;
 
 import static it.unicam.cs.gui.util.GuiStuff.initializeAndShowStage;
 
-
 /**
  * JavaFX App
  * @author Younes Rabeh

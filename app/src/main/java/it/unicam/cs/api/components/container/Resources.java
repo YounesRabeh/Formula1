@@ -31,10 +31,7 @@ public final class Resources {
      * @throws IOException if the file cannot be read
      */
     public static File getResourceFile(String path, String suffix) throws URISyntaxException, IOException {
-        URL resourceURL = App.class.getResource(path); // Get the URL of the resource
-        if (resourceURL == null) {
-            throw new IllegalArgumentException("Resource not found: " + path);
-        }
+        URL resourceURL = getResourceURL(path); // Get the URL of the resource
 
         // Check if the resource is within a JAR file
         if (resourceURL.getProtocol().equals("jar")) { // Handle JAR resources (running the JAR file)
@@ -60,7 +57,6 @@ public final class Resources {
     public static File getResourceFile(String path) throws URISyntaxException, IOException {
         return getResourceFile(path, ".tmp");
     }
-
 
     /**
      * Gets the URL of the resource.
