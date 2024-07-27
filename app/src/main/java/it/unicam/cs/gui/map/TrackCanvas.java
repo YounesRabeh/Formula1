@@ -91,8 +91,8 @@ public class TrackCanvas extends Canvas {
     }
 
     /**
-     * Get the parsed waypoints of the track
-     * @return the parsed waypoints of the track
+     * Get the calculated waypoints of the track
+     * @return the calculated waypoints of the track
      */
     public List<Waypoint> getWaypoints(){
         return this.waypoints;
@@ -134,6 +134,7 @@ public class TrackCanvas extends Canvas {
      * Get the layer of the canvas
      * @return the layer of the canvas
      */
+    @SuppressWarnings("unused")
     public int getLayer(){
         return Integer.MIN_VALUE;
     }

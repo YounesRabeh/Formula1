@@ -32,7 +32,7 @@ public final class RouteTools {
      * @throws IllegalStateException if the track is not yet drawn
      * @see Waypoint
      */
-    public static List<Waypoint> getGameMapWaypoints(GameMap gameMap) {
+    public static List<Waypoint> generateGameMapWaypoints(GameMap gameMap) {
         Check.checkNull(gameMap);
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
         WritableImage snapshot = trackCanvas.getTrackSnapshot();
@@ -58,7 +58,7 @@ public final class RouteTools {
      */
     public static List<Waypoint> findMapWaypoints(GameMap gameMap){
         long startTime = System.nanoTime();
-        List<Waypoint> waypoints = RouteTools.getGameMapWaypoints(gameMap);
+        List<Waypoint> waypoints = RouteTools.generateGameMapWaypoints(gameMap);
         long endTime = System.nanoTime();
         System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds " +
                 "or " + (float) (endTime - startTime) / 1000000 + " milliseconds\n" +

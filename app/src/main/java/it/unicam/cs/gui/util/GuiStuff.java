@@ -3,6 +3,7 @@ package it.unicam.cs.gui.util;
 import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.parser.parsers.DrawingParser;
 import it.unicam.cs.gui.map.GameMap;
+import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
 import static it.unicam.cs.DebugData.*;
 import static it.unicam.cs.api.components.container.Resources.getResourceFile;
 import static it.unicam.cs.api.components.container.Resources.getResourceURL;
-import static it.unicam.cs.engine.core.route.RouteTools.findMapWaypoints;
+import static it.unicam.cs.api.parser.Information.F1_MAP_FILE_EXTENSION;
 import static it.unicam.cs.engine.util.Useful.*;
 
 /**
@@ -37,7 +38,7 @@ public class GuiStuff {
      * @throws URISyntaxException if a syntax error occurs
      */
     public static void initializeAndShowStage(Stage stage, Logger LOGGER) throws IOException, URISyntaxException {
-        DrawingParser parser = new DrawingParser(getResourceFile(PARSER_FILE_PATH));
+        DrawingParser parser = new DrawingParser(getResourceFile(PARSER_FILE_PATH, F1_MAP_FILE_EXTENSION));
         Optional<GameMap> optionalGameMap = parser.start();
 
         if (optionalGameMap.isEmpty()) {
@@ -89,10 +90,11 @@ public class GuiStuff {
      * @param canvases the canvases
      */
     private static void drawGameElements(GameMap gameMap, Canvas[] canvases) {
-        List<Waypoint> waypoints = findMapWaypoints(gameMap);
-        List<Point2D> segmentsEndPoints = gameMap.getTrackCanvas().getSegmentsEndPoints();
+        TrackCanvas trackCanvas = gameMap.getTrackCanvas();
+        List<Waypoint> waypoints = trackCanvas.getWaypoints();
+        List<Point2D> segmentsEndPoints = trackCanvas.getSegmentsEndPoints();
 
         drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
-        drawConnections(gameMap.getTrackCanvas(), canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
 }

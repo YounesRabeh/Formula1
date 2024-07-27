@@ -17,7 +17,7 @@ public class App extends Application implements DebugData {
         try {
             initializeAndShowStage(stage, LOGGER);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

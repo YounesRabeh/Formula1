@@ -67,6 +67,11 @@ public final class CanvasRenderer {
     }
 
 
+    /**
+     * Renders a line marker on the track canvas.
+     * @param trackCanvas the canvas on which to render the line marker
+     * @param lineCoords the coordinates of the line
+     */
     public static void renderTrackLineMarker(TrackCanvas trackCanvas, int[] lineCoords){
         GraphicsContext gc = trackCanvas.getGraphicsContext2D();
         final double lineWidth = gc.getLineWidth();
@@ -79,6 +84,11 @@ public final class CanvasRenderer {
         gc.setStroke(gcColor);
     }
 
+    /**
+     * Renders a line marker on the track canvas.
+     * @param trackCanvas the canvas on which to render the line marker
+     * @param line the line to be rendered
+     */
     public static void renderTrackLineMarker(TrackCanvas trackCanvas, Line line){
         renderTrackLineMarker(
                 trackCanvas,
