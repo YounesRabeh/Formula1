@@ -38,7 +38,7 @@ public final class Resources {
 
         // Check if the resource is within a JAR file
         if (resourceURL.getProtocol().equals("jar")) { // Handle JAR resources (running the JAR file)
-            Path tempFile = Files.createTempFile("resource-", suffix);
+            Path tempFile = Files.createTempFile("resource-", "." + suffix);
             try (InputStream inputStream = resourceURL.openStream()) {
                 Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
             }
@@ -58,7 +58,7 @@ public final class Resources {
      * @throws IOException if the file cannot be read
      */
     public static File getResourceFile(String path) throws URISyntaxException, IOException {
-        return getResourceFile(path, "tmp");
+        return getResourceFile(path, ".tmp");
     }
 
 

@@ -47,7 +47,6 @@ public final class RouteTools {
                 }
             }
         }
-
         return waypoints;
     }
 
