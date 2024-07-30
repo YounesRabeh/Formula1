@@ -14,4 +14,4 @@ This repository features a Formula 1 game with a graphics rendering system for c
 ## Pseudocode Documentation
 
 The pseudocode defines a set of instructions for initializing and drawing tracks on a canvas.
-Here’s an overview of how the pseudocode is structured: [link](https://github.com/YounesRabeh/Formula1/blob/5e109b40ff265a105488068bca2ba26d75febe97/github/doc/pseudocode.html)
+Here’s an overview of how the pseudocode is structured with an example: [link](https://github.com/YounesRabeh/Formula1/blob/5e109b40ff265a105488068bca2ba26d75febe97/github/doc/pseudocode.html)
