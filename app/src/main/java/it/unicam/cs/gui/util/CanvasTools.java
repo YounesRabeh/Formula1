@@ -101,11 +101,23 @@ public final class CanvasTools {
         return isTrackPoint((int) point2D.getX(), (int) point2D.getY(), trackCanvas);
     }
 
+    /**
+     * Creates a line from a point on the canvas.
+     * @param trackCanvas the canvas to create the line on
+     * @param point2D the point to create the line from
+     * @return the line
+     */
     public static Line createLineFromPoint(TrackCanvas trackCanvas, Point2D point2D){
         int[] line = createLineCoordsFromPoint(trackCanvas, point2D);
         return new Line(line[0], line[1], line[2], line[3]);
     }
 
+    /**
+     * Creates the coordinates of a line from a point on the canvas.
+     * @param trackCanvas the canvas to create the line on
+     * @param point2D the point to create the line from
+     * @return the coordinates of the line
+     */
     public static int[] createLineCoordsFromPoint(TrackCanvas trackCanvas, Point2D point2D){
         if (isTrackPoint(trackCanvas, point2D)){
             final int strokeDistance = trackCanvas.getTrackWidth() / 2;
@@ -125,7 +137,14 @@ public final class CanvasTools {
         throw new IllegalArgumentException("[!!]- THE POINT IS NOT IN TRACK");
     }
 
-
+    /**
+     * Verifies if the line is horizontal.
+     * @param trackCanvas the canvas to check
+     * @param var1 the first coordinate
+     * @param var2 the second coordinate
+     * @param still the still coordinate
+     * @return the coordinates of the line if it is horizontal, null otherwise
+     */
     private static int[] verifyLineH(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
         final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
@@ -141,7 +160,14 @@ public final class CanvasTools {
         return null;
     }
 
-
+    /**
+     * Verifies if the line is vertical.
+     * @param trackCanvas the canvas to check
+     * @param var1 the first coordinate
+     * @param var2 the second coordinate
+     * @param still the still coordinate
+     * @return the coordinates of the line if it is vertical, null otherwise
+     */
     private static int[] verifyLineV(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
         final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;

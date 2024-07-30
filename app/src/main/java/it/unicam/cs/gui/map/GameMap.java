@@ -32,9 +32,9 @@ public class GameMap {
     /** The inert canvases */
     private final TreeSet<InertCanvas> inertCanvases;
     /** The width of the map */
-    private int width;
+    private final int width;
     /** The height of the map */
-    private int height;
+    private final int height;
 
 
     /**
