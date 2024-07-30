@@ -1,6 +1,6 @@
 package it.unicam.cs.api.parser;
 
-import it.unicam.cs.api.exceptions.NoActionFoundException;
+import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 
 import java.io.*;
 import java.util.Optional;
@@ -11,14 +11,16 @@ import java.util.Optional;
  * @see Command
  * @see CommandAction
  * @author Younes Rabeh
+ * @version 1.2
  */
 public interface Interpretable {
     /**
      * Starts the parsing process.
+     * @return an optional object, the result of the parsing
      * @throws IOException if the parser file is not readable
      * @throws NoActionFoundException if no action is found for the identifier
      */
-    void start() throws IOException, NoActionFoundException;
+    Optional<?> start() throws IOException, NoActionFoundException;
 
     /**
      * Parse the data from the file.
@@ -41,5 +43,15 @@ public interface Interpretable {
      * @throws IllegalArgumentException if the file does not exist or is a directory
      */
     void setFile(File file) throws IllegalArgumentException;
+
+    /**
+     * Set the file extension of the parser. the default value is an empty string (a file without an extension).
+     * the file extension is used to filter the files that the parser can read,
+     * and it doesn't reset if the file is changed.
+     *
+     * @param fileExtension the file extension
+     * @throws IllegalArgumentException if the file extension is empty
+     */
+    void setFileExtension(String fileExtension) throws IllegalArgumentException;
 
 }

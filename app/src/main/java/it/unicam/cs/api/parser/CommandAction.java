@@ -6,6 +6,7 @@ package it.unicam.cs.api.parser;
  *
  * @see Command
  * @author Younes Rabeh
+ * @version 1.0
  */
 @FunctionalInterface
 public interface CommandAction {

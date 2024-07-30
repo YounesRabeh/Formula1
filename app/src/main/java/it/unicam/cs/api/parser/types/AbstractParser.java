@@ -1,13 +1,22 @@
-package it.unicam.cs.api.parser;
+package it.unicam.cs.api.parser.types;
 
 
-import it.unicam.cs.api.exceptions.NoActionFoundException;
+import it.unicam.cs.api.components.container.Check;
+import it.unicam.cs.api.exceptions.parser.AlreadyMappedException;
+import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
+import it.unicam.cs.api.exceptions.parser.ParsingException;
+import it.unicam.cs.api.parser.Command;
+import it.unicam.cs.api.parser.CommandAction;
+import it.unicam.cs.api.parser.Information;
+import it.unicam.cs.api.parser.Interpretable;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+
+import static it.unicam.cs.api.components.container.Resources.getFileExtension;
 
 
 /**
@@ -23,11 +32,13 @@ import java.util.*;
  * @see Information
  * @see Command
  * @author Younes Rabeh
- * @version 1.2
+ * @version 2.2
  */
-abstract class AbstractParser implements Interpretable, Information {
+public abstract class AbstractParser implements Interpretable, Information {
     /** The file to be parsed.*/
-    protected File FILE;
+    private File FILE;
+    /** The file extension.*/
+    private String fileExtension;
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
 
@@ -36,22 +47,30 @@ abstract class AbstractParser implements Interpretable, Information {
      * @param file the file to be parsed
      * @throws IllegalArgumentException if the file does not exist or is a directory
      */
-    AbstractParser(File file) throws IllegalArgumentException {
-        if (!isFileValid(file)){
-            throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
-        }
-        this.FILE = file;
-
+    AbstractParser(File file, String fileExtension) throws IllegalArgumentException {
+        this.fileExtension = fileExtension;
+        setFile(file);
     }
 
     @Override
-    public void start() throws IOException, NoActionFoundException {
+    public Optional<?> start() throws IOException, NoActionFoundException {
         try (BufferedReader reader = getFileData(FILE).orElseThrow(() ->
                 new IOException("Unable to read file: " + FILE.getAbsolutePath()))) {
-            reader.lines()
-                    .filter(line -> !line.isEmpty() && !line.startsWith(COMMENT_CHARACTER))
-                    .forEach(line -> executeCommand(parseLine(line)));
+            Iterator<String> lineIterator = reader.lines().iterator();
+            int lineNumber = 0;
+            while (lineIterator.hasNext()) {
+                String line = lineIterator.next();
+                lineNumber++;
+                if (!line.isEmpty() && !line.startsWith(COMMENT_CHARACTER)) {
+                    try {
+                        executeCommand(parseLine(line));
+                    } catch (Exception e) {
+                        throw new ParsingException(lineNumber, e.getMessage());
+                    }
+                }
+            }
         }
+        return Optional.empty();
     }
 
     @Override
@@ -67,8 +86,7 @@ abstract class AbstractParser implements Interpretable, Information {
     @Override
     public void addRule(char identifier, CommandAction action) {
         if (functionMap.containsKey(identifier)) {
-            throw new IllegalArgumentException("[!!!] - THE IDENTIFIER \"" + identifier +
-                    "\" IS ALREADY MAPPED TO A COMMAND");
+            throw new AlreadyMappedException(identifier);
         }
         functionMap.put(identifier, action);
     }
@@ -76,9 +94,25 @@ abstract class AbstractParser implements Interpretable, Information {
     @Override
     public void setFile(File file) {
         if (!isFileValid(file)){
-            throw new IllegalArgumentException("File is not valid: " + file.getAbsolutePath());
+            throw new IllegalArgumentException("[!!!]- \"" + file.getAbsolutePath() + "\"" + " IS NOT A VALID FILE");
         }
         this.FILE = file;
+    }
+
+    @Override
+    public void setFileExtension(String fileExtension) {
+        if (fileExtension == null || fileExtension.isEmpty()) {
+            throw new IllegalArgumentException("[!!!]- FILE EXTENSION CANNOT BE EMPTY");
+        }
+        this.fileExtension = fileExtension;
+    }
+
+    /**
+     * Get the current file to be parsed.
+     * @return the file
+     */
+    public File getFile() {
+        return FILE;
     }
 
     /**
@@ -94,7 +128,8 @@ abstract class AbstractParser implements Interpretable, Information {
      * @return true if the file exists and is not a directory
      */
     private boolean isFileValid(File file) {
-        return file.exists() && file.isFile();
+        return file.exists() && file.isFile() &&
+                Check.isFileExtensionCorrect(fileExtension, getFileExtension(file));
     }
 
     /**
@@ -120,11 +155,13 @@ abstract class AbstractParser implements Interpretable, Information {
         String[] parts = line.split(COMMENT_CHARACTER)[0].split(PARSER_SEPARATOR);
         char identifier = parts[0].charAt(0); // Get the first character of the line (O_msksdfsdf) is ok
         int[] params = Arrays.stream(parts, 1, parts.length)
+                .filter(part -> !part.trim().isEmpty()) // Filter out empty strings (leading a param number)
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
         return new Command(identifier, params);
     }
+
 }
 
 

@@ -25,6 +25,7 @@ tasks.withType<JavaCompile> {
 application {
   mainModule.set("it.unicam.cs")
   mainClass.set("it.unicam.cs.App")
+
 }
 
 javafx {
@@ -51,7 +52,6 @@ sourceSets {
 }
 
 
-
 // TASKS:
 tasks.test {
   useJUnitPlatform()
@@ -72,3 +72,5 @@ tasks.register<JavaExec>("runR") {
   workingDir = projectDir // Ensures the working directory is set to the project directory
   args = listOf() // If you need to pass arguments, add them here
 }
+
+
