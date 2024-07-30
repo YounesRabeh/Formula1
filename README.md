@@ -10,9 +10,9 @@
 
 ---
 
-## Overview
+## Current Progress
 
-This repository features a Formula 1 game with a graphics rendering system for creating and visualizing tracks. The system utilizes a simple pseudocode language for defining the map. A parser interprets these pseudocode commands to produce the visual output.
+This repository features a Formula 1 game with a graphics rendering system for creating and visualizing tracks. The system utilizes a simple pseudocode language to define the map. A parser interprets these pseudocode commands to produce the visual output.
 
 ## Pseudocode Documentation
 
