@@ -38,7 +38,10 @@ public class GuiStuff {
      * @throws URISyntaxException if a syntax error occurs
      */
     public static void initializeAndShowStage(Stage stage, Logger LOGGER) throws IOException, URISyntaxException {
-        DrawingParser parser = new DrawingParser(getResourceFile(PARSER_FILE_PATH, F1_MAP_FILE_EXTENSION));
+        DrawingParser parser = new DrawingParser(
+                getResourceFile(PARSER_FILE_PATH, F1_MAP_FILE_EXTENSION),
+                F1_MAP_FILE_EXTENSION
+        );
         Optional<GameMap> optionalGameMap = parser.start();
 
         if (optionalGameMap.isEmpty()) {

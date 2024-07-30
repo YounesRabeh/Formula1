@@ -26,10 +26,11 @@ import static it.unicam.cs.api.parser.DrawingParserTools.*;
 /**
  * A parser responsible for drawing on the canvas.
  * by default, it has the following commands: {@link DrawingParser#defaultCommands()}
+ * The parser can be used to draw on multiple canvases, by switching to the next canvas with the command {@code @}.
  *
  * @see AbstractParser
  * @author Younes Rabeh
- * @version 2.3
+ * @version 2.4
  */
 public class DrawingParser extends AbstractParser {
     /** The current canvas to draw on.*/
@@ -43,26 +44,37 @@ public class DrawingParser extends AbstractParser {
 
 
     /**
-     * Creates a new DrawingParser with the given file, GraphicsContext.
+     * Creates a new DrawingParser with the given file, extension and useDefaultCommands.
      * The {@link DrawingParser#defaultCommands()} are added if the useDefaultCommands is true.
      *
      * @param file the file to be parsed
+     * @param extension the file extension
      * @param useDefaultCommands a boolean value to use the default commands
      */
-    public DrawingParser(File file, boolean useDefaultCommands) {
-        super(file, Information.F1_MAP_FILE_EXTENSION);
+    public DrawingParser(File file, String extension, boolean useDefaultCommands) {
+        super(file, extension);
         this.canvasStack = new Stack<>();
         baseCommand();
         if(useDefaultCommands) defaultCommands();
     }
 
     /**
-     * Creates a new DrawingParser with the given file and GraphicsContext.
+     * Creates a new DrawingParser with the given file and extension.
      * The {@link DrawingParser#defaultCommands()} are added.
+     * @param file the file to be parsed
+     * @param extension the target file extension
+     */
+    public DrawingParser(File file, String extension) {
+        this(file, extension,true);
+    }
+
+    /**
+     * Creates a new DrawingParser with the given file, the extension is set to an empty string
+     * and the {@link DrawingParser#defaultCommands()} are added.
      * @param file the file to be parsed
      */
     public DrawingParser(File file) {
-        this(file, true);
+        this(file, "",true);
     }
 
 
@@ -92,7 +104,7 @@ public class DrawingParser extends AbstractParser {
     /**
      * The base commands of the drawing parser. contains the following commands:
      * <ul>
-     *     <li> {@code >} - create a new canvas with the given cell size, cell number x, cell number y</li>
+     *     <li> {@code >} - create a new map with the given cell size, cell number x, cell number y</li>
      *     <li> {@code @} - switch to the next canvas</li>
      *
      */
