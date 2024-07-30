@@ -1,7 +1,7 @@
 package it.unicam.cs.gui.util;
 
 import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.api.parser.parsers.DrawingParser;
+import it.unicam.cs.api.parser.types.DrawingParser;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.fxml.FXMLLoader;

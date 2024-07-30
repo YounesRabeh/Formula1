@@ -1,4 +1,4 @@
-package it.unicam.cs.api.parser.parsers;
+package it.unicam.cs.api.parser.types;
 
 
 import it.unicam.cs.api.components.container.Check;

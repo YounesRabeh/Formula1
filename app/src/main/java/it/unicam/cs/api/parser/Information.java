@@ -1,6 +1,6 @@
 package it.unicam.cs.api.parser;
 
-import it.unicam.cs.api.parser.parsers.AbstractParser;
+import it.unicam.cs.api.parser.types.AbstractParser;
 
 /**
  * The information used by the parser.

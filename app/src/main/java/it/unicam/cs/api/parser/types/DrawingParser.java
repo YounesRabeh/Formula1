@@ -1,11 +1,10 @@
-package it.unicam.cs.api.parser.parsers;
+package it.unicam.cs.api.parser.types;
 
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
-import it.unicam.cs.api.parser.Information;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
