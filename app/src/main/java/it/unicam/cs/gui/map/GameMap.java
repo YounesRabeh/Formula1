@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.map;
 
+import it.unicam.cs.DebugData;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.gui.util.CanvasTools;
@@ -47,6 +48,7 @@ public class GameMap {
      */
     public GameMap(int cellSize, int cellNumber_X, int cellNumber_Y, int layerNumber) {
         Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y, layerNumber);
+        //TODO: check if the generated map is smaller than window size
         this.width = cellSize * cellNumber_X;
         this.height = cellSize * cellNumber_Y;
 
@@ -171,4 +173,7 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
+
+
 }

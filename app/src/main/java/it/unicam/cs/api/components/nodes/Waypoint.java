@@ -17,6 +17,7 @@ public class Waypoint extends Point2D {
      */
     public Waypoint(double x, double y) {
         super(x, y);
+
     }
 
 

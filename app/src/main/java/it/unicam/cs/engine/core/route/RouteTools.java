@@ -10,6 +10,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public final class RouteTools {
      * @throws IllegalStateException if the track is not yet drawn
      * @see Waypoint
      */
-    public static List<Waypoint> generateGameMapWaypoints(GameMap gameMap) {
+    public static Collection<Waypoint> generateGameMapWaypoints(GameMap gameMap) {
         Check.checkNull(gameMap);
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
         WritableImage snapshot = trackCanvas.getTrackSnapshot();
@@ -55,9 +56,9 @@ public final class RouteTools {
      * @param gameMap the game map
      * @return the waypoints of the game map
      */
-    public static List<Waypoint> findMapWaypoints(GameMap gameMap){
+    public static Collection<Waypoint> findMapWaypoints(GameMap gameMap){
         long startTime = System.nanoTime();
-        List<Waypoint> waypoints = RouteTools.generateGameMapWaypoints(gameMap);
+        Collection<Waypoint> waypoints = RouteTools.generateGameMapWaypoints(gameMap);
         long endTime = System.nanoTime();
         System.out.println("Execution time: " + (endTime - startTime) + " nanoseconds " +
                 "or " + (float) (endTime - startTime) / 1000000 + " milliseconds\n" +

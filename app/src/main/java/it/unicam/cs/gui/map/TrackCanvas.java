@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class TrackCanvas extends Canvas {
      * @param waypoint the waypoint to check
      * @return true if the waypoint is contained in the track, false otherwise
      */
+    @SuppressWarnings("unused")
     public boolean contains(Waypoint waypoint) {
         return CanvasTools.isPixel(
                 (int) waypoint.getX(),
@@ -89,6 +91,7 @@ public class TrackCanvas extends Canvas {
     public Color getColor() {
         return color;
     }
+
 
     /**
      * Get the calculated waypoints of the track
@@ -143,7 +146,7 @@ public class TrackCanvas extends Canvas {
      * Add the calculated waypoints to the track
      * @param calculatedWaypoints the calculated waypoints
      */
-    public void addWaypoints(List<Waypoint> calculatedWaypoints){
+    public void addWaypoints(Collection<Waypoint> calculatedWaypoints){
         Check.checkNull(calculatedWaypoints);
         this.waypoints.addAll(calculatedWaypoints);
     }

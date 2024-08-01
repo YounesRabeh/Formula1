@@ -82,6 +82,4 @@ public class GridCanvas extends Canvas {
         return Integer.MAX_VALUE;
     }
 
-
-
 }
