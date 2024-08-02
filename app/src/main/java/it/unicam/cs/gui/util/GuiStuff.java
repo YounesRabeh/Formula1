@@ -57,7 +57,7 @@ public class GuiStuff {
         Scene scene = createScene(root);
         configureStage(stage, scene);
 
-        drawGameElements(gameMap, canvases);
+        drawGameElements(gameMap);
     }
 
     /**
@@ -89,14 +89,15 @@ public class GuiStuff {
     /**
      * Draws the game elements on the canvases.
      * @param gameMap the game map
-     * @param canvases the canvases
      */
-    private static void drawGameElements(GameMap gameMap, Canvas[] canvases) {
+    private static void drawGameElements(GameMap gameMap) {
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
+        Canvas[] canvases = gameMap.getCanvases();
         List<GameMap.Waypoint> waypoints = trackCanvas.getWaypoints();
         List<Point2D> segmentsEndPoints = trackCanvas.getSegmentsEndPoints();
 
         drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
-        drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        //drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
 }

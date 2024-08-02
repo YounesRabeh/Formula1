@@ -130,11 +130,14 @@ public final class CanvasTools {
             if (lineCoords == null){
                 lineCoords = verifyLineH(trackCanvas, Y1, Y2, X);
                 if (lineCoords == null) {
-                    throw new IllegalArgumentException("not a valide line");
+                    throw new IllegalArgumentException("THE POINT ("
+                            + point2D.getX() + ", "  + point2D.getY() +
+                            ") IS NOT A VALID TRACK POINT TO CREATE A LINE FROM");
                 }
             } return lineCoords;
         }
-        throw new IllegalArgumentException("[!!]- THE POINT IS NOT IN TRACK");
+        throw new IllegalArgumentException("THE POINT ("
+                + point2D.getX() + ", "  + point2D.getY() + ") IS NOT IN TRACK");
     }
 
     /**

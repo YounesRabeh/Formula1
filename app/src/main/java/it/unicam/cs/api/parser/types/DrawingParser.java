@@ -167,6 +167,7 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('$', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
+                currentGC.setStroke(trackCanvas.getColor());
                 generateTrackSnapshot(this.map, trackCanvas, currentGC);
 
                 Line startLine = generateTrackMarker(trackCanvas, command.params());

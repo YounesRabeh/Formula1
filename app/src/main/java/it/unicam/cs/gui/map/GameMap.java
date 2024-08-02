@@ -86,7 +86,7 @@ public class GameMap {
             int x = (int) e.getX();
             int y = (int) e.getY();
             Color pixelColor = CanvasTools.getPixelColor(x, y, trackCanvas.getTrackSnapshot());
-            if (pixelColor.equals(TRACK_COLOR)){
+            if (pixelColor.equals(trackCanvas.getColor())){
                 System.out.printf("(%d, %d) is a TRACK pixel\n", x, y);
             } else {
                 System.out.printf("(%d, %d) is NOT A TRACK pixel, having %s as a color.\n",
@@ -174,19 +174,30 @@ public class GameMap {
         return height;
     }
 
-    public Waypoint createWaypoint(double x, double y) {
+    /**
+     * Create a new waypoint with the given x and y coordinates.
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return a new waypoint
+     * @throws IllegalArgumentException if the waypoint is not on a grid intersection
+     */
+    public Waypoint createWaypoint(double x, double y) throws IllegalArgumentException {
         return new Waypoint(x, y);
     }
 
+    /**
+     * A {@code Waypoint} is a point in a 2D space that is on a grid intersection.
+     * so It's an admissible point in the map (an admissible position for ta car).
+     * @see Point2D
+     * @author Younes Rabeh
+     * @version 1.2
+     */
     public class Waypoint extends Point2D {
         private Waypoint(double x, double y) {
             super(x, y);
             int currentCellSize = gridCanvas.getCellSize();
-            if (currentCellSize == 0) {
-                throw new IllegalStateException("The cell size must be set before creating a waypoint");
-            }
             if ((x % currentCellSize != 0) || (y % currentCellSize != 0)) {
-                throw new IllegalArgumentException(x + " and " + y + " must be divisible by 20");
+                throw new IllegalArgumentException("The waypoint (" + x + ", " + y + ") is not on the grid");
             }
         }
     }

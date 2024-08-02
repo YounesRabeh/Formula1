@@ -30,13 +30,13 @@ public class TrackCanvas extends Canvas {
     private int trackWidth;
     /** The admissible waypoints of the track */
     private final List<GameMap.Waypoint> waypoints = new ArrayList<>();
-    /** The parsed segments end points of the track */
+    /** The parsed segments end points of the track plus the start/finish line */
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
-    /** To see if the track is closed (a circular track) **/
+    /** To see if the track is closed (a circular track). Default is false **/
     private boolean isTrackClosed = false;
     /** The start line of the track */
     private Line startLine;
-    /** The end line of the track */
+    /** The finish line of the track */
     private Line finishLine;
 
     /**
