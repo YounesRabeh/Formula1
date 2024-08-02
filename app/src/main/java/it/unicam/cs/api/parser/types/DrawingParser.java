@@ -1,7 +1,6 @@
 package it.unicam.cs.api.parser.types;
 
 import it.unicam.cs.api.components.container.Graphics;
-import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Characteristics;
@@ -173,7 +172,7 @@ public class DrawingParser extends AbstractParser {
                 Line startLine = generateTrackMarker(trackCanvas, command.params());
                 trackCanvas.setStartLine(startLine);
                 trackCanvas.removeFirstSegmentsEndPoint();
-                trackCanvas.addFirstSegmentsEndPoint(new Waypoint(command.params()[0], command.params()[1]));
+                trackCanvas.addFirstSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, startLine);
             }
         });
@@ -184,7 +183,7 @@ public class DrawingParser extends AbstractParser {
 
                 Line finishLine = generateTrackMarker(trackCanvas, command.params());
                 trackCanvas.setFinishLine(finishLine);
-                trackCanvas.addSegmentsEndPoint(new Waypoint(command.params()[0], command.params()[1]));
+                trackCanvas.addSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, finishLine);
             }
         });

@@ -1,9 +1,9 @@
 package it.unicam.cs.gui.map;
 
-import it.unicam.cs.DebugData;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.gui.util.CanvasTools;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
@@ -174,6 +174,20 @@ public class GameMap {
         return height;
     }
 
+    public Waypoint createWaypoint(double x, double y) {
+        return new Waypoint(x, y);
+    }
 
-
+    public class Waypoint extends Point2D {
+        private Waypoint(double x, double y) {
+            super(x, y);
+            int currentCellSize = gridCanvas.getCellSize();
+            if (currentCellSize == 0) {
+                throw new IllegalStateException("The cell size must be set before creating a waypoint");
+            }
+            if ((x % currentCellSize != 0) || (y % currentCellSize != 0)) {
+                throw new IllegalArgumentException(x + " and " + y + " must be divisible by 20");
+            }
+        }
+    }
 }

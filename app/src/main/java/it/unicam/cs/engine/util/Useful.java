@@ -2,8 +2,6 @@ package it.unicam.cs.engine.util;
 
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Graphics;
-import it.unicam.cs.api.components.nodes.Waypoint;
-import it.unicam.cs.engine.core.route.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
@@ -19,9 +17,9 @@ public final class Useful {
      * Print the waypoints of the game map.
      * @param waypoints the waypoints of the game map
      */
-    public static void printWaypoints(GraphicsContext gc, List<Waypoint> waypoints) {
+    public static void printWaypoints(GraphicsContext gc, List<GameMap.Waypoint> waypoints) {
         Graphics.setFill(gc, new int[]{255, 0, 0});
-        for (Waypoint coords : waypoints) {
+        for (GameMap.Waypoint coords : waypoints) {
             System.out.printf("Black pixel found at (%d, %d)\n", (int) coords.getX(), (int) coords.getY());
         }
     }
@@ -31,9 +29,9 @@ public final class Useful {
      * @param gc the GraphicsContext
      * @param waypoints the waypoints of the game map
      */
-    public static void drawWaypoints(GraphicsContext gc, List<Waypoint> waypoints){
+    public static void drawWaypoints(GraphicsContext gc, List<GameMap.Waypoint> waypoints){
         Graphics.setFill(gc, new int[]{255, 0, 0});
-        for (Waypoint coords : waypoints) {
+        for (GameMap.Waypoint coords : waypoints) {
             Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
         }
     }

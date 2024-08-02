@@ -2,7 +2,6 @@ package it.unicam.cs.gui.map;
 
 
 import it.unicam.cs.api.components.container.Characteristics;
-import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.geometry.Point2D;
@@ -30,7 +29,7 @@ public class TrackCanvas extends Canvas {
     /** The width of the track */
     private int trackWidth;
     /** The admissible waypoints of the track */
-    private final List<Waypoint> waypoints = new ArrayList<>();
+    private final List<GameMap.Waypoint> waypoints = new ArrayList<>();
     /** The parsed segments end points of the track */
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
     /** To see if the track is closed (a circular track) **/
@@ -57,7 +56,7 @@ public class TrackCanvas extends Canvas {
      * @return true if the waypoint is contained in the track, false otherwise
      */
     @SuppressWarnings("unused")
-    public boolean contains(Waypoint waypoint) {
+    public boolean contains(GameMap.Waypoint waypoint) {
         return CanvasTools.isPixel(
                 (int) waypoint.getX(),
                 (int) waypoint.getY(),
@@ -97,7 +96,7 @@ public class TrackCanvas extends Canvas {
      * Get the calculated waypoints of the track
      * @return the calculated waypoints of the track
      */
-    public List<Waypoint> getWaypoints(){
+    public List<GameMap.Waypoint> getWaypoints(){
         return this.waypoints;
     }
 
@@ -146,7 +145,7 @@ public class TrackCanvas extends Canvas {
      * Add the calculated waypoints to the track
      * @param calculatedWaypoints the calculated waypoints
      */
-    public void addWaypoints(Collection<Waypoint> calculatedWaypoints){
+    public void addWaypoints(Collection<GameMap.Waypoint> calculatedWaypoints){
         Check.checkNull(calculatedWaypoints);
         this.waypoints.addAll(calculatedWaypoints);
     }

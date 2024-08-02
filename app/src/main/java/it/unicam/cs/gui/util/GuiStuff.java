@@ -1,6 +1,5 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.api.components.nodes.Waypoint;
 import it.unicam.cs.api.parser.types.DrawingParser;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -94,7 +93,7 @@ public class GuiStuff {
      */
     private static void drawGameElements(GameMap gameMap, Canvas[] canvases) {
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
-        List<Waypoint> waypoints = trackCanvas.getWaypoints();
+        List<GameMap.Waypoint> waypoints = trackCanvas.getWaypoints();
         List<Point2D> segmentsEndPoints = trackCanvas.getSegmentsEndPoints();
 
         drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
