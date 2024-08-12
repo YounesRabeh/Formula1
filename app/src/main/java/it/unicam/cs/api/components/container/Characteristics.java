@@ -12,7 +12,7 @@ public interface Characteristics {
     Color TRACK_COLOR = Color.BLACK;
     /** The color of the grid */
     Color GRID_COLOR = Color.GRAY;
-
+    /** The color of the track markers */
     Color TRACK_LINE_MARKER_COLOR = Color.WHITE;
     /** The width of the track markers line */
     int TRACK_MARKER_LINE_WIDTH = 6;

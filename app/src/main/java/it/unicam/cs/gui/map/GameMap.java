@@ -182,7 +182,22 @@ public class GameMap {
      * @throws IllegalArgumentException if the waypoint is not on a grid intersection
      */
     public Waypoint createWaypoint(double x, double y) throws IllegalArgumentException {
+        checkWaypointCoordinates(x, y);
         return new Waypoint(x, y);
+    }
+
+    /**
+     * Check if the waypoint is on a grid intersection.
+     * @param x the x coordinate
+     * @param y the y coordinate
+
+     */
+    private void checkWaypointCoordinates(double x, double y){
+        Check.checkNumbers(x, y);
+        int currentCellSize = gridCanvas.getCellSize();
+        if ((x % currentCellSize != 0) || (y % currentCellSize != 0)) {
+            throw new IllegalArgumentException("The waypoint (" + x + ", " + y + ") is not on the grid");
+        }
     }
 
     /**
@@ -195,10 +210,8 @@ public class GameMap {
     public class Waypoint extends Point2D {
         private Waypoint(double x, double y) {
             super(x, y);
-            int currentCellSize = gridCanvas.getCellSize();
-            if ((x % currentCellSize != 0) || (y % currentCellSize != 0)) {
-                throw new IllegalArgumentException("The waypoint (" + x + ", " + y + ") is not on the grid");
-            }
         }
+
+
     }
 }
