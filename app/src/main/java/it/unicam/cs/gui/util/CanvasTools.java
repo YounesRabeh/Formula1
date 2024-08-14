@@ -3,12 +3,15 @@ package it.unicam.cs.gui.util;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 
+import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+
+import java.util.Collection;
 
 
 /**
@@ -185,5 +188,7 @@ public final class CanvasTools {
         }
         return null;
     }
+
+
 
 }

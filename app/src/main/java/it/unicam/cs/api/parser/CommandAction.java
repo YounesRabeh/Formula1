@@ -2,7 +2,7 @@ package it.unicam.cs.api.parser;
 
 
 /**
- * An interface responsible for executing a command, via lambda expressions.
+ * An interface responsible for executing a command, used by the parser to execute the command.
  *
  * @see Command
  * @author Younes Rabeh

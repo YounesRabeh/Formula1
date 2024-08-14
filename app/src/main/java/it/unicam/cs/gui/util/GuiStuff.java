@@ -1,6 +1,8 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.api.components.container.Movement;
 import it.unicam.cs.api.parser.types.DrawingParser;
+import it.unicam.cs.engine.core.route.RouteFinder;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -38,7 +41,7 @@ public class GuiStuff {
      */
     public static void initializeAndShowStage(Stage stage, Logger LOGGER) throws IOException, URISyntaxException {
         DrawingParser parser = new DrawingParser(
-                getResourceFile(PARSER_FILE_PATH, F1_MAP_FILE_EXTENSION),
+                getResourceFile(PARSER_FILE_PATH),
                 F1_MAP_FILE_EXTENSION
         );
         Optional<GameMap> optionalGameMap = parser.start();
@@ -58,6 +61,30 @@ public class GuiStuff {
         configureStage(stage, scene);
 
         drawGameElements(gameMap);
+        //System.out.println(
+        //        gameMap.getFinishLine().getWaypoints()
+        //);
+
+        //System.out.println("Route found: " + RouteFinder.findRoute(
+        //        gameMap.getTrackCanvas().getWaypoints(),
+        //        gameMap,
+        //        gameMap.createWaypoint(100, 300)
+        //));
+        GameMap.Waypoint origin = gameMap.createWaypoint(100, 300);
+
+        gameMap.getPossibleNextWaypoints(gameMap, origin)
+            .forEach(waypoint -> {
+                for (Movement movement : Movement.values()) {
+                    double expectedX = origin.getX() + movement.getXOffset() * gameMap.getGridCanvas().getCellSize();
+                    double expectedY = origin.getY() + movement.getYOffset() * gameMap.getGridCanvas().getCellSize();
+                    if (waypoint.getX() == expectedX && waypoint.getY() == expectedY) {
+                        System.out.println(waypoint + " " + movement);
+                        break;
+                    }
+                }
+            }
+        );
+
     }
 
     /**
@@ -93,10 +120,10 @@ public class GuiStuff {
     private static void drawGameElements(GameMap gameMap) {
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
         Canvas[] canvases = gameMap.getCanvases();
-        List<GameMap.Waypoint> waypoints = trackCanvas.getWaypoints();
+        Collection<GameMap.Waypoint> waypoints = trackCanvas.getWaypoints();
         List<Point2D> segmentsEndPoints = trackCanvas.getSegmentsEndPoints();
 
-        drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoints);
+        drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), (List<GameMap.Waypoint>) waypoints);
         //drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
         drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }

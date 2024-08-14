@@ -2,11 +2,16 @@ package it.unicam.cs.gui.map;
 
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
+import it.unicam.cs.api.components.container.Movement;
+import it.unicam.cs.api.components.nodes.FinishLine;
 import it.unicam.cs.gui.util.CanvasTools;
+import it.unicam.cs.gui.util.MapTools;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Stack;
 import java.util.TreeSet;
 
@@ -36,6 +41,8 @@ public class GameMap {
     private final int width;
     /** The height of the map */
     private final int height;
+    /** The finish line of the track (The car's target) */
+    private FinishLine finishLine;
 
 
     /**
@@ -108,7 +115,6 @@ public class GameMap {
         }
     }
 
-
     /**
      * Get the grid canvas
      * @return the grid canvas
@@ -175,6 +181,23 @@ public class GameMap {
     }
 
     /**
+     * Get the finish line of the track, as a collection of waypoints.
+     * @return the finish line of the track
+     */
+    public FinishLine getFinishLine() {
+        return finishLine;
+    }
+
+    /**
+     * Create a finish line with the given origin waypoint.
+     * The origin should be the waypoint fetched from the {@code finishLine command} in the parser.
+     * @param origin the origin waypoint
+     */
+    public void createFinishLine(Waypoint origin){
+        finishLine = new FinishLine(MapTools.getWaypointsOnLevelX(this, origin));
+    }
+
+    /**
      * Create a new waypoint with the given x and y coordinates.
      * @param x the x coordinate
      * @param y the y coordinate
@@ -190,13 +213,15 @@ public class GameMap {
      * Check if the waypoint is on a grid intersection.
      * @param x the x coordinate
      * @param y the y coordinate
-
+     * @throws IllegalArgumentException if the waypoint is not on a grid intersection or
+     * if x or y are non-positive numbers
      */
     private void checkWaypointCoordinates(double x, double y){
         Check.checkNumbers(x, y);
         int currentCellSize = gridCanvas.getCellSize();
         if ((x % currentCellSize != 0) || (y % currentCellSize != 0)) {
-            throw new IllegalArgumentException("The waypoint (" + x + ", " + y + ") is not on the grid");
+            throw new IllegalArgumentException(String.format("THE WAYPOINT (x=%d,y=%d) IS NOT ON A GRID INTERSECTION. " +
+                    "THE CELL SIZE IS %d", (int) x, (int) y, currentCellSize));
         }
     }
 
@@ -207,11 +232,39 @@ public class GameMap {
      * @author Younes Rabeh
      * @version 1.2
      */
-    public class Waypoint extends Point2D {
+    public static class Waypoint extends Point2D {
         private Waypoint(double x, double y) {
             super(x, y);
         }
 
+        @Override
+        public String toString() {
+            return String.format("Waypoint (x=%d, y=%d)" , (int) getX(), (int) getY());
+        }
+    }
 
+    /**
+     * Get the possible next (reachable) waypoints, given a waypoint.
+     * @return the possible next waypoints
+     */
+    public Collection<Waypoint> getPossibleNextWaypoints(GameMap gameMap, GameMap.Waypoint waypoint) {
+        // The function suppose that the waypoint is on the grid intersection
+        Collection<GameMap.Waypoint> possibleNextWaypoints = new ArrayList<>();
+        int cellSize = gameMap.getGridCanvas().getCellSize();
+
+        for (Movement movement : Movement.values()) {
+            double newX = waypoint.getX() + movement.getXOffset() * cellSize;
+            double newY = waypoint.getY() + movement.getYOffset() * cellSize;
+            try {
+                GameMap.Waypoint nextWaypoint = gameMap.createWaypoint(newX, newY);
+                if (gameMap.getTrackCanvas().containsWaypoint(nextWaypoint)) {
+                    possibleNextWaypoints.add(nextWaypoint);
+                }
+            } catch (IllegalArgumentException ignored) {
+                // Ignore waypoints that are not on the grid intersection
+            }
+        }
+
+        return possibleNextWaypoints;
     }
 }

@@ -26,7 +26,7 @@ import static it.unicam.cs.api.components.container.Resources.getFileExtension;
  * <ul>- {@code Identifier:} The first character (Capital for convention) of the line.</ul>
  * <ul>- {@code Parameters:} The Integers after the identifier.</ul>
  *
- * <b>THE PARSER ONLY ACCEPTS INTEGERS AS PARAMETERS </b>
+ * <b>THE PARSER ONLY ACCEPTS NON-NEGATIVE INTEGERS AS PARAMETERS </b>
  * will be changed in the future.
  * @see Interpretable
  * @see Information

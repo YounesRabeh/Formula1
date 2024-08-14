@@ -3,7 +3,7 @@ package it.unicam.cs.gui.map;
 
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
-import it.unicam.cs.gui.util.CanvasTools;
+import it.unicam.cs.api.components.container.Movement;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
@@ -21,15 +21,15 @@ import java.util.List;
  * @author Younes Rabeh
  * @version 1.4
  */
-public class TrackCanvas extends Canvas {
+public class TrackCanvas extends Canvas implements Characteristics {
     /** The snapshot of the canvas */
     private WritableImage snapshot;
     /** The color of the canvas */
-    private final Color color;
+    private Color color;
     /** The width of the track */
-    private int trackWidth;
+    private int trackWidth = Characteristics.DEFAULT_TRACK_WIDTH;
     /** The admissible waypoints of the track */
-    private final List<GameMap.Waypoint> waypoints = new ArrayList<>();
+    private final Collection<GameMap.Waypoint> waypoints = new ArrayList<>();
     /** The parsed segments end points of the track plus the start/finish line */
     private final List<Point2D> segmentsEndPoints = new LinkedList<>();
     /** To see if the track is closed (a circular track). Default is false **/
@@ -56,13 +56,8 @@ public class TrackCanvas extends Canvas {
      * @return true if the waypoint is contained in the track, false otherwise
      */
     @SuppressWarnings("unused")
-    public boolean contains(GameMap.Waypoint waypoint) {
-        return CanvasTools.isPixel(
-                (int) waypoint.getX(),
-                (int) waypoint.getY(),
-                this.getTrackSnapshot(),
-                this.getColor()
-        );
+    public boolean containsWaypoint(GameMap.Waypoint waypoint){
+        return waypoints.contains(waypoint);
     }
 
     /**
@@ -71,7 +66,7 @@ public class TrackCanvas extends Canvas {
      * @throws IllegalStateException if the snapshot has not been set
      */
     public WritableImage getTrackSnapshot() {
-        if (snapshot == null) throw new IllegalStateException("[!!]- The snapshot has not been set");
+        if (snapshot == null) throw new IllegalStateException("THE SNAPSHOT HAS NOT BEEN SET YET");
         return snapshot;
     }
 
@@ -91,12 +86,11 @@ public class TrackCanvas extends Canvas {
         return color;
     }
 
-
     /**
      * Get the calculated waypoints of the track
      * @return the calculated waypoints of the track
      */
-    public List<GameMap.Waypoint> getWaypoints(){
+    public Collection<GameMap.Waypoint> getWaypoints(){
         return this.waypoints;
     }
 
@@ -141,6 +135,8 @@ public class TrackCanvas extends Canvas {
         return Integer.MIN_VALUE;
     }
 
+
+
     /**
      * Add the calculated waypoints to the track
      * @param calculatedWaypoints the calculated waypoints
@@ -184,7 +180,7 @@ public class TrackCanvas extends Canvas {
         if (this.snapshot == null){
             this.snapshot = snapshot;
         } else {
-            throw new IllegalStateException("[!!]- The snapshot has already been set");
+            throw new IllegalStateException("THE SNAPSHOT HAS ALREADY BEEN SET");
         }
     }
 
@@ -196,6 +192,19 @@ public class TrackCanvas extends Canvas {
         Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, trackWidth);
         this.trackWidth = trackWidth;
         this.getGraphicsContext2D().setLineWidth(trackWidth);
+    }
+
+    /**
+     * Set the color of the canvas
+     * @param color the color of the canvas
+     */
+    public void setColor(Color color) {
+        if (this.color == null){
+            this.color = color;
+        } else {
+            throw new IllegalStateException("THE COLOR HAS ALREADY BEEN SET");
+        }
+        //this.getGraphicsContext2D().setStroke(color);
     }
 
     /**
@@ -212,7 +221,11 @@ public class TrackCanvas extends Canvas {
      * @param startLine the start line of the track
      */
     public void setStartLine(Line startLine){
-        this.startLine = startLine;
+        if (this.startLine == null){
+            this.startLine = startLine;
+        } else {
+            throw new IllegalStateException("THE START LINE HAS ALREADY BEEN SET");
+        }
     }
 
     /**
@@ -220,6 +233,12 @@ public class TrackCanvas extends Canvas {
      * @param finishLine the finish line of the track
      */
     public void setFinishLine(Line finishLine){
-        this.finishLine = finishLine;
+        if (this.finishLine == null){
+            this.finishLine = finishLine;
+        } else {
+            throw new IllegalStateException("THE FINISH LINE HAS ALREADY BEEN SET");
+        }
     }
+
+
 }
