@@ -19,6 +19,12 @@ public final class MapTools {
     /** Prevent instantiation */
     private MapTools() {}
 
+    /**
+     * Get the waypoints on the level x of the given waypoint.
+     * @param gameMap the game map
+     * @param origin the origin waypoint
+     * @return the waypoints on the level x of the given waypoint
+     */
     public static Collection<GameMap.Waypoint> getWaypointsOnLevelX(GameMap gameMap, GameMap.Waypoint origin){
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
         Line finishLine = trackCanvas.getFinishLine();

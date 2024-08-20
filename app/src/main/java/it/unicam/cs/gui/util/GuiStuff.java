@@ -59,6 +59,7 @@ public class GuiStuff {
 
         Scene scene = createScene(root);
         configureStage(stage, scene);
+        stage.setMaximized(true);
 
         drawGameElements(gameMap);
         //System.out.println(
@@ -72,18 +73,18 @@ public class GuiStuff {
         //));
         GameMap.Waypoint origin = gameMap.createWaypoint(100, 300);
 
-        gameMap.getPossibleNextWaypoints(gameMap, origin)
-            .forEach(waypoint -> {
-                for (Movement movement : Movement.values()) {
-                    double expectedX = origin.getX() + movement.getXOffset() * gameMap.getGridCanvas().getCellSize();
-                    double expectedY = origin.getY() + movement.getYOffset() * gameMap.getGridCanvas().getCellSize();
-                    if (waypoint.getX() == expectedX && waypoint.getY() == expectedY) {
-                        System.out.println(waypoint + " " + movement);
-                        break;
-                    }
-                }
-            }
-        );
+        //gameMap.getPossibleNextWaypoints(gameMap, origin)
+        //    .forEach(waypoint -> {
+        //        for (Movement movement : Movement.values()) {
+        //            double expectedX = origin.getX() + movement.getXOffset() * gameMap.getGridCanvas().getCellSize();
+        //            double expectedY = origin.getY() + movement.getYOffset() * gameMap.getGridCanvas().getCellSize();
+        //            if (waypoint.getX() == expectedX && waypoint.getY() == expectedY) {
+        //                System.out.println(waypoint + " " + movement);
+        //                break;
+        //            }
+        //        }
+        //    }
+        //);
 
     }
 

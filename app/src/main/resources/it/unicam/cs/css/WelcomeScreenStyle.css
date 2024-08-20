@@ -1,0 +1,21 @@
+.anchor-pane {
+    -fx-background-image: url("../img/f1-welcome-screen.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+
+
+#quitButton {
+    -fx-background-radius: 10;
+    -fx-background-color: #da0202;
+}
+
+#quitButton:hover {
+    -fx-background-color: #fb3636;
+}
+
+#quitButton:pressed {
+    -fx-background-color: #a80d0d;
+}

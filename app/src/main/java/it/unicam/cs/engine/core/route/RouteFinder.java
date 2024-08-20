@@ -15,6 +15,10 @@ public final class RouteFinder {
     /** Prevent instantiation of this utility class. */
     private RouteFinder() {}
 
+    public static GameMap.Waypoint nextMove(GameMap.Waypoint current){
+        return null;
+    }
+
 
     public static Route findRoute(Collection<GameMap.Waypoint> waypoints, GameMap gameMap, GameMap.Waypoint start) {
         Queue<List<GameMap.Waypoint>> queue = new LinkedList<>();

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
  */
 public interface DebugData {
-    boolean FXML_TEST = false;
+    boolean FXML_TEST = true;
     int WIDTH = 1000;
     int HEIGHT = 900;
     String APP_WINDOW_TITLE = "FORMULA 1";
@@ -18,7 +18,7 @@ public interface DebugData {
     // NOTE: Do not change the following values (Action dependent)
     Logger LOGGER = Logger.getLogger(App.class.getName());
     String PARSER_FILE_PATH = "/it/unicam/cs/data/test1.f1m";
-    String FXML_FILE_PATH = "/it/unicam/cs/fxml/app.fxml";
+    String FXML_FILE_PATH = "/it/unicam/cs/fxml/WelcomeScene.fxml";
     int TRACK_LVL = 0;
     int EXTRA_LVL = 1;
     int WAYPOINT_LVL = 2;

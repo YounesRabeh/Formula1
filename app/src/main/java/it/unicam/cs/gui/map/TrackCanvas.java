@@ -3,7 +3,6 @@ package it.unicam.cs.gui.map;
 
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
-import it.unicam.cs.api.components.container.Movement;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
