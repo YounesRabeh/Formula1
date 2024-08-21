@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static it.unicam.cs.api.components.container.Resources.getResourceURL;
 
-public class WelcomeSceneController {
+public class WelcomeSceneController extends SceneController {
     @FXML
     private Button localButton;
     @FXML
@@ -17,15 +17,22 @@ public class WelcomeSceneController {
     private Button quitButton;
 
 
+    /**
+     * Quit the application
+     */
     @FXML
     protected void quitButtonClick() {
+        //TODO: add the background checks to close without corrupting the data
         System.exit(0);
     }
 
+    /**
+     * switch to the local game scene
+     */
     @FXML
     protected void localButtonClick() {
         try {
-            SceneController.setScene(getResourceURL(DebugData.GAME_SCENE_FXML));
+           setScene(getResourceURL(DebugData.GAME_SCENE_FXML));
         } catch (IOException e) {
             e.getCause();
         }

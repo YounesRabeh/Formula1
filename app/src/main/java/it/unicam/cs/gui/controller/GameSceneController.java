@@ -17,7 +17,7 @@ import static it.unicam.cs.api.parser.Information.F1_MAP_FILE_EXTENSION;
 import static it.unicam.cs.engine.util.Useful.alignAll;
 import static it.unicam.cs.gui.util.GuiStuff.*;
 
-public class GameSceneController {
+public class GameSceneController extends SceneController {
     @FXML
     private AnchorPane anchorPane;
 
@@ -30,10 +30,16 @@ public class GameSceneController {
                 drawGameElements(gameMap);
             });
         } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+            e.getCause();
         }
     }
 
+    /**
+     * Get the game map from the corresponding file. {@link it.unicam.cs.DebugData#PARSER_FILE_PATH}
+     * @return the game map
+     * @throws URISyntaxException if the URI syntax is incorrect
+     * @throws IOException if an I/O error occurs
+     */
     private Optional<GameMap> getGameMap() throws URISyntaxException, IOException {
         DrawingParser parser = new DrawingParser(
                 getResourceFile(PARSER_FILE_PATH),
