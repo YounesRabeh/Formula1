@@ -17,7 +17,6 @@ public class App extends Application implements DebugData {
     public void start(Stage stage) {
         try {
             SceneController.init(stage, getResourceURL(WELCOME_SCENE_FXML));
-            SceneController.init(stage, getResourceURL(WELCOME_SCENE_FXML));
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
