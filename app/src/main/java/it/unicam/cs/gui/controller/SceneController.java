@@ -2,7 +2,6 @@ package it.unicam.cs.gui.controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,13 +15,14 @@ public final class SceneController {
     public static void setStage(Stage stage) {
         SceneController.stage = stage;
         SceneController.stage.setMaximized(true);
+        SceneController.stage.setResizable(false);
     }
 
     public static void setScene(URL fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(fxmlFile);
         Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
         stage.setMaximized(true);
+        stage.setScene(scene);
         stage.show();
     }
 

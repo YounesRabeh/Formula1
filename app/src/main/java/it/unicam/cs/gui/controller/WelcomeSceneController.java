@@ -16,12 +16,6 @@ public class WelcomeSceneController {
     @FXML
     private Button quitButton;
 
-    // TODO: Disable the network button
-    //@FXML
-    //public void initialize() {
-    //    networkButton.setDisable(true);
-    //}
-
 
     @FXML
     protected void quitButtonClick() {

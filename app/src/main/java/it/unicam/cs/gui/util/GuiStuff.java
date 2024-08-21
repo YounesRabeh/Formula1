@@ -30,45 +30,6 @@ import static it.unicam.cs.engine.util.Useful.*;
 public class GuiStuff {
 
     /**
-     * Initializes and shows the stage. The stage is initialized with the given game map.
-     * The game map is parsed from the drawing parser.
-     * @param stage the stage to initialize and show
-     * @param LOGGER the logger
-     * @throws IOException if an I/O error occurs
-     * @throws URISyntaxException if a syntax error occurs
-     */
-    public static void init(Logger LOGGER) throws IOException, URISyntaxException {
-
-
-        //System.out.println(
-        //        gameMap.getFinishLine().getWaypoints()
-        //);
-
-        //System.out.println("Route found: " + RouteFinder.findRoute(
-        //        gameMap.getTrackCanvas().getWaypoints(),
-        //        gameMap,
-        //        gameMap.createWaypoint(100, 300)
-        //));
-        //GameMap.Waypoint origin = gameMap.createWaypoint(100, 300);
-
-
-
-        //gameMap.getPossibleNextWaypoints(gameMap, origin)
-        //    .forEach(waypoint -> {
-        //        for (Movement movement : Movement.values()) {
-        //            double expectedX = origin.getX() + movement.getXOffset() * gameMap.getGridCanvas().getCellSize();
-        //            double expectedY = origin.getY() + movement.getYOffset() * gameMap.getGridCanvas().getCellSize();
-        //            if (waypoint.getX() == expectedX && waypoint.getY() == expectedY) {
-        //                System.out.println(waypoint + " " + movement);
-        //                break;
-        //            }
-        //        }
-        //    }
-        //);
-
-    }
-
-    /**
      * Creates a scene with the given root.
      * @param root the root of the scene
      * @return the scene
