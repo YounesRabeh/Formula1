@@ -1,7 +1,6 @@
 package it.unicam.cs;
 
 import it.unicam.cs.gui.controller.SceneController;
-import it.unicam.cs.gui.util.GuiStuff;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.util.logging.Level;

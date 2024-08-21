@@ -27,7 +27,7 @@ public class WelcomeSceneController {
         try {
             SceneController.setScene(getResourceURL(DebugData.GAME_SCENE_FXML));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getCause();
         }
     }
 }
