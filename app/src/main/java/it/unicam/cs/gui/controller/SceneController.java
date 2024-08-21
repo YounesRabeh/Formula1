@@ -37,10 +37,10 @@ public abstract class SceneController {
      * @param stage the stage of the application
      */
     protected static void setStage(Stage stage) {
+        stage.setMaximized(true);
+        stage.setResizable(false);
+        stage.setTitle(APP_WINDOW_TITLE);
         SceneController.stage = stage;
-        SceneController.stage.setMaximized(true);
-        SceneController.stage.setResizable(false);
-        SceneController.stage.setTitle(APP_WINDOW_TITLE);
     }
 
     /**

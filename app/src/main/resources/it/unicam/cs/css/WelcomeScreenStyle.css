@@ -5,10 +5,16 @@
     -fx-background-repeat: no-repeat;
 }
 
-
+#localButton {
+    -fx-background-radius: 10;
+}
 
 #localButton:pressed {
     -fx-background-color: #000000;
+}
+
+#networkButton {
+    -fx-background-radius: 10;
 }
 
 #quitButton {
