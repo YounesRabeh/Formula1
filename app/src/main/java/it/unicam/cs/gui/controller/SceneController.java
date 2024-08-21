@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import static it.unicam.cs.DebugData.APP_WINDOW_TITLE;
+import static it.unicam.cs.gui.util.GuiTools.attach_WindowMaximizedListener;
 
 public abstract class SceneController {
     /** The stage of the application. */
@@ -18,11 +19,13 @@ public abstract class SceneController {
     private static double WIDTH;
     /** The height of the screen. */
     private static double HEIGHT;
-
+    /** The minimum width of the screen. */
     private static double MIN_WIDTH;
-
+    /** The minimum height of the screen. */
     private static double MIN_HEIGHT;
-
+    /** The scale minimization factor, the minimized window will
+     * be the original dimensions multiplied by this factor.
+     */
     private static final double MIN_SIZE_FACTOR = 0.75;
 
     /**
@@ -48,6 +51,7 @@ public abstract class SceneController {
     /**
      * Set up the screen dimensions. {@link SceneController#WIDTH} and {@link SceneController#HEIGHT}
      * Used to make sure that all screens are maximized.
+     * <b>This must be called before setting the stage.</b>
      */
     private static void screenDimensionsSetup() {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -64,6 +68,7 @@ public abstract class SceneController {
     protected static void setStage(Stage stage) {
         stage.setTitle(APP_WINDOW_TITLE);
         stage.setMaximized(true);
+        attach_WindowMaximizedListener(stage, WIDTH, HEIGHT, MIN_WIDTH, MIN_HEIGHT);
         SceneController.stage = stage;
     }
 
@@ -83,16 +88,6 @@ public abstract class SceneController {
 
         stage.setScene(scene);
         stage.show();
-
-        stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                stage.setWidth(WIDTH);
-                stage.setHeight(HEIGHT);
-            } else {
-                stage.setWidth(MIN_WIDTH);
-                stage.setHeight(MIN_HEIGHT);
-            }
-        });
     }
 
     /**

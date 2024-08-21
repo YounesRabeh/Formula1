@@ -12,10 +12,11 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static it.unicam.cs.DebugData.PARSER_FILE_PATH;
-import static it.unicam.cs.api.components.container.Resources.getResourceFile;
 import static it.unicam.cs.api.parser.Information.F1_MAP_FILE_EXTENSION;
+
+import static it.unicam.cs.api.components.container.Resources.getResourceFile;
 import static it.unicam.cs.engine.util.Useful.alignAll;
-import static it.unicam.cs.gui.util.GuiStuff.*;
+import static it.unicam.cs.gui.util.GuiTools.drawGameElements;
 
 public class GameSceneController extends SceneController {
     @FXML
