@@ -15,9 +15,7 @@ public final class SceneController {
 
     public static void setStage(Stage stage) {
         SceneController.stage = stage;
-        //SceneController.stage.setFullScreen(true);
         SceneController.stage.setMaximized(true);
-        SceneController.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     }
 
     public static void setScene(URL fxmlFile) throws IOException {

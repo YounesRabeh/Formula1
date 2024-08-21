@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import java.util.logging.Level;
 
+import static it.unicam.cs.api.components.container.Resources.getResourceURL;
+
 
 /**
  * JavaFX App
@@ -16,7 +18,7 @@ public class App extends Application implements DebugData {
     public void start(Stage stage) {
         try {
             SceneController.setStage(stage);
-            GuiStuff.init(LOGGER);
+            SceneController.setScene(getResourceURL(WELCOME_SCENE_FXML));
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }

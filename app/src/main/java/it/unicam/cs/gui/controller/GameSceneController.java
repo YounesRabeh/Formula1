@@ -20,8 +20,6 @@ import static it.unicam.cs.gui.util.GuiStuff.*;
 public class GameSceneController {
     @FXML
     private AnchorPane anchorPane;
-    @FXML
-    private Canvas canvas;
 
     @FXML
     public void initialize() {

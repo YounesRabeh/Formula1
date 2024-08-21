@@ -50,7 +50,7 @@ public class GuiStuff {
         //        gameMap.createWaypoint(100, 300)
         //));
         //GameMap.Waypoint origin = gameMap.createWaypoint(100, 300);
-        SceneController.setScene(getResourceURL(WELCOME_SCENE_FXML));
+
 
 
         //gameMap.getPossibleNextWaypoints(gameMap, origin)
