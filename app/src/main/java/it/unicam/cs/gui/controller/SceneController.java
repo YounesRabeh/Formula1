@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -10,18 +11,17 @@ import java.io.IOException;
 import java.net.URL;
 
 import static it.unicam.cs.DebugData.APP_WINDOW_TITLE;
-import static it.unicam.cs.gui.util.GuiTools.attach_WindowMaximizedListener;
-
+import static it.unicam.cs.gui.util.Listeners.attach_WindowMaximizedListener;
 public abstract class SceneController {
     /** The stage of the application. */
     private static Stage stage;
-    /** The width of the screen. */
+    /** The width of the stage. */
     private static double WIDTH;
-    /** The height of the screen. */
+    /** The height of the stage. */
     private static double HEIGHT;
-    /** The minimum width of the screen. */
+    /** The minimum width of the stage. */
     private static double MIN_WIDTH;
-    /** The minimum height of the screen. */
+    /** The minimum height of the stage. */
     private static double MIN_HEIGHT;
     /** The scale minimization factor, the minimized window will
      * be the original dimensions multiplied by this factor.
@@ -49,27 +49,14 @@ public abstract class SceneController {
     }
 
     /**
-     * Set up the screen dimensions. {@link SceneController#WIDTH} and {@link SceneController#HEIGHT}
-     * Used to make sure that all screens are maximized.
-     * <b>This must be called before setting the stage.</b>
-     */
-    private static void screenDimensionsSetup() {
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        WIDTH = screenBounds.getWidth();
-        HEIGHT = screenBounds.getHeight();
-        MIN_WIDTH = WIDTH * MIN_SIZE_FACTOR;
-        MIN_HEIGHT = HEIGHT * MIN_SIZE_FACTOR;
-    }
-
-    /**
      * Set the stage of the application. The application is maximized by default.
      * @param stage the stage of the application
      */
     protected static void setStage(Stage stage) {
         stage.setTitle(APP_WINDOW_TITLE);
-        stage.setMaximized(true);
         attach_WindowMaximizedListener(stage, WIDTH, HEIGHT, MIN_WIDTH, MIN_HEIGHT);
         SceneController.stage = stage;
+        Platform.runLater(() -> SceneController.stage.setMaximized(true));
     }
 
     /**
@@ -91,10 +78,24 @@ public abstract class SceneController {
     }
 
     /**
+     * Set up the screen dimensions. {@link SceneController#WIDTH} and {@link SceneController#HEIGHT}
+     * Used to make sure that all screens are maximized.
+     * <b>This must be called before setting the stage.</b>
+     */
+    private static void screenDimensionsSetup() {
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        WIDTH = screenBounds.getWidth();
+        HEIGHT = screenBounds.getHeight();
+        MIN_WIDTH = WIDTH * MIN_SIZE_FACTOR;
+        MIN_HEIGHT = HEIGHT * MIN_SIZE_FACTOR;
+    }
+
+    /**
      * Get the stage of the application.
      * @return the stage of the application
      */
     public static Stage getStage() {
         return stage;
     }
+
 }

@@ -73,17 +73,6 @@ public final class Useful {
     }
 
 
-    /**
-     * Align all the nodes in the root.
-     * @param root the root
-     * @param pos the position
-     * @param nodes the nodes
-     */
-    public static void alignAll(AnchorPane root, Pos pos, Node[] nodes){
-        for (Node node : nodes) {
-            StackPane.setAlignment(node, pos);
-        }
-        root.getChildren().addAll(nodes);
-    }
+
 
 }

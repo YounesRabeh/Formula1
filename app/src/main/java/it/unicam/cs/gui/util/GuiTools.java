@@ -1,10 +1,12 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.gui.controller.SceneController;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,27 +24,20 @@ public final class GuiTools {
     private GuiTools() {}
 
     /**
-     * Attach a listener to the stage to maximize/minimize the window.
-     * @param stage the stage of the application
-     * @param WIDTH the width of the window
-     * @param HEIGHT the height of the window
-     * @param MIN_WIDTH the minimum width of the window
-     * @param MIN_HEIGHT the minimum height of the window
+     * Align all the nodes in the root.
+     * @param root the root
+     * @param nodes the nodes
      */
-    public static void attach_WindowMaximizedListener(
-            Stage stage,
-            double WIDTH, double HEIGHT, double MIN_WIDTH, double MIN_HEIGHT
-    ){
-        stage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                stage.setWidth(WIDTH);
-                stage.setHeight(HEIGHT);
-            } else {
-                stage.setWidth(MIN_WIDTH);
-                stage.setHeight(MIN_HEIGHT);
-            }
-        });
+    public static void alignAll(AnchorPane root, Node[] nodes){
+        for (Node node : nodes) {
+            AnchorPane.setTopAnchor(node, 0.0);
+            AnchorPane.setBottomAnchor(node, 0.0);
+            AnchorPane.setLeftAnchor(node, 0.0);
+            AnchorPane.setRightAnchor(node, 0.0);
+        }
+        root.getChildren().addAll(nodes);
     }
+
 
 
     /**

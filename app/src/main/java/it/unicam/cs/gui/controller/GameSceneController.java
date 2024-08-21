@@ -15,7 +15,7 @@ import static it.unicam.cs.DebugData.PARSER_FILE_PATH;
 import static it.unicam.cs.api.parser.Information.F1_MAP_FILE_EXTENSION;
 
 import static it.unicam.cs.api.components.container.Resources.getResourceFile;
-import static it.unicam.cs.engine.util.Useful.alignAll;
+import static it.unicam.cs.gui.util.GuiTools.alignAll;
 import static it.unicam.cs.gui.util.GuiTools.drawGameElements;
 
 public class GameSceneController extends SceneController {
@@ -27,7 +27,7 @@ public class GameSceneController extends SceneController {
         try {
             getGameMap().ifPresent(gameMap -> {
                 Canvas[] canvases = gameMap.getCanvases();
-                alignAll(anchorPane, Pos.CENTER_LEFT, canvases);
+                alignAll(anchorPane, canvases);
                 drawGameElements(gameMap);
             });
         } catch (URISyntaxException | IOException e) {
