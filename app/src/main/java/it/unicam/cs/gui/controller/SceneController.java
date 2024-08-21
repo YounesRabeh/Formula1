@@ -1,7 +1,9 @@
 package it.unicam.cs.gui.controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,6 +15,10 @@ public abstract class SceneController {
     /** The stage of the application. */
     private static Stage stage;
 
+
+    private static double WIDTH;
+    private static double HEIGHT;
+
     /**
      * Initialize the application (The opening scene)
      * @param stage the stage of the application
@@ -22,6 +28,7 @@ public abstract class SceneController {
         if (SceneController.stage == null) {
             try { //TODO: add the splash screen and resources loading
                 System.gc();
+                setScreenDimensions();
                 setStage(stage);
                 setScene(fxmlFile);
             } catch (IOException e) {
@@ -30,6 +37,12 @@ public abstract class SceneController {
         } else { //TODO: add the custom resources & app logic exceptions
             throw new IllegalStateException("The stage is already set");
         }
+    }
+
+    private static void setScreenDimensions() {
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        WIDTH = screenBounds.getWidth();
+        HEIGHT = screenBounds.getHeight();
     }
 
     /**
@@ -50,10 +63,10 @@ public abstract class SceneController {
      */
     protected static void setScene(URL fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(fxmlFile);
-        Scene scene = new Scene(loader.load());
-        stage.setMaximized(true);
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(loader.load(), WIDTH, HEIGHT);
+        SceneController.stage.setMaximized(true);
+        SceneController.stage.setScene(scene);
+        SceneController.stage.show();
     }
 
     /**
