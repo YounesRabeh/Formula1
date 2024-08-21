@@ -7,6 +7,10 @@
 
 
 
+#localButton:pressed {
+    -fx-background-color: #000000;
+}
+
 #quitButton {
     -fx-background-radius: 10;
     -fx-background-color: #da0202;

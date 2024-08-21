@@ -8,6 +8,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.util.List;
@@ -78,7 +79,7 @@ public final class Useful {
      * @param pos the position
      * @param nodes the nodes
      */
-    public static void alignAll(StackPane root, Pos pos, Node[] nodes){
+    public static void alignAll(AnchorPane root, Pos pos, Node[] nodes){
         for (Node node : nodes) {
             StackPane.setAlignment(node, pos);
         }
