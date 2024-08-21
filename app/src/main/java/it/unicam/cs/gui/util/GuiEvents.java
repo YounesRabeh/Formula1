@@ -2,8 +2,13 @@ package it.unicam.cs.gui.util;
 
 import javafx.stage.Stage;
 
-public final class Listeners {
-    private Listeners() {}  // Prevent instantiation
+/**
+ * Utility class for listeners and event handling
+ * @author Younes Rabeh
+ * @version 1.0
+ */
+public final class GuiEvents {
+    private GuiEvents() {}  // Prevent instantiation
 
     /**
      * Attach a listener to the stage to maximize/minimize the window.

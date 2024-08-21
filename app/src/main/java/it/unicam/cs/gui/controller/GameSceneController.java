@@ -18,6 +18,10 @@ import static it.unicam.cs.api.components.container.Resources.getResourceFile;
 import static it.unicam.cs.gui.util.GuiTools.alignAll;
 import static it.unicam.cs.gui.util.GuiTools.drawGameElements;
 
+/**
+ * Controller for the game scene
+ * @see it.unicam.cs.gui.controller.SceneController
+ */
 public class GameSceneController extends SceneController {
     @FXML
     private AnchorPane anchorPane;

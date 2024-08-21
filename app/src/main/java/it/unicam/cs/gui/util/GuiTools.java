@@ -1,6 +1,5 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.gui.controller.SceneController;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;

@@ -8,6 +8,10 @@ import java.io.IOException;
 
 import static it.unicam.cs.api.components.container.Resources.getResourceURL;
 
+/**
+ * Controller for the welcome scene
+ * @see it.unicam.cs.gui.controller.SceneController
+ */
 public class WelcomeSceneController extends SceneController {
     @FXML
     private Button localButton;

@@ -11,7 +11,15 @@ import java.io.IOException;
 import java.net.URL;
 
 import static it.unicam.cs.DebugData.APP_WINDOW_TITLE;
-import static it.unicam.cs.gui.util.Listeners.attach_WindowMaximizedListener;
+import static it.unicam.cs.gui.util.GuiEvents.attach_WindowMaximizedListener;
+
+/**
+ * Abstract class for the scene controller.
+ * The scene controller is responsible for setting up the stage and the scene of the application.
+ * @see it.unicam.cs.App
+ * @author Younes Rabeh
+ * @version 1.3
+ */
 public abstract class SceneController {
     /** The stage of the application. */
     private static Stage stage;
