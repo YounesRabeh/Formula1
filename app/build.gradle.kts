@@ -22,6 +22,33 @@ tasks.withType<JavaCompile> {
   options.encoding = "UTF-8"
 }
 
+jlink {
+  launcher {
+    name = "Formula 1"
+  }
+  imageZip.set(layout.buildDirectory.file("image-zip/Formula1.zip"))
+  options.set(listOf(
+    "--strip-debug",
+    "--no-man-pages",
+    "--no-header-files",
+    "--add-modules=java.base,javafx.controls,javafx.fxml,jdk.jdwp.agent"  // Adding the required modules here
+  ))
+  imageDir.set(layout.buildDirectory.dir("jlink"))
+  imageName.set("Formula1")
+  moduleName.set("it.unicam.cs")
+
+  launcher {
+    name = "app"
+  }
+
+  jpackage {
+    imageOptions.addAll(listOf("--resource-dir", "src/main/resources"))
+    installerOptions.addAll(listOf("--resource-dir", "src/main/resources"))
+    installerType = "app-image"
+  }
+}
+
+
 application {
   mainModule.set("it.unicam.cs")
   mainClass.set("it.unicam.cs.App")
