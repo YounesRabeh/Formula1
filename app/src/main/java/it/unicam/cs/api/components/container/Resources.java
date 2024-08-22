@@ -1,17 +1,18 @@
 package it.unicam.cs.api.components.container;
 
 import it.unicam.cs.App;
+import javafx.scene.image.Image;
 
 import java.io.InputStream;
-import java.nio.file.Path;
+import java.nio.file.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -82,5 +83,39 @@ public final class Resources {
             return ""; // No extension found or dot is the last character
         }
         return fileName.substring(lastDotIndex + 1);
+    }
+
+    /**
+     * Gets the directory stream of all files having the specified glob pattern in a directory.
+     *
+     * @param directoryPath the path of the folder
+     * @param glob the glob pattern
+     * @return the directory stream
+     * @throws URISyntaxException if the path is not valid
+     * @throws IOException if the file cannot be read
+     */
+    public static DirectoryStream<Path> getDirectoryStreamOfAllIn(
+            String directoryPath,
+            String glob
+    ) throws URISyntaxException, IOException {
+        Path folderPath = getResourceFile(directoryPath).toPath();
+        return Files.newDirectoryStream(folderPath, glob);
+    }
+
+    /**
+     * Gets the icons from the specified folder.
+     *
+     * @param iconFolderPath the path of the folder
+     * @return the icons
+     * @throws URISyntaxException if the path is not valid
+     * @throws IOException if the file cannot be read
+     */
+    public static Collection<Image> getIcons(String iconFolderPath) throws URISyntaxException, IOException {
+        List<Image> icons = new ArrayList<>();
+
+        for (Path path : getDirectoryStreamOfAllIn(iconFolderPath, "*.png")) {
+            icons.add(new Image(path.toUri().toString()));
+        }
+        return icons;
     }
 }

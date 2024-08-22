@@ -8,9 +8,8 @@ import java.util.logging.Logger;
 
  */
 public interface DebugData {
-    int WIDTH = 1000;
-    int HEIGHT = 900;
     String APP_WINDOW_TITLE = "FORMULA 1";
+    String F1_APP_ICONS_FOLDER = "/it/unicam/cs/icons/";
 
 
 
@@ -24,6 +23,8 @@ public interface DebugData {
     int WAYPOINT_LVL = 2;
     int END_POINTS_LVL = 3;
     int GRID_LVL = 4;
+
+
 
 
 }

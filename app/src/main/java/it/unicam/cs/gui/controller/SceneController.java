@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.controller;
 
+import it.unicam.cs.api.components.container.Resources;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -8,9 +9,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import static it.unicam.cs.DebugData.APP_WINDOW_TITLE;
+import static it.unicam.cs.DebugData.F1_APP_ICONS_FOLDER;
 import static it.unicam.cs.gui.util.GuiEvents.attach_WindowMaximizedListener;
 
 /**
@@ -46,9 +49,9 @@ public abstract class SceneController {
             try { //TODO: add the splash screen and resources loading
                 System.gc();
                 screenDimensionsSetup();
-                setStage(stage);
+                stageSetup(stage);
                 setScene(fxmlFile);
-            } catch (IOException e) {
+            } catch (URISyntaxException | IOException e) {
                 e.getCause();
             }
         } else { //TODO: add the custom resources & app logic exceptions
@@ -58,12 +61,17 @@ public abstract class SceneController {
 
     /**
      * Set the stage of the application. The application is maximized by default.
+     * Also listens for the window maximization/minimization, and set the window icon.
      * @param stage the stage of the application
+     * @throws URISyntaxException if the URI syntax is incorrect
+     * @throws IOException if the file cannot be read
      */
-    protected static void setStage(Stage stage) {
+    protected static void stageSetup(Stage stage) throws URISyntaxException, IOException {
         stage.setTitle(APP_WINDOW_TITLE);
+        stage.getIcons().addAll(Resources.getIcons(F1_APP_ICONS_FOLDER));
         attach_WindowMaximizedListener(stage, WIDTH, HEIGHT, MIN_WIDTH, MIN_HEIGHT);
         SceneController.stage = stage;
+
         Platform.runLater(() -> SceneController.stage.setMaximized(true));
     }
 
