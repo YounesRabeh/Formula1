@@ -41,4 +41,16 @@ public class WelcomeSceneController extends SceneController {
             e.getCause();
         }
     }
+
+    /**
+     * switch to the network game scene
+     */
+    @FXML
+    protected void networkButtonClick() {
+        try { //FIXME: Change this
+            setScene(getResourceURL(DebugData.MAP_EDITOR_SCENE_FXML));
+        } catch (IOException e) {
+            e.getCause();
+        }
+    }
 }
