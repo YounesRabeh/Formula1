@@ -3,7 +3,6 @@ package it.unicam.cs.gui.util;
 import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 
-import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;

@@ -14,7 +14,6 @@ import java.net.URL;
 
 import static it.unicam.cs.DebugData.APP_WINDOW_TITLE;
 import static it.unicam.cs.DebugData.F1_APP_ICONS_FOLDER;
-import static it.unicam.cs.gui.util.GuiEvents.attach_WindowMaximizedListener;
 
 /**
  * Abstract class for the scene controller.
@@ -30,14 +29,6 @@ public abstract class SceneController {
     private static double WIDTH;
     /** The height of the stage. */
     private static double HEIGHT;
-    /** The minimum width of the stage. */
-    private static double MIN_WIDTH;
-    /** The minimum height of the stage. */
-    private static double MIN_HEIGHT;
-    /** The scale minimization factor, the minimized window will
-     * be the original dimensions multiplied by this factor.
-     */
-    private static final double MIN_SIZE_FACTOR = 0.75;
 
     /**
      * Initialize the application (The opening scene)
@@ -69,7 +60,7 @@ public abstract class SceneController {
     protected static void stageSetup(Stage stage) throws URISyntaxException, IOException {
         stage.setTitle(APP_WINDOW_TITLE);
         stage.getIcons().addAll(Resources.getIcons(F1_APP_ICONS_FOLDER));
-        attach_WindowMaximizedListener(stage, WIDTH, HEIGHT, MIN_WIDTH, MIN_HEIGHT);
+        stage.setResizable(false);
         SceneController.stage = stage;
 
         Platform.runLater(() -> SceneController.stage.setMaximized(true));
@@ -82,12 +73,7 @@ public abstract class SceneController {
      */
     protected static void setScene(URL fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(fxmlFile);
-        Scene scene;
-        if (stage.isMaximized()) {
-            scene = new Scene(loader.load(), WIDTH, HEIGHT);
-        } else {
-            scene = new Scene(loader.load(), MIN_WIDTH, MIN_HEIGHT);
-        }
+        Scene scene = new Scene(loader.load(), WIDTH, HEIGHT);
 
         stage.setScene(scene);
         stage.show();
@@ -102,8 +88,6 @@ public abstract class SceneController {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         WIDTH = screenBounds.getWidth();
         HEIGHT = screenBounds.getHeight();
-        MIN_WIDTH = WIDTH * MIN_SIZE_FACTOR;
-        MIN_HEIGHT = HEIGHT * MIN_SIZE_FACTOR;
     }
 
     /**
@@ -112,6 +96,22 @@ public abstract class SceneController {
      */
     public static Stage getStage() {
         return stage;
+    }
+
+    /**
+     * Get the width of the stage.
+     * @return the width of the stage
+     */
+    public static double getWidth() {
+        return WIDTH;
+    }
+
+    /**
+     * Get the height of the stage.
+     * @return the height of the stage
+     */
+    public static double getHeight() {
+        return HEIGHT;
     }
 
 }

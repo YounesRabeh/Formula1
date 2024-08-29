@@ -1,0 +1,13 @@
+
+
+#rightSplitPane > .split-pane-divider {
+    -fx-padding: 5px; /* Adjust the thickness here */
+    -fx-background-color: #616161;
+}
+
+
+#rightBottomPane {
+    -fx-background-color: #b8b7b6;
+}
+
+
