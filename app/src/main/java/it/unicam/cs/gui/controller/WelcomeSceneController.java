@@ -50,7 +50,7 @@ public class WelcomeSceneController extends SceneController {
      * Helper method to handle scene changes
      * @param fxmlFilePath the path to the FXML file
      */
-    private void changeScene(String fxmlFilePath) {
+    private synchronized void changeScene(String fxmlFilePath) {
         Platform.runLater(() -> {
             try {
                 setScene(getResourceURL(fxmlFilePath));

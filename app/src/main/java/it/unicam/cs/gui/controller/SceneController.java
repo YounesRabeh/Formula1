@@ -4,6 +4,7 @@ import it.unicam.cs.api.components.container.Resources;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
@@ -71,13 +72,16 @@ public abstract class SceneController {
      * @param fxmlFile the FXML file
      * @throws IOException if the FXML file is not found
      */
-    protected static void setScene(URL fxmlFile) throws IOException {
+    protected synchronized static void setScene(URL fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(fxmlFile);
-        Scene scene = new Scene(loader.load(), WIDTH, HEIGHT);
 
-        stage.setScene(scene);
+        if (stage.getScene() == null) {
+            stage.setScene(new Scene(loader.load(), WIDTH, HEIGHT));
+        } else {
+            stage.getScene().setRoot(loader.load());
+        }
+
         Platform.runLater(() -> {
-            stage.setFullScreen(true);
             stage.show();
         });
     }
