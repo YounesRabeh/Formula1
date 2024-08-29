@@ -19,6 +19,8 @@ public interface DebugData {
     String WELCOME_SCENE_FXML = "/it/unicam/cs/fxml/welcome-scene.fxml";
     String MAP_EDITOR_SCENE_FXML = "/it/unicam/cs/fxml/map-editor-scene.fxml";
     String GAME_SCENE_FXML = "/it/unicam/cs/fxml/game-scene.fxml";
+
+    String SEGMENT_BOX_ENTRY = "/it/unicam/cs/css/ui/SegmentEndpointEntryBoxStyle.css";
     int TRACK_LVL = 0;
     int EXTRA_LVL = 1;
     int WAYPOINT_LVL = 2;

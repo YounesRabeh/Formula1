@@ -1,0 +1,13 @@
+.HBox-segment-entry {
+    -fx-border-color: #434343;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+    -fx-border-radius: 5;
+}
+
+.cancel-button {
+    -fx-background-color: #bd0000;
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+    -fx-padding: 5px 10px;
+}

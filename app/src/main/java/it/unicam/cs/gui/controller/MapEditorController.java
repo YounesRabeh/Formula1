@@ -10,8 +10,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static it.unicam.cs.api.components.container.UiGenerator.addToVBOX;
-import static it.unicam.cs.api.components.container.UiGenerator.createSegmentEndpointEntry;
+import static it.unicam.cs.api.components.container.UiGenerator.*;
 
 
 /**
