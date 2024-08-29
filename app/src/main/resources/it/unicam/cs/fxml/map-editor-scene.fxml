@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.gui.controller.MapEditorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.gui.controller.MapEditorController">
    <children>
       <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.6" layoutX="307.0" layoutY="208.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -53,18 +53,14 @@
             </AnchorPane>
           <AnchorPane id="rightPane" fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <SplitPane id="rightSplitPane" fx:id="rightSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" stylesheets="@../css/MapEditorStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane id="rightSplitPane" fx:id="rightSplitPane" dividerPositions="0.8" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" stylesheets="@../css/MapEditorStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane fx:id="rightTopPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                      <AnchorPane fx:id="rightBottomPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <VBox prefHeight="348.0" prefWidth="395.0" />
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
+                        <ScrollPane fx:id="rightBottomPane" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <VBox fx:id="segmentsEndpointsVBox" prefHeight="73.0" prefWidth="400.0" />
+                           </content>
+                        </ScrollPane>
                     </items>
                   </SplitPane>
                </children></AnchorPane>

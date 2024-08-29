@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -60,10 +61,9 @@ public abstract class SceneController {
     protected static void stageSetup(Stage stage) throws URISyntaxException, IOException {
         stage.setTitle(APP_WINDOW_TITLE);
         stage.getIcons().addAll(Resources.getIcons(F1_APP_ICONS_FOLDER));
-        stage.setResizable(false);
+        stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         SceneController.stage = stage;
-
-        Platform.runLater(() -> SceneController.stage.setMaximized(true));
     }
 
     /**
@@ -76,7 +76,10 @@ public abstract class SceneController {
         Scene scene = new Scene(loader.load(), WIDTH, HEIGHT);
 
         stage.setScene(scene);
-        stage.show();
+        Platform.runLater(() -> {
+            stage.setFullScreen(true);
+            stage.show();
+        });
     }
 
     /**
@@ -85,7 +88,7 @@ public abstract class SceneController {
      * <b>This must be called before setting the stage.</b>
      */
     private static void screenDimensionsSetup() {
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         WIDTH = screenBounds.getWidth();
         HEIGHT = screenBounds.getHeight();
     }
@@ -113,5 +116,4 @@ public abstract class SceneController {
     public static double getHeight() {
         return HEIGHT;
     }
-
 }

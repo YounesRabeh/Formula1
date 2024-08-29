@@ -1,11 +1,18 @@
 package it.unicam.cs.gui.controller;
 
-import it.unicam.cs.gui.util.GuiEvents;
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Random;
+
+import static it.unicam.cs.api.components.container.UiGenerator.addToVBOX;
+import static it.unicam.cs.api.components.container.UiGenerator.createSegmentEndpointEntry;
+
 
 /**
  * Controller for the map editor scene
@@ -24,18 +31,24 @@ public class MapEditorController extends SceneController {
     @FXML
     private SplitPane rightSplitPane;
     @FXML
-    private Pane rightBottomPane;
+    private ScrollPane rightBottomPane;
     @FXML
     private Pane rightTopPane;
 
+    @FXML
+    private VBox segmentsEndpointsVBox;
+
     /** Minimum width for the left pane (the map preview)*/
-    public static final double LEFT_PANE_MIN_WIDTH = getWidth() * 0.5;
+    private static final double LEFT_PANE_MIN_WIDTH = getWidth() * 0.5;
     /** Minimum width for the right pane (the control panel)*/
-    public static final double RIGHT_PANE_MIN_WIDTH = getWidth() * 0.2;
+    private static final double RIGHT_PANE_MIN_WIDTH = getWidth() * 0.2;
     /** Minimum height for the right top pane (the map control panel)*/
-    public static final double RIGHT_TOP_PANE_MIN_HEIGHT = getHeight() * 0.2;
+    private static final double RIGHT_TOP_PANE_MIN_HEIGHT = getHeight() * 0.2;
     /** Minimum height for the right bottom pane (the segments endpoints preview)*/
-    public static final double RIGHT_BOTTOM_PANE_MIN_HEIGHT = getHeight() * 0.1;
+    private static final double RIGHT_BOTTOM_PANE_MIN_HEIGHT = getHeight() * 0.1;
+
+    private int segmentsEndpointsCounter;
+
 
 
 
@@ -51,8 +64,18 @@ public class MapEditorController extends SceneController {
 
         rightSplitPane.setDividerPositions(0.8);
         splitPane.setDividerPositions(0.6);
+        //TEST:
+        Random random = new Random();
+        ArrayList<HBox> segmentEndpointsEntries = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            segmentEndpointsEntries.add(
+                    createSegmentEndpointEntry(
+                            i, random.nextInt(0, 900), random.nextInt(0, 900)
+                    )
+            );
+        }
 
-
+        addToVBOX(segmentsEndpointsVBox, segmentEndpointsEntries);
     }
 
 
