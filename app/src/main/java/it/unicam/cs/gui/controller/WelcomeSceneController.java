@@ -12,6 +12,9 @@ import static it.unicam.cs.api.components.container.Resources.getResourceURL;
 /**
  * Controller for the welcome scene
  * @see it.unicam.cs.gui.controller.SceneController
+ * @author Younes Rabeh
+ * @version 1.0
+
  */
 public class WelcomeSceneController extends SceneController {
     @FXML

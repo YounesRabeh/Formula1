@@ -13,6 +13,7 @@ public interface DebugData {
 
 
 
+    //TEMP: For testing purposes
     // NOTE: Do not change the following values (Action dependent)
     Logger LOGGER = Logger.getLogger(App.class.getName());
     String PARSER_FILE_PATH = "/it/unicam/cs/data/test1.f1m";

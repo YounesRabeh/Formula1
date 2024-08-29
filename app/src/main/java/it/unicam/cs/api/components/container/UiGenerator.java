@@ -54,7 +54,6 @@ public final class UiGenerator {
         });
 
 
-
         List<Node> nodes = List.of(numberLabel, separator, xLabel, xField, yLabel, yField, cancelButton);
 
         // Set specific margins to adjust padding between labels and text fields
