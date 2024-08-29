@@ -34,6 +34,8 @@ public class MapEditorController extends SceneController {
     public static final double RIGHT_PANE_MIN_WIDTH = getWidth() * 0.2;
     /** Minimum height for the right top pane (the map control panel)*/
     public static final double RIGHT_TOP_PANE_MIN_HEIGHT = getHeight() * 0.2;
+    /** Minimum height for the right bottom pane (the segments endpoints preview)*/
+    public static final double RIGHT_BOTTOM_PANE_MIN_HEIGHT = getHeight() * 0.1;
 
 
 
@@ -45,6 +47,7 @@ public class MapEditorController extends SceneController {
         leftPane.setMinWidth(LEFT_PANE_MIN_WIDTH);
         rightPane.setMinWidth(RIGHT_PANE_MIN_WIDTH);
         rightTopPane.setMinHeight(RIGHT_TOP_PANE_MIN_HEIGHT);
+        rightBottomPane.setMinHeight(RIGHT_BOTTOM_PANE_MIN_HEIGHT);
 
         rightSplitPane.setDividerPositions(0.8);
         splitPane.setDividerPositions(0.6);
