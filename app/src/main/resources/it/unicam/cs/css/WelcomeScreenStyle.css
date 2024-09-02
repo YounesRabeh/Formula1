@@ -5,15 +5,15 @@
     -fx-background-repeat: no-repeat;
 }
 
-#localButton {
+#playButton {
     -fx-background-radius: 10;
 }
 
-#localButton:pressed {
+#playButton:pressed {
     -fx-background-color: #000000;
 }
 
-#networkButton {
+#createMapButton {
     -fx-background-radius: 10;
 }
 

@@ -18,9 +18,9 @@ import static it.unicam.cs.api.components.container.Resources.getResourceURL;
  */
 public class WelcomeSceneController extends SceneController {
     @FXML
-    private Button localButton;
+    private Button playButton;
     @FXML
-    private Button networkButton;
+    private Button createMapButton;
     @FXML
     private Button quitButton;
 
@@ -37,7 +37,7 @@ public class WelcomeSceneController extends SceneController {
      * Switch to the local game scene
      */
     @FXML
-    protected void localButtonClick() {
+    protected void playButtonClick() {
         changeScene(DebugData.GAME_SCENE_FXML);
     }
 
@@ -45,7 +45,7 @@ public class WelcomeSceneController extends SceneController {
      * Switch to the network game scene
      */
     @FXML
-    protected void networkButtonClick() {
+    protected void createMapButtonClick() {
         changeScene(DebugData.MAP_EDITOR_SCENE_FXML);
     }
 
