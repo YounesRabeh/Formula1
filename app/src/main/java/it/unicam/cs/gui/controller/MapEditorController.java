@@ -1,7 +1,9 @@
 package it.unicam.cs.gui.controller;
 
+import it.unicam.cs.api.components.container.UiGenerator;
 import it.unicam.cs.gui.util.GuiTools;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -80,20 +82,18 @@ public class MapEditorController extends SceneController {
         getGameMap(NEW_MAP_FILE_PATH).ifPresent(gameMap -> {
             Canvas[] canvases = gameMap.getCanvases();
             alignAll(drawingPane, canvases);
+
+            ArrayList<HBox> segmentEndpointsEntries = new ArrayList<>();
+            for (Point2D point : gameMap.getTrackCanvas().getSegmentsEndPoints()) {
+                HBox segmentEndpointsEntry = UiGenerator.createSegmentEndpointEntry(segmentsEndpointsCounter++,
+                        (int) point.getX(), (int) point.getY());
+                segmentEndpointsEntries.add(segmentEndpointsEntry);
+            }
+
+            addToVBOX(segmentsEndpointsVBox, segmentEndpointsEntries);
         });
 
 
 
-        Random random = new Random();
-        ArrayList<HBox> segmentEndpointsEntries = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            segmentEndpointsEntries.add(
-                    createSegmentEndpointEntry(
-                            i, random.nextInt(0, 900), random.nextInt(0, 900)
-                    )
-            );
-        }
-
-        addToVBOX(segmentsEndpointsVBox, segmentEndpointsEntries);
     }
 }
