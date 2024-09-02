@@ -17,6 +17,9 @@ public interface DebugData {
     // NOTE: Do not change the following values (Action dependent)
     Logger LOGGER = Logger.getLogger(App.class.getName());
     String PARSER_FILE_PATH = "/it/unicam/cs/data/test1.f1m";
+    String NEW_MAP_FILE_PATH = "/it/unicam/cs/data/default/&new-map.f1m";
+
+
     String WELCOME_SCENE_FXML = "/it/unicam/cs/fxml/welcome-scene.fxml";
     String MAP_EDITOR_SCENE_FXML = "/it/unicam/cs/fxml/map-editor-scene.fxml";
     String GAME_SCENE_FXML = "/it/unicam/cs/fxml/game-scene.fxml";

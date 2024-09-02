@@ -115,7 +115,9 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('@', command -> {
             if (this.currentCanvas instanceof TrackCanvas trackCanvas){
-                checkFinishLineBeforeSwitchingContext(trackCanvas);
+                if (!getFile().getName().equals("&new-map.f1m")){
+                    checkFinishLineBeforeSwitchingContext(trackCanvas);
+                }
             }
             nextCanvas();
         });
@@ -167,6 +169,7 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('$', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
+                currentGC.setLineWidth(trackCanvas.getTrackWidth());
                 currentGC.setStroke(trackCanvas.getColor());
                 generateTrackSnapshot(this.map, trackCanvas, currentGC);
 

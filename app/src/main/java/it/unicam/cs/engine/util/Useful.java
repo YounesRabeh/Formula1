@@ -2,6 +2,7 @@ package it.unicam.cs.engine.util;
 
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Graphics;
+import it.unicam.cs.api.parser.types.DrawingParser;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
@@ -11,7 +12,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
+
+import static it.unicam.cs.DebugData.PARSER_FILE_PATH;
+import static it.unicam.cs.api.components.container.Resources.getResourceFile;
+import static it.unicam.cs.api.parser.Information.F1_MAP_FILE_EXTENSION;
 
 public final class Useful {
     /**
@@ -70,6 +78,20 @@ public final class Useful {
             Graphics.quadraticCurveTo(drawingGC, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
         }
         drawingGC.stroke();
+    }
+
+    /**
+     * Get the game map from the corresponding file. {@link it.unicam.cs.DebugData#PARSER_FILE_PATH}
+     * @return the game map
+     * @throws URISyntaxException if the URI syntax is incorrect
+     * @throws IOException if an I/O error occurs
+     */
+    public static Optional<GameMap> getGameMap(String path) throws URISyntaxException, IOException {
+        DrawingParser parser = new DrawingParser(
+                getResourceFile(path),
+                F1_MAP_FILE_EXTENSION
+        );
+        return parser.start();
     }
 
 
