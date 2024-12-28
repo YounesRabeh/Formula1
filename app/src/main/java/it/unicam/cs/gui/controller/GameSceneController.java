@@ -29,9 +29,7 @@ public class GameSceneController extends SceneController {
                 drawGameElements(gameMap);
             });
         } catch (URISyntaxException | IOException e) {
-            e.getCause();
+            e.printStackTrace();
         }
     }
-
-
 }

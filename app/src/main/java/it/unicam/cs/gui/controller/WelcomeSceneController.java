@@ -1,12 +1,8 @@
 package it.unicam.cs.gui.controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-import java.io.IOException;
-
-import static it.unicam.cs.api.components.container.Resources.getResourceURL;
 
 /**
  * Controller for the welcome scene
@@ -46,19 +42,5 @@ public class WelcomeSceneController extends SceneController {
     @FXML
     protected void createMapButtonClick() {
         changeScene(MAP_EDITOR_SCENE_FXML);
-    }
-
-    /**
-     * Helper method to handle scene changes
-     * @param fxmlFilePath the path to the FXML file
-     */
-    private synchronized void changeScene(String fxmlFilePath) {
-        Platform.runLater(() -> {
-            try {
-                setScene(getResourceURL(fxmlFilePath));
-            } catch (IOException e) {
-                e.getCause();
-            }
-        });
     }
 }

@@ -71,7 +71,7 @@ public abstract class SceneController {
                 stageSetup(stage);
                 setScene(getResourceURL(WELCOME_SCENE_FXML));
             } catch (URISyntaxException | IOException e) {
-                e.getCause();
+                e.printStackTrace();
             }
         } else { //TODO: add the custom resources & app logic exceptions
             throw new IllegalStateException("The stage is already set");
@@ -109,6 +109,20 @@ public abstract class SceneController {
 
         Platform.runLater(() -> {
             stage.show();
+        });
+    }
+
+    /**
+     * Helper method to handle scene changes
+     * @param fxmlFilePath the path to the FXML file
+     */
+    protected synchronized void changeScene(String fxmlFilePath) {
+        Platform.runLater(() -> {
+            try {
+                setScene(getResourceURL(fxmlFilePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 

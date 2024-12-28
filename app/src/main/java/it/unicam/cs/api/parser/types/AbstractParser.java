@@ -14,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.logging.Level;
 
+import static it.unicam.cs.App.LOGGER;
 import static it.unicam.cs.api.components.container.Resources.getFileExtension;
 import static it.unicam.cs.api.parser.types.PropertiesParser.*;
 
