@@ -114,7 +114,7 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('@', command -> {
             if (this.currentCanvas instanceof TrackCanvas trackCanvas){
-                if (!getFile().getName().equals("&new-map.f1m")){
+                if (!getFile().getName().equals("e2d44868e75b32ef84051917862d296a4f92b574.f1m")){
                     checkFinishLineBeforeSwitchingContext(trackCanvas);
                 }
             }

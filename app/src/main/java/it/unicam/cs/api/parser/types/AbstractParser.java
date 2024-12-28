@@ -12,7 +12,6 @@ import it.unicam.cs.api.parser.Interpretable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -40,8 +39,6 @@ public abstract class AbstractParser implements Interpretable {
     private String fileExtension;
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
-
-
 
     /** The character used to indicate the start of a comment.*/
     public static final String COMMENT_CHARACTER = getProperty(
