@@ -13,7 +13,10 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-import static it.unicam.cs.DebugData.SEGMENT_BOX_ENTRY;
+
+import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
+import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
+
 
 /**
  * Utility class for generating the UI components
@@ -22,6 +25,11 @@ import static it.unicam.cs.DebugData.SEGMENT_BOX_ENTRY;
  */
 public final class UiGenerator {
     private UiGenerator() {}  // Prevent instantiation
+    /** The segment box entry FXML file. */
+    private static final String SEGMENT_BOX_ENTRY = getProperty(
+            CONFIG_PROPERTIES_PATH, "SEGMENT_BOX_ENTRY"
+    );
+    /** The segment box entry style. */
     private static final String SEGMENT_ENDPOINT_ENTRY_STYLE = Resources.getResourceURL(SEGMENT_BOX_ENTRY).toString();
 
     public static HBox createSegmentEndpointEntry(int num, int x, int y) {
@@ -82,5 +90,4 @@ public final class UiGenerator {
                 .sum();
         vbox.setPrefHeight(totalHeight);
     }
-
 }

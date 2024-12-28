@@ -1,6 +1,5 @@
 package it.unicam.cs.gui.controller;
 
-import it.unicam.cs.DebugData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,7 +37,7 @@ public class WelcomeSceneController extends SceneController {
      */
     @FXML
     protected void playButtonClick() {
-        changeScene(DebugData.GAME_SCENE_FXML);
+        changeScene(GAME_SCENE_FXML);
     }
 
     /**
@@ -46,7 +45,7 @@ public class WelcomeSceneController extends SceneController {
      */
     @FXML
     protected void createMapButtonClick() {
-        changeScene(DebugData.MAP_EDITOR_SCENE_FXML);
+        changeScene(MAP_EDITOR_SCENE_FXML);
     }
 
     /**

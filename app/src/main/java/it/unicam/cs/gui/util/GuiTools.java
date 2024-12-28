@@ -10,7 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import java.util.Collection;
 import java.util.List;
 
-import static it.unicam.cs.DebugData.*;
+
+import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
+import static it.unicam.cs.api.parser.types.PropertiesParser.getIntProperty;
 import static it.unicam.cs.engine.util.Useful.*;
 
 /**
@@ -21,6 +23,12 @@ import static it.unicam.cs.engine.util.Useful.*;
  */
 public final class GuiTools {
     private GuiTools() {}
+
+    public static final int TRACK_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "TRACK_LVL");
+    public static final int EXTRA_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "EXTRA_LVL");
+    public static final int WAYPOINT_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "WAYPOINT_LVL");
+    public static final int END_POINTS_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "END_POINTS_LVL");
+    public static final int GRID_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "GRID_LVL");
 
     /**
      * Align all the nodes in the root.
@@ -39,6 +47,7 @@ public final class GuiTools {
 
 
 
+    // TEMP: For visualizing the parsed data
     /**
      * Draws the game elements on the canvases.
      * @param gameMap the game map

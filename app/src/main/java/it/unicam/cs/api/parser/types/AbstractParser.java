@@ -7,17 +7,17 @@ import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.exceptions.parser.ParsingException;
 import it.unicam.cs.api.parser.Command;
 import it.unicam.cs.api.parser.CommandAction;
-import it.unicam.cs.api.parser.Information;
 import it.unicam.cs.api.parser.Interpretable;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.*;
 
 import static it.unicam.cs.api.components.container.Resources.getFileExtension;
-
+import static it.unicam.cs.api.parser.types.PropertiesParser.*;
 
 /**
  * An abstract parser that reads a file and executes the commands.
@@ -29,12 +29,11 @@ import static it.unicam.cs.api.components.container.Resources.getFileExtension;
  * <b>THE PARSER ONLY ACCEPTS NON-NEGATIVE INTEGERS AS PARAMETERS </b>
  * will be changed in the future.
  * @see Interpretable
- * @see Information
  * @see Command
  * @author Younes Rabeh
  * @version 2.2
  */
-public abstract class AbstractParser implements Interpretable, Information {
+public abstract class AbstractParser implements Interpretable {
     /** The file to be parsed.*/
     private File FILE;
     /** The file extension.*/
@@ -42,6 +41,26 @@ public abstract class AbstractParser implements Interpretable, Information {
     /** A map that stores the commands and their corresponding actions.*/
     protected final Map<Character, CommandAction> functionMap = new HashMap<>();
 
+
+
+    /** The character used to indicate the start of a comment.*/
+    public static final String COMMENT_CHARACTER = getProperty(
+            PARSER_PROPERTIES_PATH,"COMMENT_CHARACTER"
+    );
+    /** The separator used to separate the command identifier and its parameters.*/
+    public static final String PARSER_SEPARATOR = getProperty(
+            PARSER_PROPERTIES_PATH, "PARSER_SEPARATOR"
+    );
+    /** The file extension of the drawing parser (f1Map file).*/
+    public static final String F1_MAP_FILE_EXTENSION = getProperty(
+            PARSER_PROPERTIES_PATH, "F1_MAP_FILE_EXTENSION"
+    );
+    /** The file extension of the player parser (f1Player file).*/
+    public static final String F1_PLAYER_FILE_EXTENSION = getProperty(
+            PARSER_PROPERTIES_PATH, "F1_PLAYER_FILE_EXTENSION"
+    );
+    
+    
     /**
      * Creates a new parser with the specified file.
      * @param file the file to be parsed
@@ -61,11 +80,14 @@ public abstract class AbstractParser implements Interpretable, Information {
             while (lineIterator.hasNext()) {
                 String line = lineIterator.next();
                 lineNumber++;
-                if (!line.isEmpty() && !line.startsWith(COMMENT_CHARACTER)) {
-                    try {
-                        executeCommand(parseLine(line));
-                    } catch (Exception e) {
-                        throw new ParsingException(lineNumber, e.getMessage());
+                if (!line.isEmpty()) {
+                    assert COMMENT_CHARACTER != null;
+                    if (!line.startsWith(COMMENT_CHARACTER)) {
+                        try {
+                            executeCommand(parseLine(line));
+                        } catch (Exception e) {
+                            throw new ParsingException(lineNumber, e.getMessage());
+                        }
                     }
                 }
             }
@@ -152,6 +174,8 @@ public abstract class AbstractParser implements Interpretable, Information {
      * @return the command
      */
     private Command parseLine(String line) {
+        assert PARSER_SEPARATOR != null;
+        assert COMMENT_CHARACTER != null;
         String[] parts = line.split(COMMENT_CHARACTER)[0].split(PARSER_SEPARATOR);
         char identifier = parts[0].charAt(0); // Get the first character of the line (O_msksdfsdf) is ok
         int[] params = Arrays.stream(parts, 1, parts.length)

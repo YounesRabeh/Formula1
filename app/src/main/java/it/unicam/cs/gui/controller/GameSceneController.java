@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static it.unicam.cs.DebugData.PARSER_FILE_PATH;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
 import static it.unicam.cs.gui.util.GuiTools.alignAll;
 import static it.unicam.cs.gui.util.GuiTools.drawGameElements;

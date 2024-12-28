@@ -6,20 +6,15 @@ import it.unicam.cs.api.parser.types.DrawingParser;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import static it.unicam.cs.DebugData.PARSER_FILE_PATH;
 import static it.unicam.cs.api.components.container.Resources.getResourceFile;
-import static it.unicam.cs.api.parser.Information.F1_MAP_FILE_EXTENSION;
+import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
 
 public final class Useful {
     /**
@@ -70,18 +65,22 @@ public final class Useful {
         for(int i = 0; i < points2D.size() - 1; i++){
             Point2D p1 = points2D.get(i);
             Point2D p2 = points2D.get(i + 1);
-            Graphics.quadraticCurveTo(drawingGC, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
+            Graphics.quadraticCurveTo(drawingGC,
+                    new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()}
+            );
         } // close the circuit
         if (trackCanvas.getTrackState()){
             Point2D p1 = points2D.getLast();
             Point2D p2 = points2D.getFirst();
-            Graphics.quadraticCurveTo(drawingGC, new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()});
+            Graphics.quadraticCurveTo(drawingGC,
+                    new int[]{(int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY()}
+            );
         }
         drawingGC.stroke();
     }
 
     /**
-     * Get the game map from the corresponding file. {@link it.unicam.cs.DebugData#PARSER_FILE_PATH}
+     * Get the game map from the corresponding file.
      * @return the game map
      * @throws URISyntaxException if the URI syntax is incorrect
      * @throws IOException if an I/O error occurs

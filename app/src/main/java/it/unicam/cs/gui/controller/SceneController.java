@@ -4,7 +4,6 @@ import it.unicam.cs.api.components.container.Resources;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
@@ -14,8 +13,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static it.unicam.cs.DebugData.APP_WINDOW_TITLE;
-import static it.unicam.cs.DebugData.F1_APP_ICONS_FOLDER;
+import static it.unicam.cs.api.components.container.Resources.getResourceURL;
+import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
+import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 
 /**
  * Abstract class for the scene controller.
@@ -31,19 +31,45 @@ public abstract class SceneController {
     private static double WIDTH;
     /** The height of the stage. */
     private static double HEIGHT;
+    /** The app window title. */
+    public static final String APP_WINDOW_TITLE = getProperty(
+            CONFIG_PROPERTIES_PATH, "APP_WINDOW_TITLE"
+    );
+    /** The app icons folder. */
+    public static final String F1_APP_ICONS_FOLDER = getProperty(
+            CONFIG_PROPERTIES_PATH, "F1_APP_ICONS_FOLDER"
+    );
+    /** The welcome scene FXML file. */
+    protected static final String WELCOME_SCENE_FXML = getProperty(
+            CONFIG_PROPERTIES_PATH, "WELCOME_SCENE_FXML"
+    );
+    /** The map editor scene FXML file. */
+    protected static final String MAP_EDITOR_SCENE_FXML = getProperty(
+            CONFIG_PROPERTIES_PATH, "MAP_EDITOR_SCENE_FXML"
+    );
+    /** The game scene FXML file. */
+    protected static final String GAME_SCENE_FXML = getProperty(
+            CONFIG_PROPERTIES_PATH, "GAME_SCENE_FXML"
+    );
+
+
+    // TEMP: For testing purposes
+    public static final String PARSER_FILE_PATH = getProperty(CONFIG_PROPERTIES_PATH, "PARSER_FILE_PATH");
+    public static final String NEW_MAP_FILE_PATH = getProperty(CONFIG_PROPERTIES_PATH, "NEW_MAP_FILE_PATH");
+
+
 
     /**
      * Initialize the application (The opening scene)
      * @param stage the stage of the application
-     * @param fxmlFile the FXML file of the scene
      */
-    public static void init(Stage stage, URL fxmlFile) {
+    public static void init(Stage stage) {
         if (SceneController.stage == null) {
             try { //TODO: add the splash screen and resources loading
                 System.gc();
                 screenDimensionsSetup();
                 stageSetup(stage);
-                setScene(fxmlFile);
+                setScene(getResourceURL(WELCOME_SCENE_FXML));
             } catch (URISyntaxException | IOException e) {
                 e.getCause();
             }

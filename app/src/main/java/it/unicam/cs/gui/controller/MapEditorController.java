@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import static it.unicam.cs.DebugData.NEW_MAP_FILE_PATH;
 import static it.unicam.cs.api.components.container.UiGenerator.*;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
 import static it.unicam.cs.gui.util.GuiTools.alignAll;
@@ -58,9 +57,6 @@ public class MapEditorController extends SceneController {
 
     private int segmentsEndpointsCounter;
 
-
-
-
     /**
      * Initialize the map editor scene
      */
@@ -88,8 +84,5 @@ public class MapEditorController extends SceneController {
 
             addToVBOX(segmentsEndpointsVBox, segmentEndpointsEntries);
         });
-
-
-
     }
 }

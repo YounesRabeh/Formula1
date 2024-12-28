@@ -18,7 +18,7 @@ import java.util.Objects;
 /**
  * Utility class for getting resources.
  * @author Younes Rabeh
- * @version 1.3
+ * @version 1.4
  */
 public final class Resources {
     /** Prevent instantiation of this utility class. */
@@ -69,6 +69,21 @@ public final class Resources {
     public static URL getResourceURL(String path) {
         return Objects.requireNonNull(
                 App.class.getResource(path));
+    }
+
+    /**
+     * Gets the input stream of the resource.
+     *
+     * @param path the path of the resource
+     * @return the input stream of the resource
+     */
+    public static InputStream getResourceStream(String path) {
+        Objects.requireNonNull(path, "Resource path cannot be null");
+        InputStream resourceStream = App.class.getResourceAsStream(path);
+        if (resourceStream == null) {
+            throw new IllegalArgumentException("Resource not found: " + path);
+        }
+        return resourceStream;
     }
 
     /**
