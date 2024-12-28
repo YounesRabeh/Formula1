@@ -6,22 +6,20 @@ import javafx.stage.Stage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
 /**
  * JavaFX App
  * @author Younes Rabeh
  */
 public class App extends Application {
     /** The app's logger.*/
-    //public static final Logger LOGGER = Logger.getLogger(App.class.getName());
+    public static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
     @Override
     public void start(Stage stage) {
         try {
             SceneController.init(stage);
         } catch (Exception e) {
-           throw new RuntimeException(e);
+           LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

@@ -73,6 +73,7 @@ public abstract class AbstractParser implements Interpretable {
         try (BufferedReader reader = getFileData(FILE).orElseThrow(() ->
                 new IOException("Unable to read file: " + FILE.getAbsolutePath()))) {
             Iterator<String> lineIterator = reader.lines().iterator();
+
             int lineNumber = 0;
             while (lineIterator.hasNext()) {
                 String line = lineIterator.next();
@@ -182,7 +183,6 @@ public abstract class AbstractParser implements Interpretable {
 
         return new Command(identifier, params);
     }
-
 }
 
 

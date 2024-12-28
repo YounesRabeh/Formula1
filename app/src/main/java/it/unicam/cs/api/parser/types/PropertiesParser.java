@@ -1,10 +1,8 @@
 package it.unicam.cs.api.parser.types;
 
 import it.unicam.cs.api.components.container.Resources;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -42,21 +40,7 @@ public final class PropertiesParser {
         InputStream input = Resources.getResourceStream(file);
 
         Properties properties = new Properties();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) {
-                    continue; // Skip comments and empty lines
-                }
-                int separatorIndex = line.indexOf('=');
-                if (separatorIndex > 0) {
-                    String key = line.substring(0, separatorIndex).trim();
-                    String value = line.substring(separatorIndex + 1); // Preserve trailing spaces
-                    properties.setProperty(key, value);
-                }
-            }
-        }
+        properties.load(input);
         propertiesMap.put(file, properties);
     }
 
