@@ -53,11 +53,11 @@
 >MAP-20-40-40-3
 
 @TRACK #0
-#THE BACKGROUND
+# THE-BACKGROUND
 F-0-190-0
 R-0-0-900-900
 
-#THE TRACK
+#-THE-TRACK
 W-90 #default width is50
 # xc yc endX endY
 Q-100-250-100-500 #4 params
@@ -75,8 +75,10 @@ $TART_LINE-100-300
 @EXTRA-#1
 
 @WAYPOINTS-#2
+#-to-draw-the-waypoints-by-the-debug-mode-(using-max-layer--2)
 
-@END_POINTS #3
+@END_POINTS-#3
+##-CHECKPOINTS-(MAIN)
 F-200-0-170
 #P-100-500
 #P-200-700
@@ -86,6 +88,6 @@ F-200-0-170
 #P-400-70
 #P-100-200
 
-@GRID #4
+@GRID-#4
 G
 O-10
