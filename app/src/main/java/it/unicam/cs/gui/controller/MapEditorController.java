@@ -1,7 +1,6 @@
 package it.unicam.cs.gui.controller;
 
 import it.unicam.cs.api.components.container.UiGenerator;
-import it.unicam.cs.gui.util.GuiTools;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -9,19 +8,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import static it.unicam.cs.DebugData.NEW_MAP_FILE_PATH;
 import static it.unicam.cs.api.components.container.UiGenerator.*;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
 import static it.unicam.cs.gui.util.GuiTools.alignAll;
-import static it.unicam.cs.gui.util.GuiTools.drawGameElements;
 
 
 /**

@@ -1,6 +1,5 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.gui.map.GridCanvas;
@@ -20,6 +19,7 @@ import static it.unicam.cs.api.components.container.Check.checkNumbers;
 public final class CanvasRenderer {
     /** Prevent instantiation of this utility class. */
     private CanvasRenderer() {}
+
 
     /**
      * Draws a squared grid on the canvas. The grid lines are drawn in the specified color,
@@ -76,8 +76,8 @@ public final class CanvasRenderer {
         GraphicsContext gc = trackCanvas.getGraphicsContext2D();
         final double lineWidth = gc.getLineWidth();
         final Paint gcColor = gc.getStroke();
-        gc.setLineWidth(Characteristics.TRACK_MARKER_LINE_WIDTH);
-        gc.setStroke(Characteristics.TRACK_LINE_MARKER_COLOR);
+        gc.setLineWidth(TrackCanvas.TRACK_MARKER_LINE_WIDTH);
+        gc.setStroke(TrackCanvas.TRACK_LINE_MARKER_COLOR);
 
         Graphics.strokeLine(gc, lineCoords);
         gc.setLineWidth(lineWidth);

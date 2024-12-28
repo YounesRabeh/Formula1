@@ -3,7 +3,6 @@ package it.unicam.cs.api.parser.types;
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import it.unicam.cs.api.components.container.Check;
-import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.GridCanvas;
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -214,7 +213,7 @@ public class DrawingParser extends AbstractParser {
 
         functionMap.put('W', (command) -> {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
-                Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, command.params()[0]);
+                Check.checkNumbersMin(TrackCanvas.DEFAULT_TRACK_WIDTH, command.params()[0]);
                 trackCanvas.setTrackWidth(command.params()[0]);
             }
             Graphics.setLineWidth(currentGC, command.params());

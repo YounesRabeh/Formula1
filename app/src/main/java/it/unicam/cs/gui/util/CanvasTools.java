@@ -1,6 +1,5 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 
 import it.unicam.cs.gui.map.TrackCanvas;
@@ -9,8 +8,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-
-import java.util.Collection;
 
 
 /**
@@ -152,7 +149,7 @@ public final class CanvasTools {
      */
     private static int[] verifyLineH(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
-        final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
+        final int strokeThickness = TrackCanvas.TRACK_MARKER_LINE_WIDTH / 2;
         if (!CanvasTools.isTrackPoint(still, var1 - strokeThickness, trackCanvas)) {
             coords[0] = still;
             coords[1] = var1 + strokeThickness;
@@ -175,7 +172,7 @@ public final class CanvasTools {
      */
     private static int[] verifyLineV(TrackCanvas trackCanvas, int var1, int var2, int still) {
         final int[] coords = new int[4];
-        final int strokeThickness = Characteristics.TRACK_MARKER_LINE_WIDTH / 2;
+        final int strokeThickness = TrackCanvas.TRACK_MARKER_LINE_WIDTH / 2;
         if (!CanvasTools.isTrackPoint(var1 - strokeThickness, still, trackCanvas)) {
             coords[0] = var1 + strokeThickness;
             coords[1] = still;

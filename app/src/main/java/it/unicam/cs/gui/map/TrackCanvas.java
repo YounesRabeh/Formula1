@@ -1,7 +1,6 @@
 package it.unicam.cs.gui.map;
 
 
-import it.unicam.cs.api.components.container.Characteristics;
 import it.unicam.cs.api.components.container.Check;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -20,13 +19,21 @@ import java.util.List;
  * @author Younes Rabeh
  * @version 1.4
  */
-public class TrackCanvas extends Canvas implements Characteristics {
+public class TrackCanvas extends Canvas {
     /** The snapshot of the canvas */
     private WritableImage snapshot;
     /** The color of the canvas */
     private Color color;
     /** The width of the track */
-    private int trackWidth = Characteristics.DEFAULT_TRACK_WIDTH;
+    public static final int DEFAULT_TRACK_WIDTH = 50;
+    /** The color of the track markers */
+    public static final Color TRACK_LINE_MARKER_COLOR = Color.WHITE;
+    /** The color of the track */
+    public static final Color TRACK_COLOR = Color.BLACK;
+    /** The width of the track markers line */
+    public static final int TRACK_MARKER_LINE_WIDTH = 6;
+    /** The width of the track */
+    private int trackWidth = 50;
     /** The admissible waypoints of the track */
     private final Collection<GameMap.Waypoint> waypoints = new ArrayList<>();
     /** The parsed segments end points of the track plus the start/finish line */
@@ -188,7 +195,7 @@ public class TrackCanvas extends Canvas implements Characteristics {
      * @param trackWidth the width of the track
      */
     public void setTrackWidth(int trackWidth) {
-        Check.checkNumbersMin(Characteristics.DEFAULT_TRACK_WIDTH, trackWidth);
+        Check.checkNumbersMin(DEFAULT_TRACK_WIDTH, trackWidth);
         this.trackWidth = trackWidth;
         this.getGraphicsContext2D().setLineWidth(trackWidth);
     }

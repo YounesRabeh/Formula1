@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
  * @version 1.3
  */
 public class GridCanvas extends Canvas {
+    /** The color of the grid */
+    public static final Color GRID_COLOR = Color.GRAY;
     /** The size of the grid. */
     private final int cellSize;
     /** The number of cells in the horizontal direction. */

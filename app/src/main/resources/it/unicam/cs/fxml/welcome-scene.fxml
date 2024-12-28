@@ -15,7 +15,7 @@
                   <Font name="System Bold" size="40.0" />
                </font>
             </Button>
-            <Button id="createMapButton" fx:id="createMapButton" alignment="CENTER" disable="true" layoutX="12.0" layoutY="484.0" mnemonicParsing="false" onAction="#createMapButtonClick" prefHeight="74.0" prefWidth="318.0" stylesheets="@../css/WelcomeScreenStyle.css" text="Create Map" textAlignment="CENTER" AnchorPane.bottomAnchor="180.0">
+            <Button id="createMapButton" fx:id="createMapButton" alignment="CENTER" disable="false" layoutX="12.0" layoutY="484.0" mnemonicParsing="false" onAction="#createMapButtonClick" prefHeight="74.0" prefWidth="318.0" stylesheets="@../css/WelcomeScreenStyle.css" text="Create Map" textAlignment="CENTER" AnchorPane.bottomAnchor="180.0">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>

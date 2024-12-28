@@ -4,6 +4,7 @@ import it.unicam.cs.gui.controller.SceneController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static it.unicam.cs.api.components.container.Resources.getResourceURL;
 
@@ -13,6 +14,7 @@ import static it.unicam.cs.api.components.container.Resources.getResourceURL;
  * @author Younes Rabeh
  */
 public class App extends Application implements DebugData {
+    Logger LOGGER = Logger.getLogger(this.getClass().getName());
     @Override
     public void start(Stage stage) {
         try {
