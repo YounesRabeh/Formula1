@@ -61,7 +61,7 @@ public final class DrawingParserTools {
      * Generates the track snapshot. The track snapshot is a snapshot of the track canvas used
      * to get the admissible waypoints of the track & run the routeFinder algorithm.
      * <p> The track snapshot is generated only once. </p>
-     * <b> THIS METHOD ALSO RUNS THE WAYPOINTS FINDER ALGORITHM (stoppage code for sum time)</b>
+     * <b> THIS METHOD ALSO RUNS THE WAYPOINTS FINDER ALGORITHM (stoppage code)</b>
      * as in {@link RouteTools#findMapWaypoints}
      * @param map the game map
      * @param trackCanvas the track canvas

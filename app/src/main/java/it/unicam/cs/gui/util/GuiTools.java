@@ -4,6 +4,7 @@ import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 
@@ -19,11 +20,12 @@ import static it.unicam.cs.engine.util.Useful.*;
  * Utility class for GUI operations
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.2
  */
 public final class GuiTools {
     private GuiTools() {}
 
+    // TEMP: For testing purposes
     public static final int TRACK_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "TRACK_LVL");
     public static final int EXTRA_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "EXTRA_LVL");
     public static final int WAYPOINT_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "WAYPOINT_LVL");
@@ -44,6 +46,21 @@ public final class GuiTools {
         }
         root.getChildren().addAll(nodes);
     }
+
+    /**
+     * Aligns a node in the root.
+     * @param root the root
+     * @param node the node
+     */
+    public static void align(AnchorPane root, Node node){
+        AnchorPane.setTopAnchor(node, 0.0);
+        AnchorPane.setBottomAnchor(node, 0.0);
+        AnchorPane.setLeftAnchor(node, 0.0);
+        AnchorPane.setRightAnchor(node, 0.0);
+        root.getChildren().add(node);
+    }
+
+
 
 
 

@@ -3,6 +3,7 @@ package it.unicam.cs.gui.controller;
 import it.unicam.cs.api.components.container.UiGenerator;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 import static it.unicam.cs.api.components.container.UiGenerator.*;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
+import static it.unicam.cs.gui.util.GuiTools.align;
 import static it.unicam.cs.gui.util.GuiTools.alignAll;
 
 
@@ -72,8 +74,8 @@ public class MapEditorController extends SceneController {
 
         //TEMP: add some random segment endpoints
         getGameMap(NEW_MAP_FILE_PATH).ifPresent(gameMap -> {
-            Canvas[] canvases = gameMap.getCanvases();
-            alignAll(drawingPane, canvases);
+            Group canvases = gameMap.getCanvasGroup();
+            align(drawingPane, canvases);
 
             ArrayList<HBox> segmentEndpointsEntries = new ArrayList<>();
             for (Point2D point : gameMap.getTrackCanvas().getSegmentsEndPoints()) {

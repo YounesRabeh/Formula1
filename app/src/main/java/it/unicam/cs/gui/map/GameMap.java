@@ -6,6 +6,7 @@ import it.unicam.cs.api.components.nodes.FinishLine;
 import it.unicam.cs.gui.util.CanvasTools;
 import it.unicam.cs.gui.util.MapTools;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
 import java.util.TreeSet;
-
 
 
 /**
@@ -24,9 +24,8 @@ import java.util.TreeSet;
  * @see GridCanvas
  * @see TrackCanvas
  * @see InertCanvas
- * @see Characteristics
  * @author Younes Rabeh
- * @version 2.0
+ * @version 2.1
  */
 public class GameMap {
     /** The grid canvas */
@@ -62,7 +61,7 @@ public class GameMap {
         inertCanvases = new TreeSet<>();
 
         addInertCanvases(layerNumber);
-        gridEvent();
+        //gridEvent(); //Get pixel color on click
     }
 
     /**
@@ -160,6 +159,16 @@ public class GameMap {
         mapCanvases.push(trackCanvas);
 
         return mapCanvases;
+    }
+
+    /**
+     * Get the canvases as a group.
+     * @return the canvases as a group
+     */
+    public Group getCanvasGroup() {
+        Group group = new Group();
+        group.getChildren().addAll(getCanvases());
+        return group;
     }
 
     /**
