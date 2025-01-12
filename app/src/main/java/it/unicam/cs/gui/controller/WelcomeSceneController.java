@@ -33,7 +33,7 @@ public class WelcomeSceneController extends SceneController {
      */
     @FXML
     protected void playButtonClick() {
-        changeScene(GAME_SCENE_FXML);
+        changeScene(GAME_SETUP_SCENE_FXML);
     }
 
     /**

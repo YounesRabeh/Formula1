@@ -22,7 +22,7 @@ import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
  * The scene controller is responsible for setting up the stage and the scene of the application.
  * @see it.unicam.cs.App
  * @author Younes Rabeh
- * @version 1.3
+ * @version 1.4
  */
 public abstract class SceneController {
     /** The stage of the application. */
@@ -50,6 +50,10 @@ public abstract class SceneController {
     /** The game scene FXML file. */
     protected static final String GAME_SCENE_FXML = getProperty(
             CONFIG_PROPERTIES_PATH, "GAME_SCENE_FXML"
+    );
+    /** The game setup scene FXML file. */
+    protected static final String GAME_SETUP_SCENE_FXML = getProperty(
+            CONFIG_PROPERTIES_PATH, "GAME_SETUP_SCENE_FXML"
     );
 
 
@@ -145,7 +149,7 @@ public abstract class SceneController {
      * Get the stage of the application.
      * @return the stage of the application
      */
-    public static Stage getStage() {
+    protected static Stage getStage() {
         return stage;
     }
 
@@ -153,7 +157,7 @@ public abstract class SceneController {
      * Get the width of the stage.
      * @return the width of the stage
      */
-    public static double getWidth() {
+    protected static double getWidth() {
         return WIDTH;
     }
 
@@ -161,7 +165,7 @@ public abstract class SceneController {
      * Get the height of the stage.
      * @return the height of the stage
      */
-    public static double getHeight() {
+    protected static double getHeight() {
         return HEIGHT;
     }
 }

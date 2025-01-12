@@ -4,7 +4,6 @@ import it.unicam.cs.api.components.container.UiGenerator;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import static it.unicam.cs.api.components.container.UiGenerator.*;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
 import static it.unicam.cs.gui.util.GuiTools.align;
-import static it.unicam.cs.gui.util.GuiTools.alignAll;
 
 
 /**
@@ -27,7 +25,7 @@ import static it.unicam.cs.gui.util.GuiTools.alignAll;
  * @author Younes Rabeh
  * @version 1.0
  */
-public class MapEditorController extends SceneController {
+public class MapEditorSceneController extends SceneController {
     @FXML
     private SplitPane splitPane;
     @FXML
@@ -44,7 +42,6 @@ public class MapEditorController extends SceneController {
 
     @FXML
     private VBox segmentsEndpointsVBox;
-
     @FXML
     private AnchorPane drawingPane;
 
@@ -59,6 +56,7 @@ public class MapEditorController extends SceneController {
 
     private int segmentsEndpointsCounter;
 
+    // TEMP
     /**
      * Initialize the map editor scene
      */
