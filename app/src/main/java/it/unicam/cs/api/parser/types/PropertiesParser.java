@@ -59,6 +59,7 @@ public final class PropertiesParser {
      * Gets the integer value of the key from the specified properties file.
      * @param path the path to the properties file
      * @param key the key
+     * @throws NumberFormatException if the value of the key is not an integer
      * @return the integer value of the key
      */
     public static int getIntProperty(String path, String key) {
