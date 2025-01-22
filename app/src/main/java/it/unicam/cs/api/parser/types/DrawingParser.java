@@ -186,6 +186,8 @@ public class DrawingParser extends AbstractParser {
 
                 Line finishLine = generateTrackMarker(trackCanvas, command.params());
                     map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
+
+                checkMarkerOverlap(trackCanvas.getStartLine(), finishLine);
                 trackCanvas.setFinishLine(finishLine);
                 trackCanvas.addSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, finishLine);

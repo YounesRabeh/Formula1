@@ -45,6 +45,12 @@ public final class DrawingParserTools {
         }
     }
 
+    public static void checkMarkerOverlap(Line a, Line b){
+        if (a.intersects(b.getBoundsInLocal())){
+            throw new IllegalStateException("MARKER OVERLAP");
+        }
+    }
+
     /**
      * Generates a track marker from the given command. A track marker is a line that serves a specific purpose in the track.
      * @param trackCanvas the track canvas
