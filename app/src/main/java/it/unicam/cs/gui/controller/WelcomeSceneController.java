@@ -23,7 +23,7 @@ public class WelcomeSceneController extends SceneController {
      * Quit the application
      */
     @FXML
-    protected void quitButtonClick() {
+    private void quitButtonClick() {
         // TODO: add the background checks to close without corrupting the data
         System.exit(0);
     }
@@ -32,7 +32,7 @@ public class WelcomeSceneController extends SceneController {
      * Switch to the local game scene
      */
     @FXML
-    protected void playButtonClick() {
+    private void playButtonClick() {
         changeScene(GAME_SETUP_SCENE_FXML);
     }
 
@@ -40,7 +40,7 @@ public class WelcomeSceneController extends SceneController {
      * Switch to the network game scene
      */
     @FXML
-    protected void createMapButtonClick() {
+    private void createMapButtonClick() {
         changeScene(MAP_EDITOR_SCENE_FXML);
     }
 }

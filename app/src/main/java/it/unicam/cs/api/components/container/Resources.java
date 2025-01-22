@@ -18,7 +18,7 @@ import java.util.Objects;
 /**
  * Utility class for getting resources.
  * @author Younes Rabeh
- * @version 1.4
+ * @version 1.5
  */
 public final class Resources {
     /** Prevent instantiation of this utility class. */
@@ -37,7 +37,7 @@ public final class Resources {
 
         // Check if the resource is within a JAR file
         if (resourceURL.getProtocol().equals("jar")) { // Handle JAR resources (running the JAR file)
-            Path tempFile = Files.createTempFile("resource-", "." + suffix);
+            Path tempFile = Files.createTempFile("resource-", suffix);
             try (InputStream inputStream = resourceURL.openStream()) {
                 Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
             }
@@ -93,11 +93,10 @@ public final class Resources {
      */
     public static String getFileExtension(File file) {
         String fileName = file.getName();
-        int lastDotIndex = fileName.lastIndexOf('.');
-        if (lastDotIndex == -1 || lastDotIndex == fileName.length() - 1) {
-            return ""; // No extension found or dot is the last character
+        if (fileName.lastIndexOf('.') == -1 || fileName.lastIndexOf('.') == 0) {
+            return ""; // No extension found
         }
-        return fileName.substring(lastDotIndex + 1);
+        return fileName.substring(fileName.lastIndexOf('.'));
     }
 
     /**
@@ -113,7 +112,7 @@ public final class Resources {
             String directoryPath,
             String glob
     ) throws URISyntaxException, IOException {
-        Path folderPath = getResourceFile(directoryPath).toPath();
+        Path folderPath = Resources.getResourceFile(directoryPath).toPath();
         return Files.newDirectoryStream(folderPath, glob);
     }
 
@@ -132,5 +131,62 @@ public final class Resources {
             icons.add(new Image(path.toUri().toString()));
         }
         return icons;
+    }
+
+    /**
+     * Gets all files in the specified directory with the specified extension.
+     *
+     * @param directoryPath the path of the folder
+     * @param extension     the file extension to filter by (e.g., ".txt")
+     * @return the collection of files with the specified extension
+     * @throws URISyntaxException if the path is not valid
+     * @throws IOException        if the directory cannot be accessed
+     */
+    public static Collection<File> getAllFilesInDirectory(
+            String directoryPath,
+            String extension
+    ) throws URISyntaxException, IOException {
+        List<File> files = new ArrayList<>();
+
+        // Get the absolute path to the resources directory
+        Path resourcePath = Paths.get(
+                Objects.requireNonNull(App.class.getClassLoader().getResource(directoryPath)).toURI()
+        );
+
+        // Use try-with-resources to ensure the stream is closed
+        try (var paths = Files.walk(resourcePath)) {
+            paths.filter(Files::isRegularFile) // Only include files, not directories
+                    .filter(path -> path.toString().endsWith(extension)) // Filter by file extension
+                    .forEach(path -> files.add(path.toFile())); // Convert Path to File and add to the list
+        }
+
+        return files;
+    }
+
+    /**
+     * Gets all files in the specified directory.
+     *
+     * @param directoryPath the path of the folder
+     * @return the collection of files
+     * @throws URISyntaxException if the path is not valid
+     * @throws IOException        if the directory cannot be accessed
+     */
+    public static Collection<File> getAllFilesInDirectory(
+            String directoryPath
+    ) throws URISyntaxException, IOException {
+        List<File> files = new ArrayList<>();
+
+        // Get the absolute path to the resources directory
+        Path resourcePath = Paths.get(
+                Objects.requireNonNull(App.class.getClassLoader().getResource(directoryPath)).toURI()
+        );
+
+        // Use try-with-resources to ensure the stream is closed
+        try (var paths = Files.walk(resourcePath)) {
+            paths.filter(Files::isRegularFile) // Only include files, not directories
+                    .forEach(path -> files.add(path.toFile())); // Convert Path to File and add to the list
+        }
+
+        return files;
     }
 }

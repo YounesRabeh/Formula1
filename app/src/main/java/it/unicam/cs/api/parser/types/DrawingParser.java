@@ -185,7 +185,7 @@ public class DrawingParser extends AbstractParser {
                 checkIfDrawingFinishLineIsAdmissible(trackCanvas);
 
                 Line finishLine = generateTrackMarker(trackCanvas, command.params());
-                map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
+                    map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
                 trackCanvas.setFinishLine(finishLine);
                 trackCanvas.addSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
                 CanvasRenderer.renderTrackLineMarker(trackCanvas, finishLine);
