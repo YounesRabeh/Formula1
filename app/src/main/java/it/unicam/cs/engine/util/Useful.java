@@ -14,7 +14,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import static it.unicam.cs.api.components.container.Resources.getResourceFile;
 import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
 
 public final class Useful {

@@ -10,6 +10,8 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +40,8 @@ public class GameSetupSceneController extends SceneController {
     private Button previousMapButton;
     @FXML
     private Button nextMapButton;
+    @FXML
+    private Button importMapButton;
 
     /** All the present maps files */
     private List<File> mapsFiles = new ArrayList<>();
@@ -48,6 +52,7 @@ public class GameSetupSceneController extends SceneController {
 
 
     public void initialize() throws URISyntaxException, IOException {
+        splitPane.setDividerPositions(0.55, 0.45);
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
                 F1_MAP_FILE_EXTENSION
@@ -86,6 +91,23 @@ public class GameSetupSceneController extends SceneController {
             }
         };
         canvasPane.layoutBoundsProperty().addListener(layoutListener);
+    }
+
+    /**
+     * Import a map from a file.
+     */
+    @FXML
+    private void importMapButtonClick(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Map Files", "*" + F1_MAP_FILE_EXTENSION)
+        );
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null) {
+            mapsFiles.add(selectedFile);
+            loadMap(selectedFile);
+        }
+
     }
 
 
