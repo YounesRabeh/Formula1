@@ -8,6 +8,7 @@ import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -85,9 +86,9 @@ public final class Useful {
      * @throws URISyntaxException if the URI syntax is incorrect
      * @throws IOException if an I/O error occurs
      */
-    public static Optional<GameMap> getGameMap(String path) throws URISyntaxException, IOException {
+    public static Optional<GameMap> getGameMap(File mapFile) throws URISyntaxException, IOException {
         DrawingParser parser = new DrawingParser(
-                getResourceFile(path),
+                mapFile,
                 F1_MAP_FILE_EXTENSION
         );
         return parser.start();

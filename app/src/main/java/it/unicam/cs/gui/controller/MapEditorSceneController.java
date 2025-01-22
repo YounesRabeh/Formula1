@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class MapEditorSceneController extends SceneController {
         splitPane.setDividerPositions(0.6);
 
         //TEMP: add some random segment endpoints
-        getGameMap(NEW_MAP_FILE_PATH).ifPresent(gameMap -> {
+        getGameMap(new File(NEW_MAP_FILE_PATH)).ifPresent(gameMap -> {
             Group canvases = gameMap.getCanvasGroup();
             align(drawingPane, canvases);
 

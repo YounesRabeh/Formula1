@@ -24,7 +24,7 @@ public class GameSceneController extends SceneController {
     @FXML
     public void initialize() {
         try {
-            getGameMap(PARSER_FILE_PATH).ifPresent(gameMap -> {
+            getGameMap(selectedMap).ifPresent(gameMap -> {
                 Group canvases = gameMap.getCanvasGroup();
                 align(anchorPane, canvases);
                 //drawGameElements(gameMap);

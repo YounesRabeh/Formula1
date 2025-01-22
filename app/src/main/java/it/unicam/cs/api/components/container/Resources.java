@@ -142,7 +142,7 @@ public final class Resources {
      * @throws URISyntaxException if the path is not valid
      * @throws IOException        if the directory cannot be accessed
      */
-    public static Collection<File> getAllFilesInDirectory(
+    public static List<File> getAllFilesInDirectory(
             String directoryPath,
             String extension
     ) throws URISyntaxException, IOException {
@@ -171,7 +171,7 @@ public final class Resources {
      * @throws URISyntaxException if the path is not valid
      * @throws IOException        if the directory cannot be accessed
      */
-    public static Collection<File> getAllFilesInDirectory(
+    public static List<File> getAllFilesInDirectory(
             String directoryPath
     ) throws URISyntaxException, IOException {
         List<File> files = new ArrayList<>();

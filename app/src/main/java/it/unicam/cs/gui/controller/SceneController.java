@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -31,6 +32,8 @@ public abstract class SceneController {
     private static double WIDTH;
     /** The height of the stage. */
     private static double HEIGHT;
+    /** The selected map file. */
+    protected static File selectedMap;
     /** The app window title. */
     public static final String APP_WINDOW_TITLE = getProperty(
             CONFIG_PROPERTIES_PATH, "APP_WINDOW_TITLE"
@@ -55,12 +58,15 @@ public abstract class SceneController {
     protected static final String GAME_SETUP_SCENE_FXML = getProperty(
             CONFIG_PROPERTIES_PATH, "GAME_SETUP_SCENE_FXML"
     );
+    /** The maps directory path. */
+    protected static final String MAPS_DIRECTORY_PATH = getProperty(
+            CONFIG_PROPERTIES_PATH, "MAPS_DIRECTORY_PATH"
+    );
+
 
 
     // TEMP: For testing purposes
-    public static final String PARSER_FILE_PATH = getProperty(
-            CONFIG_PROPERTIES_PATH, "PARSER_FILE_PATH"
-    );
+
     public static final String NEW_MAP_FILE_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "EMPTY_MAP_FILE_PATH"
     );
