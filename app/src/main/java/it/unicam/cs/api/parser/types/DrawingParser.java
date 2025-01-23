@@ -27,7 +27,7 @@ import static it.unicam.cs.api.parser.DrawingParserTools.*;
  *
  * @see AbstractParser
  * @author Younes Rabeh
- * @version 2.4
+ * @version 2.5
  */
 public class DrawingParser extends AbstractParser {
     /** The current canvas to draw on.*/
@@ -198,6 +198,11 @@ public class DrawingParser extends AbstractParser {
             if (currentCanvas instanceof TrackCanvas trackCanvas){
                 trackCanvas.setTrackState(true);
                 trackCanvas.setFinishLine(trackCanvas.getStartLine());
+
+                Line finishLine = generateTrackMarker(trackCanvas, command.params());
+                map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
+                trackCanvas.addSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
+                CanvasRenderer.renderTrackLineMarker(trackCanvas, finishLine);
             }
         });
 

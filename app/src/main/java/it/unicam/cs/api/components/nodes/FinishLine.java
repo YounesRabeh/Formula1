@@ -1,6 +1,7 @@
 package it.unicam.cs.api.components.nodes;
 
 import it.unicam.cs.gui.map.GameMap;
+import javafx.scene.shape.Line;
 
 import java.util.Collection;
 
@@ -8,11 +9,11 @@ import java.util.Collection;
  * Represents the finish line in the game, which consists of a collection of waypoints.
  * @see GameMap.Waypoint
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  * */
 public class FinishLine {
     /** The waypoints of the finish line */
-    Collection<GameMap.Waypoint> waypoints;
+    private Collection<GameMap.Waypoint> waypoints;
 
     /**
      * Construct a FinishLine with the specified waypoints.

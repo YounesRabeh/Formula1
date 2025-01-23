@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.gui.controller.GameSetupSceneController">
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.gui.controller.GameSetupSceneController">
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.5033422459893048" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -60,17 +60,18 @@
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Text>
+                              <Text fx:id="driverNumberText" layoutX="117.0" layoutY="108.1265625" strokeType="OUTSIDE" strokeWidth="0.0" text="n/a" wrappingWidth="148.4827117919922" AnchorPane.topAnchor="86.0">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </AnchorPane>
                      </top>
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ScrollPane layoutY="-24.8" prefHeight="539.0" prefWidth="492.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                                </content>
-                              </ScrollPane>
+                              <ScrollPane layoutY="-24.8" prefHeight="539.0" prefWidth="492.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
                            </children>
                         </AnchorPane>
                      </center>

@@ -10,6 +10,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -26,14 +27,15 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  */
 public class GameSetupSceneController extends SceneController {
-
     @FXML
     private SplitPane splitPane;
     @FXML
     private AnchorPane canvasPane;
+    @FXML
+    private Text driverNumberText;
     @FXML
     private Button backButton;
     @FXML
@@ -49,6 +51,8 @@ public class GameSetupSceneController extends SceneController {
     ImageView mapView = new ImageView();
     /** The layout listener, used to resize the map preview */
     ChangeListener<Bounds> layoutListener;
+    /** The current number of drivers ion teh map **/
+    int currentDriverNumber = 0;
 
 
     public void initialize() throws URISyntaxException, IOException {
@@ -72,6 +76,7 @@ public class GameSetupSceneController extends SceneController {
                 WritableImage trackImage = CanvasTools.createCanvasSnapshot(gameMap.getTrackCanvas());
                 mapView.setImage(trackImage);
                 mapView.setPreserveRatio(true);
+                driverNumberText.setText(currentDriverNumber + "/" + gameMap.getMaxDriversNumber());
             });
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
@@ -100,7 +105,10 @@ public class GameSetupSceneController extends SceneController {
     private void importMapButtonClick(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Map Files", "*" + F1_MAP_FILE_EXTENSION)
+                new FileChooser.ExtensionFilter(
+                        "Map Files",
+                        "*" + F1_MAP_FILE_EXTENSION
+                )
         );
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
@@ -109,8 +117,7 @@ public class GameSetupSceneController extends SceneController {
         }
 
     }
-
-
+    
     /**
      * Go back to the welcome scene.
      */

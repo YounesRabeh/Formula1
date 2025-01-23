@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -32,6 +33,13 @@ public final class UiGenerator {
     /** The segment box entry style. */
     private static final String SEGMENT_ENDPOINT_ENTRY_STYLE = Resources.getResourceURL(SEGMENT_BOX_ENTRY).toString();
 
+    /**
+     * Create a segment endpoint entry.
+     * @param num the number of the segment
+     * @param x the x coordinate of the segment
+     * @param y the y coordinate of the segment
+     * @return a segment endpoint entry
+     */
     public static HBox createSegmentEndpointEntry(int num, int x, int y) {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(5));
@@ -74,6 +82,48 @@ public final class UiGenerator {
         hbox.getChildren().addAll(nodes);
         return hbox;
     }
+
+    public static HBox createDriverEntry(String driverName) {
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(5));
+        hbox.setAlignment(Pos.CENTER_LEFT);
+
+        // Player image
+        ImageView driverImageView = new ImageView();
+        driverImageView.setFitWidth(50);
+        driverImageView.setFitHeight(50);
+        driverImageView.setPreserveRatio(true);
+
+        // Player name label
+        Label nameLabel = new Label(driverName);
+
+        // Edit button
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(event -> {
+            // Add edit action logic here
+            System.out.println("Edit clicked for driver: " + driverName);
+        });
+
+        // Cancel button
+        Button cancelButton = new Button("X");
+        cancelButton.getStyleClass().add("cancel-button");
+        cancelButton.setOnAction(event -> {
+            Platform.runLater(() -> hbox.setVisible(false));
+        });
+
+        // Add elements to the HBox
+        List<Node> nodes = List.of(driverImageView, nameLabel, editButton, cancelButton);
+
+        // Set specific margins for spacing
+        HBox.setMargin(driverImageView, new Insets(0, 10, 0, 0));
+        HBox.setMargin(nameLabel, new Insets(0, 10, 0, 0));
+        HBox.setMargin(editButton, new Insets(0, 10, 0, 0));
+        HBox.setMargin(cancelButton, new Insets(0, 0, 0, 10));
+
+        hbox.getChildren().addAll(nodes);
+        return hbox;
+    }
+
 
 
     //FIXME: Add a method to create a segment entry to make the upper one private

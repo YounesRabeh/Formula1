@@ -25,7 +25,7 @@ import java.util.TreeSet;
  * @see TrackCanvas
  * @see InertCanvas
  * @author Younes Rabeh
- * @version 2.1
+ * @version 2.2
  */
 public class GameMap {
     /** The grid canvas */
@@ -40,6 +40,8 @@ public class GameMap {
     private final int height;
     /** The finish line of the track (The car's target) */
     private FinishLine finishLine;
+    /** The maximum number of Drivers on this map*/
+    private int maxDriversNumber;
 
 
     /**
@@ -202,6 +204,15 @@ public class GameMap {
      */
     public void createFinishLine(Waypoint origin){
         finishLine = new FinishLine(MapTools.getWaypointsOnLevelX(this, origin));
+        maxDriversNumber = finishLine.getWaypoints().size();
+    }
+
+    /**
+     * Get the maximum number of drivers on this map.
+     * @return the maximum number of drivers on this map
+     */
+    public int getMaxDriversNumber() {
+        return maxDriversNumber;
     }
 
     /**
