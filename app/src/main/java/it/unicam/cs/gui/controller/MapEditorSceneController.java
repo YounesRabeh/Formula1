@@ -72,6 +72,7 @@ public class MapEditorSceneController extends SceneController {
         splitPane.setDividerPositions(0.6);
 
         //TEMP: add some random segment endpoints
+        assert NEW_MAP_FILE_PATH != null;
         getGameMap(new File(NEW_MAP_FILE_PATH)).ifPresent(gameMap -> {
             Group canvases = gameMap.getCanvasGroup();
             align(drawingPane, canvases);

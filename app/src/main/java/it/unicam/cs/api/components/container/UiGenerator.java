@@ -1,5 +1,6 @@
 package it.unicam.cs.api.components.container;
 
+import it.unicam.cs.gui.controller.GameSetupSceneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -107,9 +108,6 @@ public final class UiGenerator {
         // Cancel button
         Button cancelButton = new Button("X");
         cancelButton.getStyleClass().add("cancel-button");
-        cancelButton.setOnAction(event -> {
-            Platform.runLater(() -> hbox.setVisible(false));
-        });
 
         // Add elements to the HBox
         List<Node> nodes = List.of(driverImageView, nameLabel, editButton, cancelButton);
@@ -139,5 +137,14 @@ public final class UiGenerator {
                 .mapToDouble(hbox -> hbox.getBoundsInParent().getHeight() + 10)
                 .sum();
         vbox.setPrefHeight(totalHeight);
+    }
+
+    /**
+     * Add a single HBox to a VBox
+     * @param vbox the VBox
+     * @param hbox the HBox
+     */
+    public static void addToVBOX(VBox vbox, HBox hbox) {
+        addToVBOX(vbox, List.of(hbox));
     }
 }

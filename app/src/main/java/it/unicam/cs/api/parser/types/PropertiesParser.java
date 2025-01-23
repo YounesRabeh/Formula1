@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * A parser for multiple properties files, located in the resources (settings) folder.
  * @see Properties
- * @author Younes
+ * @author Younes Rabeh
  * @version 1.5
  */
 public final class PropertiesParser {

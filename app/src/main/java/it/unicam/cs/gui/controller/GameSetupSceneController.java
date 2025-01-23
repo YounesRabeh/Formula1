@@ -1,15 +1,20 @@
 package it.unicam.cs.gui.controller;
 
 import it.unicam.cs.api.components.container.Resources;
+import it.unicam.cs.api.components.container.UiGenerator;
+import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.util.CanvasTools;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
@@ -45,10 +51,19 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private Button importMapButton;
 
+    @FXML
+    private Button addBotButton;
+    @FXML
+    private Button addPlayerButton;
+    @FXML
+    private VBox driversVBox;
+
     /** All the present maps files */
     private List<File> mapsFiles = new ArrayList<>();
     /** The map preview */
     ImageView mapView = new ImageView();
+    /** The selected map */
+    GameMap currentGameMap;
     /** The layout listener, used to resize the map preview */
     ChangeListener<Bounds> layoutListener;
     /** The current number of drivers ion teh map **/
@@ -73,15 +88,45 @@ public class GameSetupSceneController extends SceneController {
     private void loadMap(File mapFile) {
         try {
             getGameMap(mapFile).ifPresent(gameMap -> {
+                currentGameMap = gameMap;
                 WritableImage trackImage = CanvasTools.createCanvasSnapshot(gameMap.getTrackCanvas());
                 mapView.setImage(trackImage);
                 mapView.setPreserveRatio(true);
-                driverNumberText.setText(currentDriverNumber + "/" + gameMap.getMaxDriversNumber());
             });
+            Platform.runLater(this::updateUI);
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Update the UI. Disable the buttons if the driver limit is reached. Update the driver number text.
+     * Desable the driver entries if the limit is reached.
+     */
+    private void updateUI() {
+        boolean isDriverLimitReached = currentDriverNumber >= currentGameMap.getMaxDriversNumber();
+
+        addBotButton.setDisable(isDriverLimitReached);
+        addPlayerButton.setDisable(isDriverLimitReached);
+
+        int maxDrivers = currentGameMap.getMaxDriversNumber();
+        List<Node> driversVboxChildren = driversVBox.getChildren();
+
+        for (int i = 0; i < driversVboxChildren.size(); i++) {
+            boolean shouldDisable = i >= maxDrivers;
+            driversVboxChildren.get(i).setDisable(shouldDisable);
+        }
+
+        updateDriverNumberText();
+    }
+
+    private void updateDriverNumberText() {
+        int maxDrivers = currentGameMap.getMaxDriversNumber();
+        driverNumberText.setText(Math.min(currentDriverNumber, maxDrivers) + "/" + maxDrivers);
+    }
+
+
+
 
     /**
      * Initialize the map preview listener.
@@ -144,5 +189,23 @@ public class GameSetupSceneController extends SceneController {
     private void previousMapButtonClick() {
         currentMapIndex = (currentMapIndex - 1 + mapsFiles.size()) % mapsFiles.size();
         loadMap(mapsFiles.get(currentMapIndex));
+    }
+
+    @FXML
+    private void addBotButtonClick() {
+        if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
+            currentDriverNumber++;
+            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry("BOT"));
+            updateUI();
+        }
+    }
+
+    @FXML
+    private void addPlayerButtonClick() {
+        if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
+            currentDriverNumber++;
+            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry("PEPPE"));
+            updateUI();
+        }
     }
 }

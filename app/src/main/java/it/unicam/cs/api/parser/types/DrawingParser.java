@@ -27,7 +27,7 @@ import static it.unicam.cs.api.parser.DrawingParserTools.*;
  *
  * @see AbstractParser
  * @author Younes Rabeh
- * @version 2.5
+ * @version 2.6
  */
 public class DrawingParser extends AbstractParser {
     /** The current canvas to draw on.*/
@@ -138,7 +138,8 @@ public class DrawingParser extends AbstractParser {
      *     <li> {@code G} - render the grid</li>
      *     <li> {@code O} - render the grid outline</li>
      *     <li> {@code $} - render the starting line</li>
-     *     <li> {@code £} - render the finish line <b>(not yet implemented)</b></li>
+     *     <li> {@code £} - render the finish line
+     *     <li> {@code §} - configure the closed track</li>
      *     <li> {@code B} - begin a new path</li>
      *     <li> {@code K} - stroke the path</li>
      *     <li> {@code C} - set the stroke color</li>
@@ -199,10 +200,8 @@ public class DrawingParser extends AbstractParser {
                 trackCanvas.setTrackState(true);
                 trackCanvas.setFinishLine(trackCanvas.getStartLine());
 
-                Line finishLine = generateTrackMarker(trackCanvas, command.params());
                 map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
                 trackCanvas.addSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
-                CanvasRenderer.renderTrackLineMarker(trackCanvas, finishLine);
             }
         });
 
