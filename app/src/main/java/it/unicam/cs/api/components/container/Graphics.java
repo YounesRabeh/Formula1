@@ -129,7 +129,8 @@ public final class Graphics {
         Check.checkNull(gc);
         Check.checkParams(params, 2);
         // Draw a small rectangle to represent the point
-        // FIXME: delete the magic numbers
+        // FIXME: delete the magic numbers, the numbers should be half of
+        //  the diameter of the point
         gc.fillOval(params[0] - 3, params[1] - 3, 6, 6);
     }
 

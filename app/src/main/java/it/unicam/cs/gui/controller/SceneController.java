@@ -62,11 +62,13 @@ public abstract class SceneController {
     protected static final String MAPS_DIRECTORY_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "MAPS_DIRECTORY_PATH"
     );
+    protected static final String MATCH_MAKING_FILE_PATH = getProperty(
+            CONFIG_PROPERTIES_PATH, "MATCH_MAKING_FILE_PATH"
+    );
 
 
 
     // TEMP: For testing purposes
-
     public static final String NEW_MAP_FILE_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "EMPTY_MAP_FILE_PATH"
     );

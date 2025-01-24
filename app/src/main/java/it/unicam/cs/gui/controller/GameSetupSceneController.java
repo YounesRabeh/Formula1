@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
@@ -33,7 +32,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.1
+ * @version 1.2
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -66,12 +65,20 @@ public class GameSetupSceneController extends SceneController {
     GameMap currentGameMap;
     /** The layout listener, used to resize the map preview */
     ChangeListener<Bounds> layoutListener;
+    private File matchMakingFile;
+
     /** The current number of drivers ion teh map **/
     int currentDriverNumber = 0;
 
 
+
+    int currentPlayerNumber = 0;
+    int currentBotNumber = 0;
+
+
     public void initialize() throws URISyntaxException, IOException {
         splitPane.setDividerPositions(0.55, 0.45);
+        matchMakingFile = Resources.getResourceFile(MATCH_MAKING_FILE_PATH);
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
                 F1_MAP_FILE_EXTENSION
@@ -120,6 +127,9 @@ public class GameSetupSceneController extends SceneController {
         updateDriverNumberText();
     }
 
+    /**
+     * Update the driver number text
+     */
     private void updateDriverNumberText() {
         int maxDrivers = currentGameMap.getMaxDriversNumber();
         driverNumberText.setText(Math.min(currentDriverNumber, maxDrivers) + "/" + maxDrivers);
@@ -160,7 +170,6 @@ public class GameSetupSceneController extends SceneController {
             mapsFiles.add(selectedFile);
             loadMap(selectedFile);
         }
-
     }
     
     /**
@@ -194,8 +203,9 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void addBotButtonClick() {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
-            currentDriverNumber++;
-            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry("BOT"));
+            currentDriverNumber++; currentBotNumber++;
+            String botName = "BOT " + currentBotNumber + "°";
+            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(botName));
             updateUI();
         }
     }
@@ -203,8 +213,9 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void addPlayerButtonClick() {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
-            currentDriverNumber++;
-            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry("PEPPE"));
+            currentDriverNumber++; currentPlayerNumber++;
+            String playerName = "PLAYER " + currentPlayerNumber + "°";
+            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(playerName));
             updateUI();
         }
     }

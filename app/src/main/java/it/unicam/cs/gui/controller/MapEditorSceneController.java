@@ -57,7 +57,7 @@ public class MapEditorSceneController extends SceneController {
 
     private int segmentsEndpointsCounter;
 
-    // TEMP
+
     /**
      * Initialize the map editor scene
      */
@@ -71,7 +71,7 @@ public class MapEditorSceneController extends SceneController {
         rightSplitPane.setDividerPositions(0.8);
         splitPane.setDividerPositions(0.6);
 
-        //TEMP: add some random segment endpoints
+
         assert NEW_MAP_FILE_PATH != null;
         getGameMap(new File(NEW_MAP_FILE_PATH)).ifPresent(gameMap -> {
             Group canvases = gameMap.getCanvasGroup();
