@@ -13,6 +13,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -94,50 +96,55 @@ public final class UiGenerator {
         return hbox;
     }
 
-    public static HBox createDriverEntry(Driver driver) throws URISyntaxException, IOException {
-        HBox hbox = new HBox();
+    /**
+     * Create a driver entry.
+     * @param driver the driver
+     * @return a driver entry
+     */
+    public static HBox createDriverEntry(Driver driver) {
+        HBox hbox = new HBox(10); // Spacing between elements
         hbox.setPadding(new Insets(5));
         hbox.setAlignment(Pos.CENTER_LEFT);
 
+        // Player or bot image
         ImageView driverImageView;
-        // Player image
-        if (driver instanceof Player){
+        if (driver instanceof Player) {
             driverImageView = new ImageView(Resources.getImage(IMAGES_FOLDER + "player.png"));
         } else {
             driverImageView = new ImageView(String.valueOf(Resources.getResourceURL(IMAGES_FOLDER + "bot.png")));
         }
-
-        driverImageView.setFitWidth(50);
-        driverImageView.setFitHeight(50);
+        driverImageView.setFitWidth(65);
+        driverImageView.setFitHeight(65);
         driverImageView.setPreserveRatio(true);
 
-        // Player name label
-        Label nameLabel = new Label(driver.getName());
+        Label nameLabel = new Label(driver.getName() + "°");
+        nameLabel.setStyle("-fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-font-size: 25px;");
+
+        // Spacer to push buttons to the right
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
         // Edit button
         Button editButton = new Button("Edit");
+        editButton.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        editButton.setMinWidth(80); // Ensure consistent button width
         editButton.setOnAction(event -> {
-            // Add edit action logic here
             System.out.println("Edit clicked for driver: " + driver.getName());
         });
 
         // Cancel button
         Button cancelButton = new Button("X");
+        cancelButton.setStyle(
+                "-fx-font-size: 16px; -fx-background-color: red;" +
+                " -fx-text-fill: white; -fx-font-weight: bold;"
+        );
+        cancelButton.setMinWidth(40); // Ensure consistent button width
         cancelButton.getStyleClass().add("cancel-button");
 
         // Add elements to the HBox
-        List<Node> nodes = List.of(driverImageView, nameLabel, editButton, cancelButton);
-
-        // Set specific margins for spacing
-        HBox.setMargin(driverImageView, new Insets(0, 10, 0, 0));
-        HBox.setMargin(nameLabel, new Insets(0, 10, 0, 0));
-        HBox.setMargin(editButton, new Insets(0, 10, 0, 0));
-        HBox.setMargin(cancelButton, new Insets(0, 0, 0, 10));
-
-        hbox.getChildren().addAll(nodes);
+        hbox.getChildren().addAll(driverImageView, nameLabel, spacer, editButton, cancelButton);
         return hbox;
     }
-
 
 
     //FIXME: Add a method to create a segment entry to make the upper one private

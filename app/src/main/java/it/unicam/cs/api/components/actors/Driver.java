@@ -16,7 +16,7 @@ public abstract class Driver implements Racer {
     /** The color of the driver's car. */
     private Color carColor;
     /** The maximum length of the driver's name. */
-    private static final int MAX_DRIVER_NAME_LENGTH = 30;
+    private final int MAX_DRIVER_NAME_LENGTH = 30;
 
     // NOTE: every driver has a car with a unique color
     Driver(String name, Color carColor){
@@ -72,9 +72,18 @@ public abstract class Driver implements Racer {
         return carColor;
     }
 
+    /**
+     * Returns the maximum length of the driver's name.
+     * @return the maximum length of the driver's name
+     */
+    public int getMaxDriverNameLength() {
+        return MAX_DRIVER_NAME_LENGTH;
+    }
+
     @Override
     public String toString() {
         return name + " " + carColor.toString();
     }
+
 
 }

@@ -13,7 +13,7 @@ public class Bot extends Driver {
         super(name, carColor);
     }
 
-    public Bot() {
-        super("BOT", Color.RED);
+    public Bot(String name) {
+        super(name, Color.RED);
     }
 }

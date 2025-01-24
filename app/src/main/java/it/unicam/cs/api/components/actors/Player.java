@@ -13,8 +13,8 @@ public class Player extends Driver implements Playable {
         super(name, carColor);
     }
 
-    public Player() {
-        super("PLAYER", Color.BLUE);
+    public Player(String name) {
+        super(name, Color.BLUE);
     }
 }
 

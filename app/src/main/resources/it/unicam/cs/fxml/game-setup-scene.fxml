@@ -72,9 +72,9 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ScrollPane layoutY="-24.8" prefHeight="494.0" prefWidth="320.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
+                              <ScrollPane layoutY="-24.8" prefHeight="494.0" prefWidth="320.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                                  <content>
-                                    <VBox fx:id="driversVBox" prefHeight="470.0" prefWidth="310.0" />
+                                    <VBox fx:id="driversVBox" prefHeight="470.0" prefWidth="474.0" />
                                  </content></ScrollPane>
                            </children>
                         </AnchorPane>

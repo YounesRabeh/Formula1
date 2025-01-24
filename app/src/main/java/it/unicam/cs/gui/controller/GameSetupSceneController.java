@@ -87,7 +87,7 @@ public class GameSetupSceneController extends SceneController {
 
 
     public void initialize() throws URISyntaxException, IOException {
-        splitPane.setDividerPositions(0.55, 0.45);
+        splitPane.setDividerPositions(0.65, 0.35);
         matchMakingFile = Resources.getResourceFile(MATCH_MAKING_FILE_PATH);
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
@@ -213,7 +213,8 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void addBotButtonClick() throws URISyntaxException, IOException {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
-            Bot bot = new Bot();
+            String name = "Bot " + (currentBotNumber + 1);
+            Bot bot = new Bot(name);
             drivers.add(bot);
             currentDriverNumber++; currentBotNumber++;
             UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(bot));
@@ -224,7 +225,8 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void addPlayerButtonClick() throws URISyntaxException, IOException {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
-            Player player = new Player();
+            String name = "Player " + (currentPlayerNumber + 1);
+            Player player = new Player(name);
             drivers.add(player);
             currentDriverNumber++; currentPlayerNumber++;
             UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(player));

@@ -72,8 +72,7 @@ public final class Resources {
                 App.class.getResource(path));
     }
 
-
-    public static Image getImage(String path) throws URISyntaxException, IOException {
+    public static Image getImage(String path) {
         return new Image(String.valueOf(getResourceURL(path)));
     }
 
