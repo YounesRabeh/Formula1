@@ -62,7 +62,7 @@ public abstract class SceneController {
     protected static final String MAPS_DIRECTORY_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "MAPS_DIRECTORY_PATH"
     );
-
+    /** The match making file path. */
     protected static final String MATCH_MAKING_FILE_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "MATCH_MAKING_FILE_PATH"
     );
@@ -122,9 +122,7 @@ public abstract class SceneController {
             stage.getScene().setRoot(loader.load());
         }
 
-        Platform.runLater(() -> {
-            stage.show();
-        });
+        Platform.runLater(() -> stage.show());
     }
 
     /**

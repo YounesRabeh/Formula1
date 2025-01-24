@@ -2,24 +2,23 @@ package it.unicam.cs.api.components.container;
 
 import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.api.components.actors.Player;
-import it.unicam.cs.gui.controller.GameSetupSceneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
@@ -96,15 +95,12 @@ public final class UiGenerator {
         return hbox;
     }
 
-    /**
-     * Create a driver entry.
-     * @param driver the driver
-     * @return a driver entry
-     */
     public static HBox createDriverEntry(Driver driver) {
-        HBox hbox = new HBox(10); // Spacing between elements
+        HBox hbox = new HBox(10);
         hbox.setPadding(new Insets(5));
         hbox.setAlignment(Pos.CENTER_LEFT);
+
+        AtomicBoolean isNameEdited = new AtomicBoolean(false);
 
         // Player or bot image
         ImageView driverImageView;
@@ -117,7 +113,8 @@ public final class UiGenerator {
         driverImageView.setFitHeight(65);
         driverImageView.setPreserveRatio(true);
 
-        Label nameLabel = new Label(driver.getName() + "°");
+        // Label with name
+        Label nameLabel = new Label(driver.getName() + (isNameEdited.get() ? "" : "°"));
         nameLabel.setStyle("-fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-font-size: 25px;");
 
         // Spacer to push buttons to the right
@@ -127,23 +124,86 @@ public final class UiGenerator {
         // Edit button
         Button editButton = new Button("Edit");
         editButton.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        editButton.setMinWidth(80); // Ensure consistent button width
+        editButton.setMinWidth(80);
         editButton.setOnAction(event -> {
-            System.out.println("Edit clicked for driver: " + driver.getName());
+            showEditPopup(driver, nameLabel, hbox);
+            isNameEdited.set(true);
         });
 
         // Cancel button
         Button cancelButton = new Button("X");
         cancelButton.setStyle(
                 "-fx-font-size: 16px; -fx-background-color: red;" +
-                " -fx-text-fill: white; -fx-font-weight: bold;"
+                        " -fx-text-fill: white; -fx-font-weight: bold;"
         );
         cancelButton.setMinWidth(40); // Ensure consistent button width
         cancelButton.getStyleClass().add("cancel-button");
 
+        // Set the border color of the HBox based on the car color
+        hbox.setStyle("-fx-border-color: " + toHex(driver.getCarColor()) + "; -fx-border-width: 5px;");
+
         // Add elements to the HBox
         hbox.getChildren().addAll(driverImageView, nameLabel, spacer, editButton, cancelButton);
         return hbox;
+    }
+
+    // Method to show the edit popup
+    private static void showEditPopup(Driver driver, Label nameLabel, HBox hbox) {
+        // Create the popup dialog
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Edit Driver");
+
+        // Popup layout
+        VBox popupLayout = new VBox(10);
+        popupLayout.setPadding(new Insets(10));
+        popupLayout.setAlignment(Pos.CENTER);
+
+        // Name input
+        TextField nameField = new TextField(driver.getName());
+        nameField.setPromptText("Enter new name");
+
+        // Color picker
+        Label colorLabel = new Label("Choose car color:");
+        ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setValue(driver.getCarColor());
+
+        // Save button
+        Button saveButton = new Button("Save");
+        saveButton.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        saveButton.setOnAction(saveEvent -> {
+            String newName = nameField.getText().trim();
+            if (!newName.isEmpty()) {
+                driver.setName(newName); // Update the driver's name
+                nameLabel.setText(newName); // Update the name label
+            }
+
+            Color selectedColor = colorPicker.getValue();
+            driver.setCarColor(selectedColor);
+
+            // Update the border color of the HBox
+            hbox.setStyle("-fx-border-color: " + toHex(selectedColor) + "; -fx-border-width: 5px;");
+
+            popup.close();
+        });
+
+        // Cancel button
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setStyle("-fx-font-size: 14px;");
+        cancelButton.setOnAction(cancelEvent -> popup.close());
+
+        // Add components to popup layout
+        popupLayout.getChildren().addAll(nameField, colorLabel, colorPicker, saveButton, cancelButton);
+
+        // Show the popup
+        Scene popupScene = new Scene(popupLayout, 300, 200);
+        popup.setScene(popupScene);
+        popup.showAndWait();
+    }
+
+    // Helper method to convert Color to hex
+    private static String toHex(Color color) {
+        return String.format("#%02X%02X%02X", (int)(color.getRed() * 255), (int)(color.getGreen() * 255), (int)(color.getBlue() * 255));
     }
 
 
@@ -170,4 +230,5 @@ public final class UiGenerator {
     public static void addToVBOX(VBox vbox, HBox hbox) {
         addToVBOX(vbox, List.of(hbox));
     }
+
 }

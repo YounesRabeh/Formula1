@@ -80,10 +80,20 @@ public abstract class Driver implements Racer {
         return MAX_DRIVER_NAME_LENGTH;
     }
 
+    public void setName(String name) {
+        if (name == null) throw new IllegalArgumentException("[!!!] - Name cannot be null");
+        if(name.isBlank()) throw new IllegalArgumentException("[!!] - Name cannot be blank");
+        this.name = checkName(name);
+    }
+
+    public void setCarColor(Color carColor) {
+        if (carColor == null) throw new IllegalArgumentException("[!!!] - Color cannot be null");
+        if (carColor.equals(Color.BLACK)) throw new IllegalArgumentException("[!!] - Color cannot be black");
+        this.carColor = checkColor(carColor);
+    }
+
     @Override
     public String toString() {
         return name + " " + carColor.toString();
     }
-
-
 }

@@ -145,9 +145,6 @@ public class GameSetupSceneController extends SceneController {
         driverNumberText.setText(Math.min(currentDriverNumber, maxDrivers) + "/" + maxDrivers);
     }
 
-
-
-
     /**
      * Initialize the map preview listener.
      */
@@ -250,6 +247,5 @@ public class GameSetupSceneController extends SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
