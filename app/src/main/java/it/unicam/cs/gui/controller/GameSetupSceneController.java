@@ -83,7 +83,6 @@ public class GameSetupSceneController extends SceneController {
     private File matchMakingFile;
     /** The list of added drivers */
     private final List<Driver> drivers = new ArrayList<>();
-
     /** The current number of drivers ion teh map **/
     int currentDriverNumber = 0;
 
