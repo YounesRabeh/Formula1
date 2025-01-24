@@ -144,7 +144,6 @@ public class GameSetupSceneController extends SceneController {
         for (int i = 0; i < driversVboxChildren.size(); i++) {
             boolean shouldDisable = i >= maxDrivers;
             driversVboxChildren.get(i).setDisable(shouldDisable);
-            driversVboxChildren.get(i).setVisible(!shouldDisable);
         }
 
         updateDriverNumberText();
