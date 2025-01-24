@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
+import static it.unicam.cs.api.parser.types.AbstractParser.PARSER_SEPARATOR;
 import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
 import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 
@@ -28,10 +29,10 @@ import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 /**
  * Utility class for generating the UI components
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.5
  */
 public final class UiGenerator {
-    private UiGenerator() {}  // Prevent instantiation
+    private UiGenerator() {}
     /** The segment box entry FXML file. */
     private static final String SEGMENT_BOX_ENTRY = getProperty(
             CONFIG_PROPERTIES_PATH, "SEGMENT_BOX_ENTRY"
@@ -41,9 +42,9 @@ public final class UiGenerator {
             CONFIG_PROPERTIES_PATH, "IMAGES_FOLDER"
     );
 
-
     /** The segment box entry style. */
-    private static final String SEGMENT_ENDPOINT_ENTRY_STYLE = Resources.getResourceURL(SEGMENT_BOX_ENTRY).toString();
+    private static final String SEGMENT_ENDPOINT_ENTRY_STYLE =
+            Resources.getResourceURL(SEGMENT_BOX_ENTRY).toString();
 
     /**
      * Create a segment endpoint entry.
@@ -105,9 +106,13 @@ public final class UiGenerator {
         // Player or bot image
         ImageView driverImageView;
         if (driver instanceof Player) {
-            driverImageView = new ImageView(Resources.getImage(IMAGES_FOLDER + "player.png"));
+            driverImageView = new ImageView(
+                    Resources.getImage(IMAGES_FOLDER + "player.png")
+            );
         } else {
-            driverImageView = new ImageView(String.valueOf(Resources.getResourceURL(IMAGES_FOLDER + "bot.png")));
+            driverImageView = new ImageView(
+                    Resources.getImage(IMAGES_FOLDER + "bot.png")
+            );
         }
         driverImageView.setFitWidth(65);
         driverImageView.setFitHeight(65);
@@ -134,22 +139,19 @@ public final class UiGenerator {
         Button cancelButton = new Button("X");
         cancelButton.setStyle(
                 "-fx-font-size: 16px; -fx-background-color: red;" +
-                        " -fx-text-fill: white; -fx-font-weight: bold;"
+                " -fx-text-fill: white; -fx-font-weight: bold;"
         );
-        cancelButton.setMinWidth(40); // Ensure consistent button width
+        cancelButton.setMinWidth(40);
         cancelButton.getStyleClass().add("cancel-button");
 
-        // Set the border color of the HBox based on the car color
         hbox.setStyle("-fx-border-color: " + toHex(driver.getCarColor()) + "; -fx-border-width: 5px;");
 
-        // Add elements to the HBox
         hbox.getChildren().addAll(driverImageView, nameLabel, spacer, editButton, cancelButton);
         return hbox;
     }
 
     // Method to show the edit popup
     private static void showEditPopup(Driver driver, Label nameLabel, HBox hbox) {
-        // Create the popup dialog
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Edit Driver");
@@ -173,18 +175,18 @@ public final class UiGenerator {
         saveButton.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         saveButton.setOnAction(saveEvent -> {
             String newName = nameField.getText().trim();
-            if (!newName.isEmpty()) {
+            assert PARSER_SEPARATOR != null;
+            if (newName.contains(PARSER_SEPARATOR)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Invalid Name");
+                alert.setHeaderText("Invalid Character in Name");
+                alert.setContentText("The name cannot contain: \"" + PARSER_SEPARATOR + "\"");
+                alert.showAndWait();
+            } else if (!newName.isEmpty()) {
                 driver.setName(newName); // Update the driver's name
-                nameLabel.setText(newName); // Update the name label
+                nameLabel.setText(newName); // Update the name label without the "°" symbol
+                popup.close();
             }
-
-            Color selectedColor = colorPicker.getValue();
-            driver.setCarColor(selectedColor);
-
-            // Update the border color of the HBox
-            hbox.setStyle("-fx-border-color: " + toHex(selectedColor) + "; -fx-border-width: 5px;");
-
-            popup.close();
         });
 
         // Cancel button
@@ -203,7 +205,12 @@ public final class UiGenerator {
 
     // Helper method to convert Color to hex
     private static String toHex(Color color) {
-        return String.format("#%02X%02X%02X", (int)(color.getRed() * 255), (int)(color.getGreen() * 255), (int)(color.getBlue() * 255));
+        return String.format(
+                "#%02X%02X%02X",
+                (int)(color.getRed() * 255),
+                (int)(color.getGreen() * 255),
+                (int)(color.getBlue() * 255)
+        );
     }
 
 
@@ -230,5 +237,4 @@ public final class UiGenerator {
     public static void addToVBOX(VBox vbox, HBox hbox) {
         addToVBOX(vbox, List.of(hbox));
     }
-
 }

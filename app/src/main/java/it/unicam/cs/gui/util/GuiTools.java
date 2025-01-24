@@ -1,5 +1,8 @@
 package it.unicam.cs.gui.util;
 
+import it.unicam.cs.api.components.actors.Bot;
+import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
@@ -78,4 +81,5 @@ public final class GuiTools {
         drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
         drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
+
 }

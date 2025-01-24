@@ -5,6 +5,7 @@ import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.api.components.container.Resources;
 import it.unicam.cs.api.components.container.UiGenerator;
+import it.unicam.cs.api.parser.types.PlayerParser;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.application.Platform;
@@ -12,26 +13,29 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
+import static it.unicam.cs.api.parser.types.AbstractParser.PARSER_SEPARATOR;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
+
 
 /**
  * Controller class for the game setup scene.
@@ -56,6 +60,8 @@ public class GameSetupSceneController extends SceneController {
     private Button importMapButton;
     @FXML
     private Button startGameButton;
+    @FXML
+    private Button clearDriversButton;
 
     @FXML
     private Button addBotButton;
@@ -88,12 +94,14 @@ public class GameSetupSceneController extends SceneController {
 
     public void initialize() throws URISyntaxException, IOException {
         splitPane.setDividerPositions(0.65, 0.35);
+        startGameButton.setDisable(true);
         matchMakingFile = Resources.getResourceFile(MATCH_MAKING_FILE_PATH);
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
                 F1_MAP_FILE_EXTENSION
         );
         initMapPreviewListener();
+        Platform.runLater(this::initDriversSafeFile);
         loadMap(mapsFiles.getFirst());
     }
 
@@ -122,6 +130,9 @@ public class GameSetupSceneController extends SceneController {
      */
     private void updateUI() {
         boolean isDriverLimitReached = currentDriverNumber >= currentGameMap.getMaxDriversNumber();
+        if (isDriverLimitReached) {
+            startGameButton.setDisable(false);
+        }
 
         addBotButton.setDisable(isDriverLimitReached);
         addPlayerButton.setDisable(isDriverLimitReached);
@@ -143,6 +154,43 @@ public class GameSetupSceneController extends SceneController {
     private void updateDriverNumberText() {
         int maxDrivers = currentGameMap.getMaxDriversNumber();
         driverNumberText.setText(Math.min(currentDriverNumber, maxDrivers) + "/" + maxDrivers);
+    }
+
+    /**
+     * Initialize the drivers from the match making file.
+     */
+    private void initDriversSafeFile(){
+        if (matchMakingFile.length() == 0) {
+            return;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(matchMakingFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                assert PARSER_SEPARATOR != null;
+                String[] data = line.split(PARSER_SEPARATOR);
+                if (data.length == 3) {
+                    String name = data[1];
+                    String color = data[2];
+                    if (data[0].equals("P")) {
+                        Player player = new Player(name);
+                        player.setCarColor(Color.valueOf(color));
+                        drivers.add(player);
+                        currentPlayerNumber++;
+                    } else {
+                        Bot bot = new Bot(name);
+                        bot.setCarColor(Color.valueOf(color));
+                        drivers.add(bot);
+                        currentBotNumber++;
+                    }
+                    currentDriverNumber++;
+                    UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(drivers.get(drivers.size() - 1)));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**
@@ -195,7 +243,8 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void nextMapButtonClick() {
         currentMapIndex = (currentMapIndex + 1) % mapsFiles.size();
-        loadMap(mapsFiles.get(currentMapIndex));
+        selectedMap = mapsFiles.get(currentMapIndex);
+        loadMap(selectedMap);
     }
 
     /**
@@ -204,12 +253,14 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void previousMapButtonClick() {
         currentMapIndex = (currentMapIndex - 1 + mapsFiles.size()) % mapsFiles.size();
-        loadMap(mapsFiles.get(currentMapIndex));
+        selectedMap = mapsFiles.get(currentMapIndex);
+        loadMap(selectedMap);
     }
 
     @FXML
-    private void addBotButtonClick() throws URISyntaxException, IOException {
+    private void addBotButtonClick() {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
+            startGameButton.setDisable(false);
             String name = "Bot " + (currentBotNumber + 1);
             Bot bot = new Bot(name);
             drivers.add(bot);
@@ -220,8 +271,9 @@ public class GameSetupSceneController extends SceneController {
     }
 
     @FXML
-    private void addPlayerButtonClick() throws URISyntaxException, IOException {
+    private void addPlayerButtonClick() {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
+            startGameButton.setDisable(false);
             String name = "Player " + (currentPlayerNumber + 1);
             Player player = new Player(name);
             drivers.add(player);
@@ -234,18 +286,71 @@ public class GameSetupSceneController extends SceneController {
     @FXML
     private void startGameButtonClick() {
         if (drivers.isEmpty()) {
-            throw new IllegalStateException("No drivers available to start the game.");
+            alertPopup(Alert.AlertType.WARNING, "Game Start Error",
+                    "No Drivers Available", "Please add drivers before starting the game.");
+            return; // Exit the method to prevent further execution
+        }
+
+        Set<String> driverNames = new HashSet<>();
+        for (Driver driver : drivers) {
+            if (!driverNames.add(driver.getName())) {
+                alertPopup(Alert.AlertType.WARNING, "Game Start Error",
+                        "Duplicate Driver Name", "Driver name '" + driver.getName() + "' is duplicated. " +
+                                "Please fix this issue.");
+                return; // Exit the method to prevent further execution
+            }
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
             int cap = Math.min(currentGameMap.getMaxDriversNumber(), drivers.size());
             for (int i = 0; i < cap; i++) {
                 Driver driver = drivers.get(i);
-                writer.write(driver.toString());
+                if (driver instanceof Player) {
+                    writer.write("P" + PARSER_SEPARATOR);
+                } else {
+                    writer.write("B" + PARSER_SEPARATOR);
+                }
+                writer.write(driver.getName() + PARSER_SEPARATOR + driver.getCarColor().toString());
                 writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        selectedMap = mapsFiles.get(currentMapIndex);
+        changeScene(GAME_SCENE_FXML);
     }
+
+    /**
+     * Show an alert popup.
+     * @param type the alert type
+     * @param title the title of the alert
+     * @param header the header of the alert
+     * @param content the content of the alert
+     */
+    private void alertPopup(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void clearDriversButtonClick(){
+        drivers.clear();
+        driversVBox.getChildren().clear();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
+            // Truncate the file by opening it in write mode without writing anything
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        currentDriverNumber = 0;
+        currentBotNumber = 0;
+        currentPlayerNumber = 0;
+        initDriversSafeFile();
+
+        updateUI();
+    }
+
+
 }
