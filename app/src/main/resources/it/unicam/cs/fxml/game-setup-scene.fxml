@@ -66,7 +66,8 @@
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="clearDriversButton" layoutX="404.0" layoutY="13.0" mnemonicParsing="false" onAction="#clearDriversButtonClick" prefHeight="55.0" prefWidth="113.0" text="clear drivers" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0" />
+                              <Button fx:id="clearDriversButton" layoutX="404.0" layoutY="13.0" mnemonicParsing="false" onAction="#clearDriversButtonClick" prefHeight="55.0" prefWidth="113.0" text="clear drivers" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="60.0" />
+                              <Button fx:id="deleteLastDriverButton" layoutX="273.0" layoutY="57.0" mnemonicParsing="false" onAction="#deleteLastDriverButtonClick" prefHeight="55.0" prefWidth="113.0" text="Delete Last" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0" />
                            </children>
                         </AnchorPane>
                      </top>

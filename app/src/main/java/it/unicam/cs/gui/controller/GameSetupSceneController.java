@@ -41,7 +41,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.5
+ * @version 1.6
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -62,6 +62,8 @@ public class GameSetupSceneController extends SceneController {
     private Button startGameButton;
     @FXML
     private Button clearDriversButton;
+    @FXML
+    private Button deleteLastDriverButton;
 
     @FXML
     private Button addBotButton;
@@ -232,6 +234,7 @@ public class GameSetupSceneController extends SceneController {
      */
     @FXML
     private void backButtonClick() {
+        matchMakingFileWrite();
         changeScene(WELCOME_SCENE_FXML);
     }
 
@@ -352,5 +355,40 @@ public class GameSetupSceneController extends SceneController {
         updateUI();
     }
 
+    @FXML
+    private void deleteLastDriverButtonClick(){
+        if (drivers.isEmpty()) {
+            return;
+        }
+        drivers.removeLast();
+        driversVBox.getChildren().removeLast();
+        currentDriverNumber--;
+        if (drivers.getLast() instanceof Player) {
+            currentPlayerNumber--;
+        } else {
+            currentBotNumber--;
+        }
+        matchMakingFileWrite();
+        updateUI();
+    }
+
+    /**
+     * Write the match making file.
+     */
+    private void matchMakingFileWrite() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
+            for (Driver driver : drivers) {
+                if (driver instanceof Player) {
+                    writer.write("P" + PARSER_SEPARATOR);
+                } else {
+                    writer.write("B" + PARSER_SEPARATOR);
+                }
+                writer.write(driver.getName() + PARSER_SEPARATOR + driver.getCarColor().toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

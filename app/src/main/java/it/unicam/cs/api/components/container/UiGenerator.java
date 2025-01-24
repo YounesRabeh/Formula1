@@ -29,7 +29,7 @@ import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 /**
  * Utility class for generating the UI components
  * @author Younes Rabeh
- * @version 1.5
+ * @version 1.6
  */
 public final class UiGenerator {
     private UiGenerator() {}
@@ -135,18 +135,10 @@ public final class UiGenerator {
             isNameEdited.set(true);
         });
 
-        // Cancel button
-        Button cancelButton = new Button("X");
-        cancelButton.setStyle(
-                "-fx-font-size: 16px; -fx-background-color: red;" +
-                " -fx-text-fill: white; -fx-font-weight: bold;"
-        );
-        cancelButton.setMinWidth(40);
-        cancelButton.getStyleClass().add("cancel-button");
 
         hbox.setStyle("-fx-border-color: " + toHex(driver.getCarColor()) + "; -fx-border-width: 5px;");
 
-        hbox.getChildren().addAll(driverImageView, nameLabel, spacer, editButton, cancelButton);
+        hbox.getChildren().addAll(driverImageView, nameLabel, spacer, editButton);
         return hbox;
     }
 
