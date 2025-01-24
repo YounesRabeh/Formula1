@@ -5,7 +5,6 @@ import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.api.components.container.Resources;
 import it.unicam.cs.api.components.container.UiGenerator;
-import it.unicam.cs.api.parser.types.PlayerParser;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.application.Platform;
@@ -145,6 +144,7 @@ public class GameSetupSceneController extends SceneController {
         for (int i = 0; i < driversVboxChildren.size(); i++) {
             boolean shouldDisable = i >= maxDrivers;
             driversVboxChildren.get(i).setDisable(shouldDisable);
+            driversVboxChildren.get(i).setVisible(!shouldDisable);
         }
 
         updateDriverNumberText();

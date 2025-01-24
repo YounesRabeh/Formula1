@@ -175,6 +175,14 @@ public final class UiGenerator {
                 alert.setContentText("The name cannot contain: \"" + PARSER_SEPARATOR + "\"");
                 alert.showAndWait();
             } else if (!newName.isEmpty()) {
+                if (newName.length() > driver.getMaxDriverNameLength()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Invalid Name");
+                    alert.setHeaderText("Name is too long");
+                    alert.setContentText("The name cannot exceed " + driver.getMaxDriverNameLength() + " characters");
+                    alert.showAndWait();
+                    return;
+                }
                 driver.setName(newName); // Update the driver's name
                 nameLabel.setText(newName); // Update the name label without the "°" symbol
                 popup.close();

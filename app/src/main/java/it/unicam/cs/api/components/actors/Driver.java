@@ -83,6 +83,9 @@ public abstract class Driver implements Racer {
     public void setName(String name) {
         if (name == null) throw new IllegalArgumentException("[!!!] - Name cannot be null");
         if(name.isBlank()) throw new IllegalArgumentException("[!!] - Name cannot be blank");
+        if (name.length() > MAX_DRIVER_NAME_LENGTH) {
+            throw new IllegalArgumentException("[!!] - Name is too long");
+        }
         this.name = checkName(name);
     }
 
