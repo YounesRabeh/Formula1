@@ -1,5 +1,8 @@
 package it.unicam.cs.gui.controller;
 
+import it.unicam.cs.api.components.actors.Bot;
+import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.api.components.container.Resources;
 import it.unicam.cs.api.components.container.UiGenerator;
 import it.unicam.cs.gui.map.GameMap;
@@ -19,7 +22,9 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -32,7 +37,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.2
+ * @version 1.5
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -49,6 +54,8 @@ public class GameSetupSceneController extends SceneController {
     private Button nextMapButton;
     @FXML
     private Button importMapButton;
+    @FXML
+    private Button startGameButton;
 
     @FXML
     private Button addBotButton;
@@ -65,7 +72,10 @@ public class GameSetupSceneController extends SceneController {
     GameMap currentGameMap;
     /** The layout listener, used to resize the map preview */
     ChangeListener<Bounds> layoutListener;
+    /** The match making file, used to save the match making configuration */
     private File matchMakingFile;
+    /** The list of added drivers */
+    private final List<Driver> drivers = new ArrayList<>();
 
     /** The current number of drivers ion teh map **/
     int currentDriverNumber = 0;
@@ -201,22 +211,43 @@ public class GameSetupSceneController extends SceneController {
     }
 
     @FXML
-    private void addBotButtonClick() {
+    private void addBotButtonClick() throws URISyntaxException, IOException {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
+            Bot bot = new Bot();
+            drivers.add(bot);
             currentDriverNumber++; currentBotNumber++;
-            String botName = "BOT " + currentBotNumber + "°";
-            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(botName));
+            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(bot));
             updateUI();
         }
     }
 
     @FXML
-    private void addPlayerButtonClick() {
+    private void addPlayerButtonClick() throws URISyntaxException, IOException {
         if (currentDriverNumber < currentGameMap.getMaxDriversNumber()) {
+            Player player = new Player();
+            drivers.add(player);
             currentDriverNumber++; currentPlayerNumber++;
-            String playerName = "PLAYER " + currentPlayerNumber + "°";
-            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(playerName));
+            UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(player));
             updateUI();
         }
+    }
+
+    @FXML
+    private void startGameButtonClick() {
+        if (drivers.isEmpty()) {
+            throw new IllegalStateException("No drivers available to start the game.");
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
+            int cap = Math.min(currentGameMap.getMaxDriversNumber(), drivers.size());
+            for (int i = 0; i < cap; i++) {
+                Driver driver = drivers.get(i);
+                writer.write(driver.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

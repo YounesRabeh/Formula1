@@ -9,7 +9,11 @@ import javafx.scene.paint.Color;
  */
 public class Bot extends Driver {
 
-    Bot(String name, Color carColor) {
+    public Bot(String name, Color carColor) {
         super(name, carColor);
+    }
+
+    public Bot() {
+        super("BOT", Color.RED);
     }
 }

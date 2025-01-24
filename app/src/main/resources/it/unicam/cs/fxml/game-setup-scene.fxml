@@ -44,7 +44,7 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <AnchorPane fx:id="canvasPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                              <AnchorPane fx:id="canvasPane" layoutX="-31.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="-31.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="14.0" />
                            </children></AnchorPane>
                      </center>
                   </BorderPane>
@@ -72,9 +72,9 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ScrollPane layoutY="-24.8" prefHeight="539.0" prefWidth="492.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                              <ScrollPane layoutY="-24.8" prefHeight="494.0" prefWidth="320.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
                                  <content>
-                                    <VBox fx:id="driversVBox" prefHeight="469.0" prefWidth="468.0" />
+                                    <VBox fx:id="driversVBox" prefHeight="470.0" prefWidth="310.0" />
                                  </content></ScrollPane>
                            </children>
                         </AnchorPane>
@@ -86,7 +86,7 @@
                                  <items>
                                     <Button fx:id="addBotButton" layoutX="10.0" layoutY="16.0" mnemonicParsing="false" onAction="#addBotButtonClick" prefHeight="43.0" prefWidth="97.0" text="add Bot" />
                                     <Button fx:id="addPlayerButton" layoutX="10.0" layoutY="18.0" mnemonicParsing="false" onAction="#addPlayerButtonClick" prefHeight="43.0" prefWidth="97.0" text="add Player" />
-                                    <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="304.0" text="START">
+                                    <Button fx:id="startGameButton" mnemonicParsing="false" onAction="#startGameButtonClick" prefHeight="43.0" prefWidth="304.0" text="START">
                                        <font>
                                           <Font name="System Bold" size="24.0" />
                                        </font>

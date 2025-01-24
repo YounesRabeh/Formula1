@@ -2,6 +2,7 @@ package it.unicam.cs.api.components.container;
 
 import it.unicam.cs.App;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.InputStream;
 import java.nio.file.*;
@@ -69,6 +70,11 @@ public final class Resources {
     public static URL getResourceURL(String path) {
         return Objects.requireNonNull(
                 App.class.getResource(path));
+    }
+
+
+    public static Image getImage(String path) throws URISyntaxException, IOException {
+        return new Image(String.valueOf(getResourceURL(path)));
     }
 
     /**

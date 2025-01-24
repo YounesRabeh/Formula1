@@ -4,7 +4,7 @@ module it.unicam.cs {
     requires org.controlsfx.controls;
     requires javafx.graphics;
     requires java.rmi;
-    requires java.logging;
+    requires java.sql;
 
     opens it.unicam.cs to javafx.fxml;
     opens it.unicam.cs.gui.controller to javafx.fxml;

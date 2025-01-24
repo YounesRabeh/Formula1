@@ -9,8 +9,12 @@ import javafx.scene.paint.Color;
  */
 public class Player extends Driver implements Playable {
 
-    Player(String name, Color carColor) {
+    public Player(String name, Color carColor) {
         super(name, carColor);
+    }
+
+    public Player() {
+        super("PLAYER", Color.BLUE);
     }
 }
 

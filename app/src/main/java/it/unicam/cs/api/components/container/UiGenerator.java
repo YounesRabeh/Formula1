@@ -1,5 +1,7 @@
 package it.unicam.cs.api.components.container;
 
+import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.gui.controller.GameSetupSceneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -13,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -31,6 +35,12 @@ public final class UiGenerator {
     private static final String SEGMENT_BOX_ENTRY = getProperty(
             CONFIG_PROPERTIES_PATH, "SEGMENT_BOX_ENTRY"
     );
+    /** The images folder. */
+    private static final String IMAGES_FOLDER = getProperty(
+            CONFIG_PROPERTIES_PATH, "IMAGES_FOLDER"
+    );
+
+
     /** The segment box entry style. */
     private static final String SEGMENT_ENDPOINT_ENTRY_STYLE = Resources.getResourceURL(SEGMENT_BOX_ENTRY).toString();
 
@@ -84,25 +94,31 @@ public final class UiGenerator {
         return hbox;
     }
 
-    public static HBox createDriverEntry(String driverName) {
+    public static HBox createDriverEntry(Driver driver) throws URISyntaxException, IOException {
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(5));
         hbox.setAlignment(Pos.CENTER_LEFT);
 
+        ImageView driverImageView;
         // Player image
-        ImageView driverImageView = new ImageView();
+        if (driver instanceof Player){
+            driverImageView = new ImageView(Resources.getImage(IMAGES_FOLDER + "player.png"));
+        } else {
+            driverImageView = new ImageView(String.valueOf(Resources.getResourceURL(IMAGES_FOLDER + "bot.png")));
+        }
+
         driverImageView.setFitWidth(50);
         driverImageView.setFitHeight(50);
         driverImageView.setPreserveRatio(true);
 
         // Player name label
-        Label nameLabel = new Label(driverName);
+        Label nameLabel = new Label(driver.getName());
 
         // Edit button
         Button editButton = new Button("Edit");
         editButton.setOnAction(event -> {
             // Add edit action logic here
-            System.out.println("Edit clicked for driver: " + driverName);
+            System.out.println("Edit clicked for driver: " + driver.getName());
         });
 
         // Cancel button

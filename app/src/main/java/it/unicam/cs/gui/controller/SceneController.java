@@ -68,6 +68,7 @@ public abstract class SceneController {
 
 
 
+
     // TEMP: For testing purposes
     public static final String NEW_MAP_FILE_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "EMPTY_MAP_FILE_PATH"

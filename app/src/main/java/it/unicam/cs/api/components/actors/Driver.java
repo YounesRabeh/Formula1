@@ -2,7 +2,15 @@ package it.unicam.cs.api.components.actors;
 
 import javafx.scene.paint.Color;
 
-abstract class Driver implements Racer {
+/**
+ * Represents a driver in the game. A driver is a racer that can be controlled by the user or the computer
+ * @see Racer
+ * @see Player
+ * @see Bot
+ * @author Younes Rabeh
+ * @version 1.3
+ */
+public abstract class Driver implements Racer {
     /** The driver's name. */
     private String name;
     /** The color of the driver's car. */
@@ -46,6 +54,27 @@ abstract class Driver implements Racer {
         //TODO: make sure the color is not already used by another driver
 
         return color;
+    }
+
+    /**
+     * Returns the driver's name.
+     * @return the driver's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the driver's car color.
+     * @return the driver's car color
+     */
+    public Color getCarColor() {
+        return carColor;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + carColor.toString();
     }
 
 }
