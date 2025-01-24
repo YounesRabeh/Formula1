@@ -18,8 +18,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 
 import static it.unicam.cs.api.parser.types.AbstractParser.PARSER_SEPARATOR;
 import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
@@ -29,7 +27,7 @@ import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 /**
  * Utility class for generating the UI components
  * @author Younes Rabeh
- * @version 1.6
+ * @version 1.7
  */
 public final class UiGenerator {
     private UiGenerator() {}
@@ -101,8 +99,6 @@ public final class UiGenerator {
         hbox.setPadding(new Insets(5));
         hbox.setAlignment(Pos.CENTER_LEFT);
 
-        AtomicBoolean isNameEdited = new AtomicBoolean(false);
-
         // Player or bot image
         ImageView driverImageView;
         if (driver instanceof Player) {
@@ -119,7 +115,7 @@ public final class UiGenerator {
         driverImageView.setPreserveRatio(true);
 
         // Label with name
-        Label nameLabel = new Label(driver.getName() + (isNameEdited.get() ? "" : "°"));
+        Label nameLabel = new Label(driver.getName());
         nameLabel.setStyle("-fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-font-size: 25px;");
 
         // Spacer to push buttons to the right
@@ -132,7 +128,6 @@ public final class UiGenerator {
         editButton.setMinWidth(80);
         editButton.setOnAction(event -> {
             showEditPopup(driver, nameLabel, hbox);
-            isNameEdited.set(true);
         });
 
 
@@ -186,6 +181,12 @@ public final class UiGenerator {
                 driver.setName(newName); // Update the driver's name
                 nameLabel.setText(newName); // Update the name label without the "°" symbol
                 popup.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Invalid Name");
+                alert.setHeaderText("Name cannot be empty");
+                alert.setContentText("Please enter a valid name");
+                alert.showAndWait();
             }
         });
 

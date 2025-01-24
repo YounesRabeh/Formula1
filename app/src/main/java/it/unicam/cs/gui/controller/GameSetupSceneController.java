@@ -40,7 +40,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.6
+ * @version 1.7
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -94,7 +94,6 @@ public class GameSetupSceneController extends SceneController {
 
     public void initialize() throws URISyntaxException, IOException {
         splitPane.setDividerPositions(0.65, 0.35);
-        startGameButton.setDisable(true);
         matchMakingFile = Resources.getResourceFile(MATCH_MAKING_FILE_PATH);
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
@@ -130,8 +129,8 @@ public class GameSetupSceneController extends SceneController {
      */
     private void updateUI() {
         boolean isDriverLimitReached = currentDriverNumber >= currentGameMap.getMaxDriversNumber();
-        if (isDriverLimitReached) {
-            startGameButton.setDisable(false);
+        if (currentDriverNumber == 0) {
+            startGameButton.setDisable(true);
         }
 
         addBotButton.setDisable(isDriverLimitReached);
@@ -183,7 +182,7 @@ public class GameSetupSceneController extends SceneController {
                         currentBotNumber++;
                     }
                     currentDriverNumber++;
-                    UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(drivers.get(drivers.size() - 1)));
+                    UiGenerator.addToVBOX(driversVBox, UiGenerator.createDriverEntry(drivers.getLast()));
                 }
             }
         } catch (IOException e) {
