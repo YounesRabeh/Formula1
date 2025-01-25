@@ -12,14 +12,13 @@ import java.net.URISyntaxException;
 
 import static it.unicam.cs.engine.util.Useful.getGameMap;
 import static it.unicam.cs.gui.util.GuiTools.align;
-import static it.unicam.cs.gui.util.GuiTools.drawGameElements;
 
 
 /**
  * Controller for the game scene
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  */
 public class GameSceneController extends SceneController {
     @FXML
@@ -29,13 +28,14 @@ public class GameSceneController extends SceneController {
     @FXML
     private Button abandonButton;
 
+    //FIXME: the extra field are
     @FXML
     public void initialize() {
         try {
             getGameMap(selectedMap).ifPresent(gameMap -> {
                 Group canvases = gameMap.getCanvasGroup();
                 align(anchorPane, canvases);
-                drawGameElements(gameMap);
+                //drawGameElements(gameMap);
             });
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

@@ -27,7 +27,7 @@ import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 /**
  * Utility class for generating the UI components
  * @author Younes Rabeh
- * @version 1.7
+ * @version 1.8
  */
 public final class UiGenerator {
     private UiGenerator() {}
@@ -178,8 +178,10 @@ public final class UiGenerator {
                     alert.showAndWait();
                     return;
                 }
-                driver.setName(newName); // Update the driver's name
-                nameLabel.setText(newName); // Update the name label without the "°" symbol
+                driver.setName(newName);
+                nameLabel.setText(newName);
+                driver.setCarColor(colorPicker.getValue());
+                hbox.setStyle("-fx-border-color: " + toHex(colorPicker.getValue()) + "; -fx-border-width: 5px;");
                 popup.close();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);

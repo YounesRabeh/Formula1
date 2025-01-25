@@ -40,7 +40,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.7
+ * @version 1.8
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -76,7 +76,7 @@ public class GameSetupSceneController extends SceneController {
     /** The map preview */
     ImageView mapView = new ImageView();
     /** The selected map */
-    GameMap currentGameMap;
+    static GameMap currentGameMap;
     /** The layout listener, used to resize the map preview */
     ChangeListener<Bounds> layoutListener;
     /** The match making file, used to save the match making configuration */
@@ -101,7 +101,8 @@ public class GameSetupSceneController extends SceneController {
         );
         initMapPreviewListener();
         Platform.runLater(this::initDriversSafeFile);
-        loadMap(mapsFiles.getFirst());
+        selectedMap = selectedMap == null ? mapsFiles.getFirst() : selectedMap;
+        loadMap(selectedMap);
     }
 
     /**
