@@ -40,7 +40,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.8
+ * @version 1.9
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -189,8 +189,6 @@ public class GameSetupSceneController extends SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
@@ -223,7 +221,15 @@ public class GameSetupSceneController extends SceneController {
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
             mapsFiles.add(selectedFile);
-            loadMap(selectedFile);
+            try {
+                selectedMap = selectedFile;
+                loadMap(selectedFile);
+            } catch (Exception e) {
+                alertPopup(Alert.AlertType.ERROR, "Map Import Error",
+                        "An error occurred while importing the map\nERROR: " + e.getMessage(),
+                        "Please make sure the file is a valid map file.");
+            }
+
         }
     }
     
