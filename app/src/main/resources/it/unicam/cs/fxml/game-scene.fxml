@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.gui.controller.GameSceneController">
    <children>
@@ -24,50 +24,77 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.rowIndex="1">
+                  <Button fx:id="leftButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬅" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.columnIndex="1">
+                  <Button fx:id="upButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="77.0" text="⬆" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Button fx:id="downButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬇" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="132.0" layoutY="21.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="rightButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="➡" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button">
+                  <Button fx:id="upRightButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="77.0" text="⬉">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="132.0" layoutY="21.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.columnIndex="2">
+                  <Button fx:id="upLeftButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="77.0" text="⬈" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="132.0" layoutY="200.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="centerButton" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="78.0" text="⬤" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="28.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="240.0" layoutY="111.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button fx:id="downRightButton" layoutX="240.0" layoutY="111.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬊" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
-                  <Button layoutX="132.0" layoutY="200.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="75.0" text="Button" GridPane.rowIndex="2">
+                  <Button fx:id="downLeftButton" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬋" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
                   </Button>
                </children>
             </GridPane>

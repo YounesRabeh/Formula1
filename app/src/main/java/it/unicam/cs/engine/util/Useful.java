@@ -40,6 +40,22 @@ public final class Useful {
         }
     }
 
+    public static void drawWaypoints(GraphicsContext gc, GameMap.Waypoint[] waypoints){
+        Graphics.setFill(gc, new int[]{255, 0, 0});
+        for (GameMap.Waypoint coords : waypoints) {
+            if (coords == null) continue;
+            Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
+        }
+    }
+
+    public static void drawWaypoint(GraphicsContext gc,GameMap.Waypoint waypoint){
+        if (waypoint == null) return;
+        Graphics.setFill(gc, new int[]{0, 100, 100});
+
+        Graphics.strokePoint(gc, new int[]{(int) waypoint.getX(), (int) waypoint.getY()});
+
+    }
+
     /**
      * Draw the parsed segment end points of the track.
      * @param gc the GraphicsContext

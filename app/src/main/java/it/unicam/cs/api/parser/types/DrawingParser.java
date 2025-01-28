@@ -173,7 +173,9 @@ public class DrawingParser extends AbstractParser {
                 currentGC.setStroke(trackCanvas.getColor());
                 generateTrackSnapshot(this.map, trackCanvas, currentGC);
 
+
                 Line startLine = generateTrackMarker(trackCanvas, command.params());
+                map.createStartLine(map.createWaypoint(command.params()[0], command.params()[1]));
                 trackCanvas.setStartLine(startLine);
                 trackCanvas.removeFirstSegmentsEndPoint();
                 trackCanvas.addFirstSegmentsEndPoint(map.createWaypoint(command.params()[0], command.params()[1]));
@@ -186,7 +188,7 @@ public class DrawingParser extends AbstractParser {
                 checkIfDrawingFinishLineIsAdmissible(trackCanvas);
 
                 Line finishLine = generateTrackMarker(trackCanvas, command.params());
-                    map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
+                map.createFinishLine(map.createWaypoint(command.params()[0], command.params()[1]));
 
                 checkMarkerOverlap(trackCanvas.getStartLine(), finishLine);
                 trackCanvas.setFinishLine(finishLine);

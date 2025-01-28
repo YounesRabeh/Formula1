@@ -63,9 +63,6 @@ public final class GuiTools {
     }
 
 
-
-
-
     // TEMP: For visualizing the parsed data
     /**
      * Draws the game elements on the canvases.
@@ -80,6 +77,15 @@ public final class GuiTools {
         drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), (List<GameMap.Waypoint>) waypoints);
         drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
         drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
+    }
+
+    public static void drawDriversOnTrack(GameMap gameMap) {
+        List<Driver> drivers = gameMap.getDrivers();
+        for (Driver driver : drivers) {
+            GameMap.Waypoint position = driver.getPosition();
+            Canvas[] canvases = gameMap.getCanvases();
+            drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), position);
+        }
     }
 
 }

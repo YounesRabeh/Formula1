@@ -80,7 +80,16 @@ public class GameSetupSceneController extends SceneController {
     /** The layout listener, used to resize the map preview */
     ChangeListener<Bounds> layoutListener;
     /** The match making file, used to save the match making configuration */
-    private File matchMakingFile;
+    public static File MATCH_MAKING_FILE;
+
+    static {
+        try {
+            MATCH_MAKING_FILE = Resources.getResourceFile(MATCH_MAKING_FILE_PATH);
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /** The list of added drivers */
     private final List<Driver> drivers = new ArrayList<>();
     /** The current number of drivers ion teh map **/
@@ -94,7 +103,7 @@ public class GameSetupSceneController extends SceneController {
 
     public void initialize() throws URISyntaxException, IOException {
         splitPane.setDividerPositions(0.65, 0.35);
-        matchMakingFile = Resources.getResourceFile(MATCH_MAKING_FILE_PATH);
+
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
                 F1_MAP_FILE_EXTENSION
@@ -160,10 +169,10 @@ public class GameSetupSceneController extends SceneController {
      * Initialize the drivers from the match making file.
      */
     private void initDriversSafeFile(){
-        if (matchMakingFile.length() == 0) {
+        if (MATCH_MAKING_FILE.length() == 0) {
             return;
         }
-        try (BufferedReader reader = new BufferedReader(new FileReader(matchMakingFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(MATCH_MAKING_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 assert PARSER_SEPARATOR != null;
@@ -308,7 +317,7 @@ public class GameSetupSceneController extends SceneController {
             }
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(MATCH_MAKING_FILE, false))) {
             int cap = Math.min(currentGameMap.getMaxDriversNumber(), drivers.size());
             for (int i = 0; i < cap; i++) {
                 Driver driver = drivers.get(i);
@@ -346,7 +355,7 @@ public class GameSetupSceneController extends SceneController {
     private void clearDriversButtonClick(){
         drivers.clear();
         driversVBox.getChildren().clear();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
+        try (BufferedWriter ignored = new BufferedWriter(new FileWriter(MATCH_MAKING_FILE, false))) {
             // Truncate the file by opening it in write mode without writing anything
         } catch (IOException e) {
             e.printStackTrace();
@@ -380,7 +389,7 @@ public class GameSetupSceneController extends SceneController {
      * Write the match making file.
      */
     private void matchMakingFileWrite() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(matchMakingFile, false))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(MATCH_MAKING_FILE, false))) {
             for (Driver driver : drivers) {
                 if (driver instanceof Player) {
                     writer.write("P" + PARSER_SEPARATOR);

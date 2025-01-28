@@ -1,6 +1,9 @@
 package it.unicam.cs.api.components.actors;
 
+import it.unicam.cs.api.components.actors.structs.Inertia;
+import it.unicam.cs.gui.map.GameMap;
 import javafx.scene.paint.Color;
+
 
 /**
  * Represents a driver in the game. A driver is a racer that can be controlled by the user or the computer
@@ -15,14 +18,17 @@ public abstract class Driver implements Racer {
     private String name;
     /** The color of the driver's car. */
     private Color carColor;
+    /** The current waypoint/ position of the driver. */
+    private GameMap.Waypoint currentWaypoint;
+    /** The driver's inertia. */
+    private final Inertia inertia;
     /** The maximum length of the driver's name. */
     private final int MAX_DRIVER_NAME_LENGTH = 30;
 
-    // NOTE: every driver has a car with a unique color
     Driver(String name, Color carColor){
         this.name = checkName(name);
         this.carColor = checkColor(carColor);
-
+        this.inertia = new Inertia();
     }
 
     /**
@@ -73,6 +79,22 @@ public abstract class Driver implements Racer {
     }
 
     /**
+     * Gets the current waypoint of the driver.
+     * @return the current waypoint of the driver
+     */
+    public GameMap.Waypoint getPosition() {
+        return currentWaypoint;
+    }
+
+    /**
+     * Gets the driver's inertia.
+     * @return the driver's inertia
+     */
+    public Inertia getInertia() {
+        return inertia;
+    }
+
+    /**
      * Returns the maximum length of the driver's name.
      * @return the maximum length of the driver's name
      */
@@ -80,6 +102,11 @@ public abstract class Driver implements Racer {
         return MAX_DRIVER_NAME_LENGTH;
     }
 
+    /**
+     * Sets the driver's name.
+     * @param name the new name of the driver
+     * @throws IllegalArgumentException if the name is null, blank, or too long
+     */
     public void setName(String name) {
         if (name == null) throw new IllegalArgumentException("[!!!] - Name cannot be null");
         if(name.isBlank()) throw new IllegalArgumentException("[!!] - Name cannot be blank");
@@ -89,14 +116,29 @@ public abstract class Driver implements Racer {
         this.name = checkName(name);
     }
 
+    /**
+     * Sets the driver's car color.
+     * @param carColor the new color of the driver's car
+     * @throws IllegalArgumentException if the color is null, black, or already used
+     */
     public void setCarColor(Color carColor) {
         if (carColor == null) throw new IllegalArgumentException("[!!!] - Color cannot be null");
         if (carColor.equals(Color.BLACK)) throw new IllegalArgumentException("[!!] - Color cannot be black");
         this.carColor = checkColor(carColor);
     }
 
+    /**
+     * Sets the current waypoint of the driver.
+     * @param waypoint the new waypoint of the driver
+     */
+    public void setPosition(GameMap.Waypoint waypoint) {
+        this.currentWaypoint = waypoint;
+    }
+
+
     @Override
     public String toString() {
         return name + " " + carColor.toString();
     }
+
 }

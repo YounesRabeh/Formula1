@@ -1,8 +1,12 @@
 package it.unicam.cs.gui.map;
 
+import it.unicam.cs.api.components.actors.Bot;
+import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.api.components.container.Check;
-import it.unicam.cs.api.components.container.Movement;
+import it.unicam.cs.api.components.actors.structs.Movement;
 import it.unicam.cs.api.components.nodes.FinishLine;
+import it.unicam.cs.api.components.nodes.StartLine;
 import it.unicam.cs.gui.util.CanvasTools;
 import it.unicam.cs.gui.util.MapTools;
 import javafx.geometry.Point2D;
@@ -10,10 +14,12 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Stack;
-import java.util.TreeSet;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.*;
+
+import static it.unicam.cs.api.parser.types.AbstractParser.PARSER_SEPARATOR;
+import static it.unicam.cs.gui.controller.GameSetupSceneController.MATCH_MAKING_FILE;
 
 
 /**
@@ -38,10 +44,14 @@ public class GameMap {
     private final int width;
     /** The height of the map */
     private final int height;
+    /** The start line of the track */
+    private StartLine startLine;
     /** The finish line of the track (The car's target) */
     private FinishLine finishLine;
     /** The maximum number of Drivers on this map*/
     private int maxDriversNumber;
+    /** The drivers on this map */
+    private List<Driver> drivers;
 
 
     /**
@@ -54,6 +64,7 @@ public class GameMap {
      */
     public GameMap(int cellSize, int cellNumber_X, int cellNumber_Y, int layerNumber) {
         Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y, layerNumber);
+        initDrivers();
         //TODO: check if the generated map is smaller than window size
         this.width = cellSize * cellNumber_X;
         this.height = cellSize * cellNumber_Y;
@@ -189,6 +200,48 @@ public class GameMap {
         return height;
     }
 
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
+
+    /**
+     * Initialize the drivers from the match making file.
+     */
+    private void initDrivers() {
+        List<Driver> driversFromFile = new ArrayList<>();
+        if (MATCH_MAKING_FILE == null || !MATCH_MAKING_FILE.exists() || MATCH_MAKING_FILE.length() == 0) {
+            drivers = driversFromFile;
+        }
+        try {
+            assert MATCH_MAKING_FILE != null;
+            try (BufferedReader reader = new BufferedReader(new FileReader(MATCH_MAKING_FILE))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    assert PARSER_SEPARATOR != null;
+                    String[] data = line.split(PARSER_SEPARATOR);
+                    if (data.length == 3) {
+                        String type = data[0];
+                        String name = data[1];
+                        String color = data[2];
+                        if ("P".equals(type)) {
+                            Player player = new Player(name);
+                            player.setCarColor(Color.valueOf(color));
+                            driversFromFile.add(player);
+                        } else if ("B".equals(type)) {
+                            Bot bot = new Bot(name);
+                            bot.setCarColor(Color.valueOf(color));
+                            driversFromFile.add(bot);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        drivers = driversFromFile;
+    }
+
+
     /**
      * Get the finish line of the track, as a collection of waypoints.
      * @return the finish line of the track
@@ -204,7 +257,11 @@ public class GameMap {
      */
     public void createFinishLine(Waypoint origin){
         finishLine = new FinishLine(MapTools.getWaypointsOnLevelX(this, origin));
-        maxDriversNumber = finishLine.getWaypoints().size();
+    }
+
+    public void createStartLine(Waypoint origin){
+        startLine = new StartLine(MapTools.getWaypointsOnLevelX(this, origin));
+        maxDriversNumber = startLine.getWaypoints().size();
     }
 
     /**
@@ -213,6 +270,10 @@ public class GameMap {
      */
     public int getMaxDriversNumber() {
         return maxDriversNumber;
+    }
+
+    public List<Waypoint> getStartingPosition(){
+        return (List<Waypoint>) startLine.getWaypoints();
     }
 
     /**
@@ -261,21 +322,23 @@ public class GameMap {
         }
     }
 
+    //TEMP: will be deleted
+
     /**
      * Get the possible next (reachable) waypoints, given a waypoint.
      * @return the possible next waypoints
      */
-    public Collection<Waypoint> getPossibleNextWaypoints(GameMap gameMap, GameMap.Waypoint waypoint) {
+    public Collection<Waypoint> getPossibleNextWaypoints(GameMap.Waypoint waypoint) {
         // The function suppose that the waypoint is on the grid intersection
         Collection<GameMap.Waypoint> possibleNextWaypoints = new ArrayList<>();
-        int cellSize = gameMap.getGridCanvas().getCellSize();
+        int cellSize = this.getGridCanvas().getCellSize();
 
         for (Movement movement : Movement.values()) {
             double newX = waypoint.getX() + movement.getXOffset() * cellSize;
             double newY = waypoint.getY() + movement.getYOffset() * cellSize;
             try {
-                GameMap.Waypoint nextWaypoint = gameMap.createWaypoint(newX, newY);
-                if (gameMap.getTrackCanvas().containsWaypoint(nextWaypoint)) {
+                GameMap.Waypoint nextWaypoint = this.createWaypoint(newX, newY);
+                if (this.getTrackCanvas().containsWaypoint(nextWaypoint)) {
                     possibleNextWaypoints.add(nextWaypoint);
                 }
             } catch (IllegalArgumentException ignored) {

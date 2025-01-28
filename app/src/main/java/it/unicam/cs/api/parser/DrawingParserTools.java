@@ -1,7 +1,7 @@
 package it.unicam.cs.api.parser;
 
 
-import it.unicam.cs.engine.core.route.RouteTools;
+import it.unicam.cs.engine.nav.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasTools;
@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Line;
 
-import static it.unicam.cs.engine.core.route.RouteTools.findMapWaypoints;
+import static it.unicam.cs.engine.nav.RouteTools.findMapWaypoints;
 
 /**
  * A utility class that provides helper methods for the drawing parser.

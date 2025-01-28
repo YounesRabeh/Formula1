@@ -1,7 +1,8 @@
-package it.unicam.cs.engine.core.route;
+package it.unicam.cs.engine.nav;
 
 
 import it.unicam.cs.api.components.container.Check;
+import it.unicam.cs.api.components.actors.structs.Movement;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasTools;
@@ -64,5 +65,30 @@ public final class RouteTools {
                 "> Found " + waypoints.size() + " black pixels"
         );
         return waypoints;
+    }
+
+    /**
+     * Get the possible next (reachable) waypoints, given a waypoint.
+     * @return the possible next waypoints
+     */
+    public Collection<GameMap.Waypoint> getPossibleNextWaypoints(GameMap.Waypoint waypoint, GameMap gameMap) {
+        Collection<GameMap.Waypoint> possibleNextWaypoints = new ArrayList<>();
+        int cellSize = gameMap.getGridCanvas().getCellSize();
+
+        for (Movement movement : Movement.values()) {
+            double newX = waypoint.getX() + movement.getXOffset() * cellSize;
+            double newY = waypoint.getY() + movement.getYOffset() * cellSize;
+            try {
+                GameMap.Waypoint nextWaypoint = gameMap.createWaypoint(newX, newY);
+                if (gameMap.getTrackCanvas().containsWaypoint(nextWaypoint)) {
+                    possibleNextWaypoints.add(nextWaypoint);
+                }
+            } catch (IllegalArgumentException ignored) {
+                //TEMP:
+                // Ignore waypoints that are not on the grid intersection
+            }
+        }
+
+        return possibleNextWaypoints;
     }
 }

@@ -1,20 +1,20 @@
-package it.unicam.cs.api.components.container;
+package it.unicam.cs.api.components.actors.structs;
 
 /**
  * Represents the possible movements of an object on the map.
  * The offset must be multiplied by the cell size to get the actual movement.
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  */
 public enum Movement {
-    STAY(0, 0),
-    UP(0, -1),
-    DOWN(0, 1),
-    LEFT(-1, 0),
-    RIGHT(1, 0),
-    UP_LEFT(-1, -1),
     UP_RIGHT(1, -1),
+    UP(0, -1),
+    UP_LEFT(-1, -1),
+    RIGHT(1, 0),
+    STAY(0, 0),
+    LEFT(-1, 0),
     DOWN_LEFT(-1, 1),
+    DOWN(0, 1),
     DOWN_RIGHT(1, 1);
 
     /** The x offset of the movement */
