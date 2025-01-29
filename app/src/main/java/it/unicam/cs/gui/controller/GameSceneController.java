@@ -1,10 +1,12 @@
 package it.unicam.cs.gui.controller;
 
 import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.engine.manager.GameManager;
 import it.unicam.cs.engine.nav.RouteFinder;
 import it.unicam.cs.engine.util.Useful;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.util.GuiTools;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.Group;
@@ -20,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static it.unicam.cs.engine.util.Useful.getGameMap;
-import static it.unicam.cs.gui.util.GuiTools.WAYPOINT_LVL;
 import static it.unicam.cs.gui.util.GuiTools.align;
 
 
@@ -58,8 +59,9 @@ public class GameSceneController extends SceneController {
 
     private Button[] commandButtons;
 
-
     private List<Driver> drivers;
+
+    private static GameManager GAME_MANAGER;
 
     //FIXME: the extra field are
     @FXML
@@ -81,20 +83,22 @@ public class GameSceneController extends SceneController {
                 drivers = gameMap.getDrivers();
                 Driver driver = drivers.get(0);
                 putDriversOnTrack(gameMap);
+                GAME_MANAGER = GameManager.getInstance(gameMap);
+                GAME_MANAGER.addAllDrivers(drivers);
+                Platform.runLater(GAME_MANAGER::execute);
 
                 GameMap.Waypoint[] possibleNextWaypoints =
                         RouteFinder.getPossibleNextWaypoints(
-                                driver.getPosition(),
                                 gameMap,
                                 driver
                         );
 
                 Group canvasGroup = gameMap.getCanvasGroup();
                 Canvas[] canvases = gameMap.getCanvases();
-                Useful.drawWaypoints(
-                        canvases[WAYPOINT_LVL].getGraphicsContext2D(),
-                        possibleNextWaypoints
-                );
+                //Useful.drawWaypoints(
+                //        canvases[WAYPOINT_LVL].getGraphicsContext2D(),
+                //        possibleNextWaypoints
+                //);
                 GuiTools.drawDriversOnTrack(gameMap);
                 System.out.println("Driver name:" + driver.getName());
                 System.out.println("Driver position:" + driver.getPosition());
@@ -105,10 +109,10 @@ public class GameSceneController extends SceneController {
                         driver.getPosition(),
                         targets
                 );
-                Useful.drawWaypoint(
-                        canvases[WAYPOINT_LVL].getGraphicsContext2D(),
-                        bestTarget
-                );
+                //Useful.drawWaypoint(
+                //        canvases[WAYPOINT_LVL].getGraphicsContext2D(),
+                //        bestTarget
+                //);
                 System.out.println("Best target:" + bestTarget);
                 align(anchorPane, canvasGroup);
                 updateCommandButtons(driver, gameMap);
@@ -117,6 +121,10 @@ public class GameSceneController extends SceneController {
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void draw(){
+
     }
 
     private void putDriversOnTrack(GameMap gameMap) {
@@ -135,13 +143,13 @@ public class GameSceneController extends SceneController {
 
     @FXML
     private void abandonButtonClick() {
+
         changeScene(GAME_SETUP_SCENE_FXML);
     }
 
     private void updateCommandButtons(Driver driver, GameMap gameMap) {
         GameMap.Waypoint[] possibleNextWaypoints =
                 RouteFinder.getPossibleNextWaypoints(
-                        driver.getPosition(),
                         gameMap,
                         driver
                 );

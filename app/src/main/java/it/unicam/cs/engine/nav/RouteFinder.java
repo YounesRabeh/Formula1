@@ -7,6 +7,7 @@ import it.unicam.cs.gui.map.GameMap;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  *
@@ -26,11 +27,12 @@ public final class RouteFinder {
      * @return the best target
      */
     public static GameMap.Waypoint getBestTarget(
-            GameMap.Waypoint current,
+            GameMap.Waypoint currentPosition,
             Collection<GameMap.Waypoint> targets
     ) {
         return targets.stream()
-                .min(Comparator.comparingDouble(current::distance))
+                .filter(Objects::nonNull)  // Ignore null waypoints
+                .min(Comparator.comparingDouble(wp -> wp.distance(currentPosition)))
                 .orElse(null);
     }
 
@@ -46,11 +48,11 @@ public final class RouteFinder {
      * @return the possible next waypoints, always 9 elements (null if not admissible)
      */
     public static GameMap.Waypoint[] getPossibleNextWaypoints(
-            GameMap.Waypoint current,
             GameMap gameMap,
             Driver driver
     ) {
         int cellSize = gameMap.getGridCanvas().getCellSize();
+        GameMap.Waypoint current = driver.getPosition();
         GameMap.Waypoint[] waypoints = new GameMap.Waypoint[9];
 
         Inertia inertia = driver.getInertia();

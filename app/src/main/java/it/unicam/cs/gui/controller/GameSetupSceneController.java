@@ -103,6 +103,7 @@ public class GameSetupSceneController extends SceneController {
 
     public void initialize() throws URISyntaxException, IOException {
         splitPane.setDividerPositions(0.65, 0.35);
+        currentDriverNumber = 0;
 
         mapsFiles = Resources.getAllFilesInDirectory(
                 MAPS_DIRECTORY_PATH,
@@ -236,9 +237,9 @@ public class GameSetupSceneController extends SceneController {
             } catch (Exception e) {
                 alertPopup(Alert.AlertType.ERROR, "Map Import Error",
                         "An error occurred while importing the map\nERROR: " + e.getMessage(),
-                        "Please make sure the file is a valid map file.");
+                        "Please make sure the file is a valid map file."
+                );
             }
-
         }
     }
     
@@ -252,7 +253,7 @@ public class GameSetupSceneController extends SceneController {
     }
 
     /** internal counter to keep track of the current map index */
-    private int currentMapIndex = 0;
+    private static int currentMapIndex = 0;
     /**
      * Load the next map.
      */
@@ -373,14 +374,13 @@ public class GameSetupSceneController extends SceneController {
         if (drivers.isEmpty()) {
             return;
         }
-        drivers.removeLast();
-        driversVBox.getChildren().removeLast();
+
         currentDriverNumber--;
         if (drivers.getLast() instanceof Player) {
             currentPlayerNumber--;
-        } else {
-            currentBotNumber--;
-        }
+        } else currentBotNumber--;
+        drivers.removeLast();
+        driversVBox.getChildren().removeLast();
         matchMakingFileWrite();
         updateUI();
     }

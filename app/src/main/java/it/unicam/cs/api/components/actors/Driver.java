@@ -57,7 +57,6 @@ public abstract class Driver implements Racer {
         if (color == null) throw new IllegalArgumentException("[!!!] - Color cannot be null");
         //FIXME: the color of the track is not allowed
         if (color.equals(Color.BLACK)) throw new IllegalArgumentException("[!!] - Color cannot be black");
-        //TODO: make sure the color is not already used by another driver
 
         return color;
     }
@@ -139,6 +138,11 @@ public abstract class Driver implements Racer {
     @Override
     public String toString() {
         return name + " " + carColor.toString();
+    }
+
+    public void move(GameMap.Waypoint waypoint) {
+        this.currentWaypoint = waypoint;
+
     }
 
 }
