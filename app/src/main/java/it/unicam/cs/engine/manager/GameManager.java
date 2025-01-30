@@ -1,5 +1,6 @@
 package it.unicam.cs.engine.manager;
 
+import it.unicam.cs.api.components.actors.Bot;
 import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.engine.nav.RouteFinder;
 import it.unicam.cs.gui.map.GameMap;
@@ -8,18 +9,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Manages the game
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  */
 public class GameManager {
     /** The instance of the game manager */
     private static GameManager instance;
-
+    /** The game map */
     private final GameMap gameMap;
-
     /** The list of drivers in the game */
     private static List<Driver> currentDrivers = new LinkedList<>();
     /** The current round */
@@ -48,7 +49,7 @@ public class GameManager {
     }
 
     public static void initRound(){
-        currentDrivers.clear();
+        round.clear();
 
         round = new Round();
         round.addAllDrivers(currentDrivers);
@@ -88,21 +89,42 @@ public class GameManager {
     }
 
 
+    private static CountDownLatch playerActionLatch;
+
     public void execute() {
         running = true;
         initRound();
         Driver driver;
         try {
             while ((driver = next()) != null) {
-                driver.move(RouteFinder.getBestTarget(
-                        driver.getPosition(),
-                        Arrays.asList(
-                                RouteFinder.getPossibleNextWaypoints(gameMap, driver)
-                        ))
-                );
+                if (driver instanceof Bot) {
+                    // Bot move automatically
+                    driver.move(RouteFinder.getBestTarget(
+                            driver.getPosition(),
+                            Arrays.asList(RouteFinder.getPossibleNextWaypoints(gameMap, driver))
+                    ));
+                } else {
+                    waitForPlayerAction();
+                }
             }
         } catch (IllegalStateException ignored) {}
         running = false;
+    }
+
+    private void waitForPlayerAction() {
+        playerActionLatch = new CountDownLatch(1);
+        try {
+            playerActionLatch.await(); // Wait until the latch is counted down
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+
+    public static void signalPlayerAction() {
+        if (playerActionLatch != null) {
+            playerActionLatch.countDown(); // Resume the game when player clicks a button
+        }
     }
 
 
@@ -110,7 +132,7 @@ public class GameManager {
      * Gets the next driver from the stack
      * @return the next driver
      */
-    private Driver next() {
+    public Driver next() {
         if (round.isEmpty()) {
             throw new IllegalStateException("No drivers in stack");
         }

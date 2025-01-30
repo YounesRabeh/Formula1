@@ -40,7 +40,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.9
+ * @version 2.1
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -305,7 +305,7 @@ public class GameSetupSceneController extends SceneController {
         if (drivers.isEmpty()) {
             alertPopup(Alert.AlertType.WARNING, "Game Start Error",
                     "No Drivers Available", "Please add drivers before starting the game.");
-            return; // Exit the method to prevent further execution
+            return;
         }
 
         Set<String> driverNames = new HashSet<>();
@@ -314,7 +314,7 @@ public class GameSetupSceneController extends SceneController {
                 alertPopup(Alert.AlertType.WARNING, "Game Start Error",
                         "Duplicate Driver Name", "Driver name '" + driver.getName() + "' is duplicated. " +
                                 "Please fix this issue.");
-                return; // Exit the method to prevent further execution
+                return;
             }
         }
 

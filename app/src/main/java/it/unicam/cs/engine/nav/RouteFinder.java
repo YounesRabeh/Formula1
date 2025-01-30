@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  *
  * @author Younes Rabeh
- * @version 1.0
+ * @version 1.1
  */
 public final class RouteFinder {
     /** Prevent instantiation of this utility class. */
@@ -22,16 +22,16 @@ public final class RouteFinder {
      * Gets the best target for the current waypoint.
      * The best target is the waypoint that is closest to the current waypoint.
      *
-     * @param current the current waypoint
+     * @param currentPosition the current waypoint
      * @param targets the possible targets
      * @return the best target
      */
     public static GameMap.Waypoint getBestTarget(
             GameMap.Waypoint currentPosition,
             Collection<GameMap.Waypoint> targets
-    ) {
+    ) { //TODO: add the parsed (snapped) segment endpoints to the path
         return targets.stream()
-                .filter(Objects::nonNull)  // Ignore null waypoints
+                .filter(Objects::nonNull)  // Ignore null waypoints (non-admissible)
                 .min(Comparator.comparingDouble(wp -> wp.distance(currentPosition)))
                 .orElse(null);
     }
@@ -42,7 +42,6 @@ public final class RouteFinder {
      * The possible next waypoints are the waypoints that the driver can move to.
      * The waypoints are calculated based on the driver's inertia and the possible movements.
      *
-     * @param current the current waypoint
      * @param gameMap the game map
      * @param driver the driver
      * @return the possible next waypoints, always 9 elements (null if not admissible)
@@ -53,14 +52,12 @@ public final class RouteFinder {
     ) {
         int cellSize = gameMap.getGridCanvas().getCellSize();
         GameMap.Waypoint current = driver.getPosition();
-        GameMap.Waypoint[] waypoints = new GameMap.Waypoint[9];
+        GameMap.Waypoint[] waypoints = new GameMap.Waypoint[Movement.values().length + 1];
 
         Inertia inertia = driver.getInertia();
 
-        // Index for movement mapping: [0] upLeft, [1] up, [2] upRight, etc.
         Movement[] movements = Movement.values();
 
-        // Inertia-based waypoint is treated as the center [4]
         double centerX = current.getX() + inertia.getX() * cellSize;
         double centerY = current.getY() + inertia.getY() * cellSize;
 

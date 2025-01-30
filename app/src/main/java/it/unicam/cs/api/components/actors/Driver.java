@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
  * @see Player
  * @see Bot
  * @author Younes Rabeh
- * @version 1.3
+ * @version 1.4
  */
 public abstract class Driver implements Racer {
     /** The driver's name. */
@@ -108,7 +108,7 @@ public abstract class Driver implements Racer {
      */
     public void setName(String name) {
         if (name == null) throw new IllegalArgumentException("[!!!] - Name cannot be null");
-        if(name.isBlank()) throw new IllegalArgumentException("[!!] - Name cannot be blank");
+        if (name.isBlank()) throw new IllegalArgumentException("[!!] - Name cannot be blank");
         if (name.length() > MAX_DRIVER_NAME_LENGTH) {
             throw new IllegalArgumentException("[!!] - Name is too long");
         }
@@ -133,7 +133,6 @@ public abstract class Driver implements Racer {
     public void setPosition(GameMap.Waypoint waypoint) {
         this.currentWaypoint = waypoint;
     }
-
 
     @Override
     public String toString() {

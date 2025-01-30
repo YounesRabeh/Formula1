@@ -1,8 +1,6 @@
 package it.unicam.cs.gui.util;
 
-import it.unicam.cs.api.components.actors.Bot;
 import it.unicam.cs.api.components.actors.Driver;
-import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
@@ -22,7 +20,7 @@ import static it.unicam.cs.engine.util.Useful.*;
  * Utility class for GUI operations
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.2
+ * @version 1.3
  */
 public final class GuiTools {
     private GuiTools() {}
@@ -86,6 +84,11 @@ public final class GuiTools {
             Canvas[] canvases = gameMap.getCanvases();
             drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), position);
         }
+    }
+
+    public static void clearWaypointsGC(GameMap gameMap) {
+        Canvas canvas = gameMap.getCanvases()[WAYPOINT_LVL];
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
 }

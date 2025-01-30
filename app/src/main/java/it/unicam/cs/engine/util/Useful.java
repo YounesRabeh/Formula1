@@ -50,7 +50,7 @@ public final class Useful {
 
     public static void drawWaypoint(GraphicsContext gc,GameMap.Waypoint waypoint){
         if (waypoint == null) return;
-        Graphics.setFill(gc, new int[]{0, 100, 100});
+        Graphics.setFill(gc, new int[]{200, 0, 100});
 
         Graphics.strokePoint(gc, new int[]{(int) waypoint.getX(), (int) waypoint.getY()});
 

@@ -24,7 +24,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="leftButton" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬅" GridPane.rowIndex="1">
+                  <Button fx:id="leftButton" mnemonicParsing="false" onAction="#leftButtonClick" prefHeight="75.0" prefWidth="75.0" text="⬅" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -32,7 +32,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="upButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="77.0" text="⬆" GridPane.columnIndex="1">
+                  <Button fx:id="upButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" onAction="#upButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬆" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -40,7 +40,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="downButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬇" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Button fx:id="downButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" onAction="#downButtonClick" prefHeight="75.0" prefWidth="75.0" text="⬇" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -48,7 +48,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="rightButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="➡" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="rightButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" onAction="#rightButtonClick" prefHeight="75.0" prefWidth="75.0" text="➡" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -56,7 +56,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="upRightButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="77.0" text="⬉">
+                  <Button fx:id="upRightButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" onAction="#upLeftButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬉">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -64,7 +64,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="upLeftButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="77.0" text="⬈" GridPane.columnIndex="2">
+                  <Button fx:id="upLeftButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" onAction="#upRightButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬈" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -72,7 +72,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="centerButton" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="78.0" text="⬤" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="centerButton" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" onAction="#centerButtonClick" prefHeight="75.0" prefWidth="78.0" text="⬤" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -80,7 +80,7 @@
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button fx:id="downRightButton" layoutX="240.0" layoutY="111.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬊" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button fx:id="downRightButton" layoutX="240.0" layoutY="111.0" mnemonicParsing="false" onAction="#downRightButtonClick" prefHeight="75.0" prefWidth="75.0" text="⬊" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -88,7 +88,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="downLeftButton" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" text="⬋" GridPane.rowIndex="2">
+                  <Button fx:id="downLeftButton" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" onAction="#downLeftButtonClick" prefHeight="75.0" prefWidth="75.0" text="⬋" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -101,5 +101,6 @@
          </children>
       </AnchorPane>
       <Button fx:id="abandonButton" layoutX="970.0" layoutY="25.0" mnemonicParsing="false" onAction="#abandonButtonClick" prefHeight="50.0" prefWidth="73.0" text="abandon" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <AnchorPane fx:id="mapArea" prefHeight="720.0" prefWidth="686.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
