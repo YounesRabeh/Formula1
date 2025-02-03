@@ -18,7 +18,6 @@ public class Round extends Stack<Driver> {
         push(driver);
     }
 
-
     public void addAllDrivers(Collection<? extends Driver> c) {
         for (Driver driver: c) addDriver(driver);
     }

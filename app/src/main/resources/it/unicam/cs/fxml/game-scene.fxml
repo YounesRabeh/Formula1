@@ -56,7 +56,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="upRightButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" onAction="#upLeftButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬉">
+                  <Button fx:id="upLeftButton" layoutX="25.0" layoutY="111.0" mnemonicParsing="false" onAction="#upLeftButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬉">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -64,7 +64,7 @@
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="upLeftButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" onAction="#upRightButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬈" GridPane.columnIndex="2">
+                  <Button fx:id="upRightButton" layoutX="132.0" layoutY="21.0" mnemonicParsing="false" onAction="#upRightButtonClick" prefHeight="70.0" prefWidth="77.0" text="⬈" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>

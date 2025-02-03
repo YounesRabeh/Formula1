@@ -7,6 +7,7 @@ import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +55,24 @@ public final class Useful {
 
         Graphics.strokePoint(gc, new int[]{(int) waypoint.getX(), (int) waypoint.getY()});
 
+    }
+
+    /**
+     * Draw a waypoint with a specific color.
+     * @param gc the GraphicsContext
+     * @param waypoint the waypoint to draw
+     * @param color the color of the waypoint
+     */
+    public static void drawWaypoint(GraphicsContext gc, GameMap.Waypoint waypoint, Color color) {
+        if (waypoint == null) return;
+
+        int[] colorArray = new int[]{
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255)
+        };
+        Graphics.setFill(gc, colorArray);
+        Graphics.strokePoint(gc, new int[]{(int) waypoint.getX(), (int) waypoint.getY()});
     }
 
     /**

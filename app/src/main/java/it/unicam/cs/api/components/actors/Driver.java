@@ -1,6 +1,7 @@
 package it.unicam.cs.api.components.actors;
 
 import it.unicam.cs.api.components.actors.structs.Inertia;
+import it.unicam.cs.api.components.actors.structs.Movement;
 import it.unicam.cs.gui.map.GameMap;
 import javafx.scene.paint.Color;
 
@@ -60,6 +61,13 @@ public abstract class Driver implements Racer {
 
         return color;
     }
+
+    public void incrementInertia(Movement movement) {
+        int newX = this.inertia.getX() + movement.getXOffset();
+        int newY = this.inertia.getY() + movement.getYOffset();
+        this.inertia.set(newX, newY);
+    }
+
 
     /**
      * Returns the driver's name.

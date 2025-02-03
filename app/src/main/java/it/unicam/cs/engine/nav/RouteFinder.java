@@ -52,23 +52,10 @@ public final class RouteFinder {
     ) {
         int cellSize = gameMap.getGridCanvas().getCellSize();
         GameMap.Waypoint current = driver.getPosition();
-        GameMap.Waypoint[] waypoints = new GameMap.Waypoint[Movement.values().length + 1];
+        GameMap.Waypoint[] waypoints = new GameMap.Waypoint[Movement.values().length];
 
         Inertia inertia = driver.getInertia();
-
         Movement[] movements = Movement.values();
-
-        double centerX = current.getX() + inertia.getX() * cellSize;
-        double centerY = current.getY() + inertia.getY() * cellSize;
-
-        try {
-            GameMap.Waypoint centerWaypoint = gameMap.createWaypoint(centerX, centerY);
-            if (gameMap.getTrackCanvas().containsWaypoint(centerWaypoint)) {
-                waypoints[4] = centerWaypoint;
-            }
-        } catch (IllegalArgumentException ignored) {
-            waypoints[4] = null;
-        }
 
         for (int i = 0; i < movements.length; i++) {
             double newX = current.getX() + (movements[i].getXOffset() + inertia.getX()) * cellSize;

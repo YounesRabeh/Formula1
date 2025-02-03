@@ -1,12 +1,16 @@
 package it.unicam.cs.gui.util;
 
 import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.engine.nav.RouteFinder;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 import java.util.Collection;
 import java.util.List;
@@ -89,6 +93,52 @@ public final class GuiTools {
     public static void clearWaypointsGC(GameMap gameMap) {
         Canvas canvas = gameMap.getCanvases()[WAYPOINT_LVL];
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+    public static void draw(AnchorPane mapArea, GameMap gameMap, Driver driver) {
+
+        mapArea.getChildren().clear();
+        clearWaypointsGC(gameMap);
+
+        Canvas[] canvases = gameMap.getCanvases();
+        GameMap.Waypoint[] possibleNextWaypoints =
+                RouteFinder.getPossibleNextWaypoints(
+                        gameMap,
+                        driver
+                );
+
+
+
+
+        for (GameMap.Waypoint waypoint : possibleNextWaypoints) {
+            drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoint, Color.AQUA);
+        }
+        GuiTools.drawDriversOnTrack(gameMap);
+        System.out.println("Driver name:" + driver.getName());
+        System.out.println("Driver position:" + driver.getPosition());
+        //System.out.println("Possible position:" + Arrays.toString(possibleNextWaypoints));
+
+        Collection<GameMap.Waypoint> targets = gameMap.getFinishLine().getWaypoints();
+        GameMap.Waypoint bestTarget = RouteFinder.getBestTarget(
+                driver.getPosition(),
+                targets
+        );
+
+        System.out.println("Best target:" + bestTarget);
+
+    }
+
+    public static void updateCommandButtons(Driver driver, GameMap gameMap, Button[] commandButtons) {
+        GameMap.Waypoint[] possibleNextWaypoints =
+                RouteFinder.getPossibleNextWaypoints(
+                        gameMap,
+                        driver
+                );
+        for (int i = 0; i < commandButtons.length; i++) {
+            Button button = commandButtons[i];
+            GameMap.Waypoint nextWaypoint = possibleNextWaypoints[i];
+            button.setDisable(nextWaypoint == null);
+        }
     }
 
 }

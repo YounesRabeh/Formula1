@@ -9,19 +9,15 @@ import it.unicam.cs.gui.util.GuiTools;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Collection;
 import java.util.List;
 
 import static it.unicam.cs.engine.util.Useful.getGameMap;
-import static it.unicam.cs.gui.util.GuiTools.align;
-import static it.unicam.cs.gui.util.GuiTools.clearWaypointsGC;
 
 
 /**
@@ -34,7 +30,7 @@ public class GameSceneController extends SceneController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private AnchorPane mapArea;
+    private AnchorPane mapArea;  //NOTE: shouldn't be static
     @FXML
     private GridPane commandGridPane;
     @FXML
@@ -58,9 +54,9 @@ public class GameSceneController extends SceneController {
     @FXML
     private Button downRightButton;
 
-    private Button[] commandButtons;
+    private static Button[] commandButtons;
 
-    private List<Driver> drivers;
+    private static List<Driver> drivers;
 
     private GameMap currentGameMap;
 
@@ -90,12 +86,12 @@ public class GameSceneController extends SceneController {
                 GAME_MANAGER.addAllDrivers(drivers);
                 GuiTools.drawDriversOnTrack(gameMap);
 
+
                 Platform.runLater(() -> {
-                    draw(gameMap, drivers.getFirst());
-                    align(mapArea, gameMap.getCanvasGroup());
-                    updateCommandButtons(drivers.getFirst(), gameMap);
                     GameManager.initRound();
+                    uiUpdate(gameMap, mapArea);
                 });
+
             });
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException(e);
@@ -103,34 +99,14 @@ public class GameSceneController extends SceneController {
     }
 
 
-    private void draw(GameMap gameMap, Driver driver) {
-        mapArea.getChildren().clear();
-        clearWaypointsGC(gameMap);
-        Platform.runLater(() -> {
 
-            Canvas[] canvases = gameMap.getCanvases();
-            GameMap.Waypoint[] possibleNextWaypoints =
-                    RouteFinder.getPossibleNextWaypoints(
-                            gameMap,
-                            driver
-                    );
+    public static void uiUpdate(GameMap gameMap, AnchorPane mapArea) {
+        GuiTools.updateCommandButtons(drivers.getFirst(), gameMap, commandButtons);
+        GuiTools.draw(mapArea, gameMap, drivers.getFirst());
+        GuiTools.align(mapArea, gameMap.getCanvasGroup());
 
-
-            // Draw the drivers on the track
-            clearWaypointsGC(gameMap);
-            GuiTools.drawDriversOnTrack(gameMap);
-            System.out.println("Driver name:" + driver.getName());
-            System.out.println("Driver position:" + driver.getPosition());
-            //System.out.println("Possible position:" + Arrays.toString(possibleNextWaypoints));
-
-            Collection<GameMap.Waypoint> targets = gameMap.getFinishLine().getWaypoints();
-            GameMap.Waypoint bestTarget = RouteFinder.getBestTarget(
-                    driver.getPosition(),
-                    targets
-            );
-            System.out.println("Best target:" + bestTarget);
-        });
     }
+
 
     /**
      * Puts the drivers on the track, at the starting positions
@@ -151,43 +127,35 @@ public class GameSceneController extends SceneController {
     }
 
 
+    //NOTE: works only for the first driver
     private void handlePlayerMove(Movement movement) {
         Driver currentDriver;
+
         try {
-            currentDriver = GAME_MANAGER.next();
+            currentDriver = GameManager.next();
         } catch (IllegalStateException e) {
             return;
         }
 
+        if (currentDriver == null) {
+            GameManager.initRound();
+            currentDriver = GameManager.next();
+        }
+        assert currentDriver != null;
+        //currentDriver.incrementInertia(movement);
         GameMap.Waypoint[] possibleNextWaypoints =
                 RouteFinder.getPossibleNextWaypoints(currentGameMap, currentDriver);
         GameMap.Waypoint chosenWaypoint = possibleNextWaypoints[movement.ordinal()];
 
         if (chosenWaypoint != null) {
-            currentDriver.setPosition(chosenWaypoint); // Move driver to the chosen waypoint
-            GuiTools.drawDriversOnTrack(currentGameMap); // Update the game view
+            currentDriver.setPosition(chosenWaypoint);
+            uiUpdate(currentGameMap, mapArea);
         }
-
-        // Signal GameManager to continue the round
-        GameManager.signalPlayerAction();
     }
 
     @FXML
     private void abandonButtonClick() {
         changeScene(GAME_SETUP_SCENE_FXML);
-    }
-
-    private void updateCommandButtons(Driver driver, GameMap gameMap) {
-        GameMap.Waypoint[] possibleNextWaypoints =
-                RouteFinder.getPossibleNextWaypoints(
-                        gameMap,
-                        driver
-                );
-        for (int i = 0; i < commandButtons.length; i++) {
-            Button button = commandButtons[i];
-            GameMap.Waypoint nextWaypoint = possibleNextWaypoints[i];
-            button.setDisable(nextWaypoint == null);
-        }
     }
 
     @FXML
