@@ -2,6 +2,7 @@ package it.unicam.cs.engine.manager;
 
 import it.unicam.cs.api.components.actors.Bot;
 import it.unicam.cs.api.components.actors.Driver;
+import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.engine.nav.RouteFinder;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.util.GuiTools;
@@ -17,7 +18,7 @@ import static it.unicam.cs.gui.controller.GameSceneController.commandButtons;
 /**
  * Manages the game,
  * @author Younes Rabeh
- * @version 1.8
+ * @version 1.9
  */
 public class GameManager {
     /** The instance of the game manager */
@@ -32,9 +33,15 @@ public class GameManager {
     private static Round round;
     /** The round thread */
     private static Thread roundThread;
-
+    //TODO: Implement the winner
+    /** The winner of the game */
     public static Driver winner;
+    /** True if all the current drivers are bots */
+    private static boolean allDriversBots;
+    /** The delay between the bot's moves, used only if all the current drivers are bots */
+    private static final int DELAY = 1000;
 
+    /** The current driver */
     private volatile static Driver currentDriver;
 
 
@@ -80,6 +87,7 @@ public class GameManager {
     public static void initRound(){
         round = new Round();
         round.addAll(gameMap.getDrivers());
+        onlyBotsCheck();
         roundThread = roundThread();
         roundThread.start();
     }
@@ -93,16 +101,26 @@ public class GameManager {
 
     /**
      * The round thread, which will execute the moves of
-     * the bots and wait for the player to execute his move
+     * the bots and wait for the player to execute his move, if all the drivers are bots,
+     * it will give a {@link GameManager#DELAY} between the bot's moves
      * */
     private static Thread roundThread(){
         return new Thread(() -> {
             while (!round.isEmpty()) { //The round is empty only if all other drivers did crash
                 currentDriver = round.take();
                 if (currentDriver instanceof Bot bot) {
-                    execute(bot);
-                    latch = new CountDownLatch(1);
-                    Platform.runLater(() -> GuiTools.mapUpdate(gameMap, mapArea));
+
+                    if (allDriversBots) {
+                        try {
+                            Thread.sleep(DELAY);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
+                        execute(bot);
+                        latch = new CountDownLatch(1);
+                        Platform.runLater(() -> GuiTools.mapUpdate(gameMap, mapArea));
+                    }
                 } else {
                     try {
                         GuiTools.updateCommandButtons(currentDriver, gameMap, commandButtons);
@@ -115,6 +133,19 @@ public class GameManager {
                 }
             }
         });
+    }
+
+    /**
+     * Checks if all the drivers are bots, to give a delay between the bot's moves
+     */
+    private static void onlyBotsCheck(){
+        for (Driver driver : currentDrivers){
+            if (driver instanceof Player){
+                allDriversBots = false;
+                return;
+            }
+        }
+        allDriversBots = true;
     }
 
 
