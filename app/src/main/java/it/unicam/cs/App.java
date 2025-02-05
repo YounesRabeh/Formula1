@@ -1,5 +1,6 @@
 package it.unicam.cs;
 
+import it.unicam.cs.engine.manager.GameManager;
 import it.unicam.cs.gui.controller.SceneController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -21,6 +22,11 @@ public class App extends Application {
         } catch (Exception e) {
            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void stop() {
+        GameManager.endGame();
     }
 
     public static void main(String[] args) {

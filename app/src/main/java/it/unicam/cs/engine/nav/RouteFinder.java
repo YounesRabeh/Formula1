@@ -46,6 +46,7 @@ public final class RouteFinder {
             GameMap.Waypoint[] waypoints,
             Collection<GameMap.Waypoint> targets
     ) {
+
         if (waypoints == null || waypoints.length == 0 || targets == null || targets.isEmpty()) {
             return null;
         }
@@ -86,6 +87,7 @@ public final class RouteFinder {
             GameMap gameMap,
             Driver driver
     ) {
+
         int cellSize = gameMap.getGridCanvas().getCellSize();
         GameMap.Waypoint current = driver.getPosition();
         GameMap.Waypoint[] waypoints = new GameMap.Waypoint[Movement.values().length];

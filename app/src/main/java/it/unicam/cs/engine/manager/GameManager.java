@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
+import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
+import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
 import static it.unicam.cs.gui.controller.GameSceneController.commandButtons;
 
 
@@ -39,7 +41,9 @@ public class GameManager {
     /** True if all the current drivers are bots */
     private static boolean allDriversBots;
     /** The delay between the bot's moves, used only if all the current drivers are bots */
-    private static final int DELAY = 1000;
+    private static final int BOT_DELAY = Integer.parseInt(Objects.requireNonNull(getProperty(
+            CONFIG_PROPERTIES_PATH, "BOT_DELAY"
+    )));
 
     /** The current driver */
     private volatile static Driver currentDriver;
@@ -102,17 +106,16 @@ public class GameManager {
     /**
      * The round thread, which will execute the moves of
      * the bots and wait for the player to execute his move, if all the drivers are bots,
-     * it will give a {@link GameManager#DELAY} between the bot's moves
+     * it will give a {@link GameManager#BOT_DELAY} between the bot's moves
      * */
     private static Thread roundThread(){
         return new Thread(() -> {
             while (!round.isEmpty()) { //The round is empty only if all other drivers did crash
                 currentDriver = round.take();
                 if (currentDriver instanceof Bot bot) {
-
                     if (allDriversBots) {
                         try {
-                            Thread.sleep(DELAY);
+                            Thread.sleep(BOT_DELAY);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                             break;
@@ -120,6 +123,7 @@ public class GameManager {
                         execute(bot);
                         latch = new CountDownLatch(1);
                         Platform.runLater(() -> GuiTools.mapUpdate(gameMap, mapArea));
+                        GuiTools.updateCommandButtons(currentDriver, gameMap, commandButtons);
                     }
                 } else {
                     try {

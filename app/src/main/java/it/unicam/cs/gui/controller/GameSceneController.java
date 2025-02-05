@@ -1,5 +1,6 @@
 package it.unicam.cs.gui.controller;
 
+import it.unicam.cs.api.components.actors.Bot;
 import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.api.components.actors.structs.Movement;
 import it.unicam.cs.engine.manager.GameManager;
@@ -132,6 +133,9 @@ public class GameSceneController extends SceneController {
             currentDriver = GameManager.getCurrentDriver();
         } catch (IllegalStateException | NoSuchElementException e) {
             System.out.println("No more drivers to move");
+        }
+        if (currentDriver instanceof Bot) {
+            return;
         }
 
         //currentDriver.incrementInertia(movement);
