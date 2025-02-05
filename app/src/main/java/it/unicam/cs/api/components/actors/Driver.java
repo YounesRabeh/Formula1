@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
  * @see Player
  * @see Bot
  * @author Younes Rabeh
- * @version 1.4
+ * @version 1.7
  */
 public abstract class Driver implements Racer {
     /** The driver's name. */
@@ -134,13 +134,6 @@ public abstract class Driver implements Racer {
         this.carColor = checkColor(carColor);
     }
 
-    /**
-     * Sets the current waypoint of the driver.
-     * @param waypoint the new waypoint of the driver
-     */
-    public void setPosition(GameMap.Waypoint waypoint) {
-        this.currentWaypoint = waypoint;
-    }
 
     @Override
     public String toString() {
@@ -148,6 +141,10 @@ public abstract class Driver implements Racer {
     }
 
     public void move(GameMap.Waypoint waypoint) {
+        if (waypoint == null) {
+            throw new IllegalArgumentException("[!!!] - Waypoint cannot be null");
+        }
+        System.out.println(this.name + " moved from " + currentWaypoint + " to " + waypoint);
         this.currentWaypoint = waypoint;
 
     }

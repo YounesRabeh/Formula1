@@ -5,6 +5,7 @@ import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.api.components.actors.Player;
 import it.unicam.cs.api.components.container.Resources;
 import it.unicam.cs.api.components.container.UiGenerator;
+import it.unicam.cs.engine.manager.GameManager;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.util.CanvasTools;
 import javafx.application.Platform;
@@ -34,13 +35,14 @@ import java.util.Set;
 import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
 import static it.unicam.cs.api.parser.types.AbstractParser.PARSER_SEPARATOR;
 import static it.unicam.cs.engine.util.Useful.getGameMap;
+import static it.unicam.cs.gui.util.GuiTools.alertPopup;
 
 
 /**
  * Controller class for the game setup scene.
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 2.1
+ * @version 2.3
  */
 public class GameSetupSceneController extends SceneController {
     @FXML
@@ -337,20 +339,7 @@ public class GameSetupSceneController extends SceneController {
         changeScene(GAME_SCENE_FXML);
     }
 
-    /**
-     * Show an alert popup.
-     * @param type the alert type
-     * @param title the title of the alert
-     * @param header the header of the alert
-     * @param content the content of the alert
-     */
-    private void alertPopup(Alert.AlertType type, String title, String header, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
+
 
     @FXML
     private void clearDriversButtonClick(){

@@ -31,7 +31,7 @@ import static it.unicam.cs.gui.controller.GameSetupSceneController.MATCH_MAKING_
  * @see TrackCanvas
  * @see InertCanvas
  * @author Younes Rabeh
- * @version 2.2
+ * @version 2.3
  */
 public class GameMap {
     /** The grid canvas */
@@ -302,6 +302,15 @@ public class GameMap {
             throw new IllegalArgumentException(String.format("THE WAYPOINT (x=%d,y=%d) IS NOT ON A GRID INTERSECTION. " +
                     "THE CELL SIZE IS %d", (int) x, (int) y, currentCellSize));
         }
+    }
+
+    /**
+     * Check if the waypoint is free (no driver is on it).
+     * @param waypoint the waypoint to check
+     * @return true if the waypoint is free, false otherwise
+     */
+    public boolean isWaypointFree(Waypoint waypoint) {
+        return drivers.stream().noneMatch(driver -> driver.getPosition().equals(waypoint));
     }
 
     /**

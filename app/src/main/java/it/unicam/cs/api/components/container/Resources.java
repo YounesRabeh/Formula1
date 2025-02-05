@@ -2,11 +2,8 @@ package it.unicam.cs.api.components.container;
 
 import it.unicam.cs.App;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.io.InputStream;
 import java.nio.file.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,7 +16,7 @@ import java.util.Objects;
 /**
  * Utility class for getting resources.
  * @author Younes Rabeh
- * @version 1.5
+ * @version 1.6
  */
 public final class Resources {
     /** Prevent instantiation of this utility class. */
@@ -158,11 +155,10 @@ public final class Resources {
                 Objects.requireNonNull(App.class.getClassLoader().getResource(directoryPath)).toURI()
         );
 
-        // Use try-with-resources to ensure the stream is closed
         try (var paths = Files.walk(resourcePath)) {
             paths.filter(Files::isRegularFile) // Only include files, not directories
-                    .filter(path -> path.toString().endsWith(extension)) // Filter by file extension
-                    .forEach(path -> files.add(path.toFile())); // Convert Path to File and add to the list
+                    .filter(path -> path.toString().endsWith(extension))
+                    .forEach(path -> files.add(path.toFile()));
         }
 
         return files;
@@ -186,10 +182,9 @@ public final class Resources {
                 Objects.requireNonNull(App.class.getClassLoader().getResource(directoryPath)).toURI()
         );
 
-        // Use try-with-resources to ensure the stream is closed
         try (var paths = Files.walk(resourcePath)) {
-            paths.filter(Files::isRegularFile) // Only include files, not directories
-                    .forEach(path -> files.add(path.toFile())); // Convert Path to File and add to the list
+            paths.filter(Files::isRegularFile)
+                    .forEach(path -> files.add(path.toFile()));
         }
 
         return files;

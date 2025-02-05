@@ -4,13 +4,12 @@ import it.unicam.cs.api.components.actors.Driver;
 import it.unicam.cs.engine.nav.RouteFinder;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
-import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +23,7 @@ import static it.unicam.cs.engine.util.Useful.*;
  * Utility class for GUI operations
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.3
+ * @version 1.4
  */
 public final class GuiTools {
     private GuiTools() {}
@@ -81,6 +80,17 @@ public final class GuiTools {
         drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
 
+    public static void mapUpdate(GameMap gameMap, AnchorPane mapArea) {
+        for (Driver driver : gameMap.getDrivers()) {
+            GuiTools.draw(mapArea, gameMap, driver);
+        }
+        GuiTools.align(mapArea, gameMap.getCanvasGroup());
+    }
+
+    /**
+     * Draws the drivers on the track.
+     * @param gameMap the game map
+     */
     public static void drawDriversOnTrack(GameMap gameMap) {
         List<Driver> drivers = gameMap.getDrivers();
         for (Driver driver : drivers) {
@@ -100,22 +110,18 @@ public final class GuiTools {
         mapArea.getChildren().clear();
         clearWaypointsGC(gameMap);
 
-        Canvas[] canvases = gameMap.getCanvases();
-        GameMap.Waypoint[] possibleNextWaypoints =
-                RouteFinder.getPossibleNextWaypoints(
-                        gameMap,
-                        driver
-                );
+        //Canvas[] canvases = gameMap.getCanvases();
+        //GameMap.Waypoint[] possibleNextWaypoints =
+        //        RouteFinder.getPossibleNextWaypoints(
+        //                gameMap,
+        //                driver
+        //        );
 
-
-
-
-        for (GameMap.Waypoint waypoint : possibleNextWaypoints) {
-            drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoint, Color.AQUA);
-        }
+        //for (GameMap.Waypoint waypoint : possibleNextWaypoints) {
+        //    drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoint, Color.AQUA);
+        //}
         GuiTools.drawDriversOnTrack(gameMap);
-        System.out.println("Driver name:" + driver.getName());
-        System.out.println("Driver position:" + driver.getPosition());
+        //System.out.println("Driver name:" + driver.getName() + " Driver position:" + driver.getPosition());
         //System.out.println("Possible position:" + Arrays.toString(possibleNextWaypoints));
 
         Collection<GameMap.Waypoint> targets = gameMap.getFinishLine().getWaypoints();
@@ -124,7 +130,7 @@ public final class GuiTools {
                 targets
         );
 
-        System.out.println("Best target:" + bestTarget);
+        //System.out.println("Best target:" + bestTarget);
 
     }
 
@@ -139,6 +145,21 @@ public final class GuiTools {
             GameMap.Waypoint nextWaypoint = possibleNextWaypoints[i];
             button.setDisable(nextWaypoint == null);
         }
+    }
+
+    /**
+     * Show an alert popup.
+     * @param type the alert type
+     * @param title the title of the alert
+     * @param header the header of the alert
+     * @param content the content of the alert
+     */
+    public static void alertPopup(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 }

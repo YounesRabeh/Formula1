@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static it.unicam.cs.engine.util.Useful.getGameMap;
 
@@ -24,7 +25,7 @@ import static it.unicam.cs.engine.util.Useful.getGameMap;
  * Controller for the game scene
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.2
+ * @version 1.3
  */
 public class GameSceneController extends SceneController {
     @FXML
@@ -54,13 +55,15 @@ public class GameSceneController extends SceneController {
     @FXML
     private Button downRightButton;
 
-    private static Button[] commandButtons;
+    public static Button[] commandButtons;
 
     private static List<Driver> drivers;
 
     private GameMap currentGameMap;
 
-    private static GameManager GAME_MANAGER;
+
+    private static Thread uiUpdater;
+
 
     @FXML
     public void initialize() {
@@ -81,15 +84,16 @@ public class GameSceneController extends SceneController {
                 this.currentGameMap = gameMap;
                 drivers = gameMap.getDrivers();
                 putDriversOnTrack(gameMap);
+                printInitInfo();
 
-                GAME_MANAGER = GameManager.getInstance(gameMap);
-                GAME_MANAGER.addAllDrivers(drivers);
+                GameManager.getInstance(gameMap, mapArea);
+                //GameManager.endGame(); //ERROR proofing
                 GuiTools.drawDriversOnTrack(gameMap);
 
-
+                //NOTE: THE FOLLOWING CODE SHOULD BE MOVED TO GameManager if possible
                 Platform.runLater(() -> {
                     GameManager.initRound();
-                    uiUpdate(gameMap, mapArea);
+                    GuiTools.mapUpdate(gameMap, mapArea);
                 });
 
             });
@@ -98,14 +102,6 @@ public class GameSceneController extends SceneController {
         }
     }
 
-
-
-    public static void uiUpdate(GameMap gameMap, AnchorPane mapArea) {
-        GuiTools.updateCommandButtons(drivers.getFirst(), gameMap, commandButtons);
-        GuiTools.draw(mapArea, gameMap, drivers.getFirst());
-        GuiTools.align(mapArea, gameMap.getCanvasGroup());
-
-    }
 
 
     /**
@@ -122,39 +118,41 @@ public class GameSceneController extends SceneController {
                 .limit(startingPositions.size())
                 .forEach(driver -> {
                     int index = drivers.indexOf(driver);
-                    driver.setPosition(startingPositions.get(index));
+                    driver.move(startingPositions.get(index));
                 });
     }
 
-
-    //NOTE: works only for the first driver
+    /**
+     * Handles the player movement, initiated by the player clicking on a command button
+     * @param movement the movement
+     */
     private void handlePlayerMove(Movement movement) {
-        Driver currentDriver;
-
+        Driver currentDriver = null;
         try {
-            currentDriver = GameManager.next();
-        } catch (IllegalStateException e) {
-            return;
+            currentDriver = GameManager.getCurrentDriver();
+        } catch (IllegalStateException | NoSuchElementException e) {
+            System.out.println("No more drivers to move");
         }
 
-        if (currentDriver == null) {
-            GameManager.initRound();
-            currentDriver = GameManager.next();
-        }
-        assert currentDriver != null;
         //currentDriver.incrementInertia(movement);
         GameMap.Waypoint[] possibleNextWaypoints =
                 RouteFinder.getPossibleNextWaypoints(currentGameMap, currentDriver);
         GameMap.Waypoint chosenWaypoint = possibleNextWaypoints[movement.ordinal()];
 
         if (chosenWaypoint != null) {
-            currentDriver.setPosition(chosenWaypoint);
-            uiUpdate(currentGameMap, mapArea);
+            currentDriver.move(chosenWaypoint);
+            GuiTools.mapUpdate(currentGameMap, mapArea);
         }
+        GameManager.continueRound();
     }
+
+
 
     @FXML
     private void abandonButtonClick() {
+        GameManager.endGame();
+        System.out.println("######## GAME ABANDONED ########");
+
         changeScene(GAME_SETUP_SCENE_FXML);
     }
 
@@ -201,6 +199,12 @@ public class GameSceneController extends SceneController {
     @FXML
     private void downRightButtonClick() {
         handlePlayerMove(Movement.DOWN_RIGHT); // Button for moving down-right
+    }
+
+    private void printInitInfo(){
+        System.out.println("########### MAP LOADED ###########");
+        System.out.println("The Drivers:\n" + currentGameMap.getDrivers());
+        System.out.println("######### THE RACE IS UP #########");
     }
 
 }
