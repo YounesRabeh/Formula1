@@ -20,7 +20,7 @@ import static it.unicam.cs.gui.controller.GameSceneController.commandButtons;
 /**
  * Manages the game,
  * @author Younes Rabeh
- * @version 1.9
+ * @version 2.0
  */
 public class GameManager {
     /** The instance of the game manager */
@@ -30,7 +30,7 @@ public class GameManager {
     /** The game map */
     private static GameMap gameMap;
     /** The list of drivers in the game */
-    private static List<Driver> currentDrivers = new LinkedList<>();
+    private static final List<Driver> currentDrivers = new LinkedList<>();
     /** The current round */
     private static Round round;
     /** The round thread */
@@ -48,7 +48,6 @@ public class GameManager {
     /** The current driver */
     private volatile static Driver currentDriver;
 
-
     /**
      * Creates a new game manager
      */
@@ -56,22 +55,6 @@ public class GameManager {
         GameManager.gameMap = gameMap;
         GameManager.mapArea = mapArea;
         round = new Round();
-    }
-
-    /**
-     * Returns the next driver in the round
-     * @return the next driver
-     */
-    public static Driver seeNext(){
-        return round.getFirst();
-    }
-
-    /**
-     * Gets the next driver from the stack
-     * @return the next driver
-     */
-    public static Driver next() {
-        return round.take();
     }
 
     /**
@@ -96,9 +79,11 @@ public class GameManager {
         roundThread.start();
     }
 
-    public static void killRound(){
-        roundThread.interrupt();
-        roundThread = null;
+    private static void killRound() {
+        if (roundThread != null) {
+            roundThread.interrupt();
+            roundThread = null;
+        }
     }
 
     private static CountDownLatch latch = new CountDownLatch(1);
@@ -152,7 +137,6 @@ public class GameManager {
         allDriversBots = true;
     }
 
-
     /**
      * Returns the current driver
      * @return the current driver
@@ -161,8 +145,6 @@ public class GameManager {
         return currentDriver;
     }
 
-
-
     /**
      * Continues the round, signals to the ga me manager that the player executed his move,
      * the round can continue
@@ -170,7 +152,6 @@ public class GameManager {
     public static void continueRound() {
         latch.countDown();
     }
-
 
     /**
      * Executes the bot's move, the bot will move to the best position that is calculated by the route finder
@@ -185,11 +166,13 @@ public class GameManager {
         bot.move(bestTarget);
     }
 
-
+    /**
+     * Returns true if the round is over
+     * @return true if the round is over
+     */
     public static boolean isRoundOver() {
         return round.isEmpty();
     }
-
 
     /**
      * Returns the list of drivers in the game
@@ -224,19 +207,16 @@ public class GameManager {
     }
 
     /**
-     * End the current Game and reset the game manager to its default (ready for another game)
+     * End the current Game and reset the game manager to its default (ready for another game),
+     * used also to close teh app prematurely
      */
     public static void endGame() {
-        killRound(); // Stop the round thread if it's running
-        currentDrivers.clear(); // Clear the list of current drivers
-        round.clear(); // Clear the round data
-        currentDriver = null; // Reset the current driver
-        instance = null; // Allow for reinitialization if needed
-        gameMap = null; // Reset the game map
-        latch = new CountDownLatch(1); // Reset the latch
+        if (roundThread != null) killRound();
+        Optional.ofNullable(currentDrivers).ifPresent(List::clear);
+        Optional.ofNullable(round).ifPresent(Round::clear);
+        currentDriver = null;
+        instance = null;
+        gameMap = null;
+        latch = new CountDownLatch(1);
     }
-
-
-
-
 }

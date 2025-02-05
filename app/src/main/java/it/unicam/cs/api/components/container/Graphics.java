@@ -12,7 +12,7 @@ import static javafx.scene.paint.Color.rgb;
  * target function are stored in an array, thus we can't pass them directly.
  *
  * @author Younes Rabeh
- * @version 1.1
+ * @version 1.2
  * @see GraphicsContext
  */
 public final class Graphics {
@@ -128,10 +128,10 @@ public final class Graphics {
     public static void strokePoint(GraphicsContext gc, int[] params){
         Check.checkNull(gc);
         Check.checkParams(params, 2);
-        // Draw a small rectangle to represent the point
-        // FIXME: delete the magic numbers, the numbers should be half of
-        //  the diameter of the point
-        gc.fillOval(params[0] - 3, params[1] - 3, 6, 6);
+        int size = 8;
+        int offset = size / 2;
+
+        gc.fillOval(params[0] - offset, params[1] - offset, size, size);
     }
 
 }

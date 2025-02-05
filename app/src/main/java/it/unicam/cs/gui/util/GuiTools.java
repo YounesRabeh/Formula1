@@ -23,7 +23,7 @@ import static it.unicam.cs.engine.util.Useful.*;
  * Utility class for GUI operations
  * @see it.unicam.cs.gui.controller.SceneController
  * @author Younes Rabeh
- * @version 1.4
+ * @version 1.5
  */
 public final class GuiTools {
     private GuiTools() {}
@@ -96,7 +96,7 @@ public final class GuiTools {
         for (Driver driver : drivers) {
             GameMap.Waypoint position = driver.getPosition();
             Canvas[] canvases = gameMap.getCanvases();
-            drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), position);
+            drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), position, driver.getCarColor());
         }
     }
 
