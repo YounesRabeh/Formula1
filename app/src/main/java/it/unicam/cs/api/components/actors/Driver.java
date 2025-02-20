@@ -140,13 +140,13 @@ public abstract class Driver implements Racer {
         return name + " " + carColor.toString();
     }
 
+    @Override
     public void move(GameMap.Waypoint waypoint) {
         if (waypoint == null) {
             throw new IllegalArgumentException("[!!!] - Waypoint cannot be null");
         }
         System.out.println(this.name + " moved from " + currentWaypoint + " to " + waypoint);
         this.currentWaypoint = waypoint;
-
     }
 
 }

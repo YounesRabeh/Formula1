@@ -90,6 +90,7 @@ public class GameSceneController extends SceneController {
                 GameManager.getInstance(gameMap, mapArea);
                 //GameManager.endGame(); //ERROR proofing
                 GuiTools.drawDriversOnTrack(gameMap);
+                GuiTools.drawGameElements(gameMap);
 
                 //NOTE: THE FOLLOWING CODE SHOULD BE MOVED TO GameManager if possible
                 Platform.runLater(() -> {
@@ -205,10 +206,12 @@ public class GameSceneController extends SceneController {
         handlePlayerMove(Movement.DOWN_RIGHT); // Button for moving down-right
     }
 
+    /**
+     * Prints the initial information about the game
+     */
     private void printInitInfo(){
         System.out.println("########### MAP LOADED ###########");
         System.out.println("The Drivers:\n" + currentGameMap.getDrivers());
         System.out.println("######### THE RACE IS UP #########");
     }
-
 }

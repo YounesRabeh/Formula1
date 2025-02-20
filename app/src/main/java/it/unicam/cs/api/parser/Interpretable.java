@@ -5,7 +5,7 @@ import it.unicam.cs.api.exceptions.parser.NoActionFoundException;
 import java.io.*;
 import java.util.Optional;
 
-/**
+    /**
  * Represents the basic functionality of a parser.
  *
  * @see Command

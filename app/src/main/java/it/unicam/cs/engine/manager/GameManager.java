@@ -79,6 +79,9 @@ public class GameManager {
         roundThread.start();
     }
 
+    /**
+     * Kills the round thread
+     */
     private static void killRound() {
         if (roundThread != null) {
             roundThread.interrupt();
@@ -162,7 +165,7 @@ public class GameManager {
         GameMap.Waypoint bestTarget = RouteFinder.getBestTarget(
                 possibleNextWaypoints,
                 gameMap.getFinishLine().getWaypoints()
-        );
+        ); //TODO: add parsed waypoints
         bot.move(bestTarget);
     }
 

@@ -46,7 +46,7 @@ public final class RouteFinder {
             GameMap.Waypoint[] waypoints,
             Collection<GameMap.Waypoint> targets
     ) {
-
+        //TODO: add the parsed (snapped) segment endpoints to the path
         if (waypoints == null || waypoints.length == 0 || targets == null || targets.isEmpty()) {
             return null;
         }
@@ -67,7 +67,7 @@ public final class RouteFinder {
     private static double calculateMinimumDistance(GameMap.Waypoint waypoint, Collection<GameMap.Waypoint> targets) {
         return targets.stream()
                 .filter(Objects::nonNull)  // Ignore null targets
-                .mapToDouble(target -> waypoint.distance(target))  // Calculate distance from waypoint to each target
+                .mapToDouble(waypoint::distance)  // Calculate distance from waypoint to each target
                 .min()  // Get the smallest distance
                 .orElse(Double.MAX_VALUE);  // Return a large value if no targets are available
     }

@@ -8,6 +8,4 @@ package it.unicam.cs.gui.util;
  */
 public final class GuiEvents {
     private GuiEvents() {}  // Prevent instantiation
-
-
 }
