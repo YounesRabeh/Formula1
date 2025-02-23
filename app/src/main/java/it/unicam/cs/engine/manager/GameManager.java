@@ -106,17 +106,17 @@ public class GameManager {
                 if (currentDriver instanceof Bot bot) {
                     if (allDriversBots) {
 
-                        try {
-                            Thread.sleep(BOT_DELAY);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            break;
-                        }
-                        execute(bot);
-                        latch = new CountDownLatch(1);
-                        Platform.runLater(() -> GuiTools.mapUpdate(gameMap, mapArea));
-                        GuiTools.updateCommandButtons(currentDriver, gameMap, commandButtons);
                     }
+                    try {
+                        Thread.sleep(BOT_DELAY);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                    execute(bot);
+                    latch = new CountDownLatch(1);
+                    Platform.runLater(() -> GuiTools.mapUpdate(gameMap, mapArea));
+                    GuiTools.updateCommandButtons(currentDriver, gameMap, commandButtons);
                 } else {
                     try {
                         GuiTools.updateCommandButtons(currentDriver, gameMap, commandButtons);

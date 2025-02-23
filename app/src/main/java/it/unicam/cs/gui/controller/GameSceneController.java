@@ -92,7 +92,7 @@ public class GameSceneController extends SceneController {
                 Platform.runLater(() -> {
                     GameManager.initRound();
                     commandGridPane.setVisible(!GameManager.getIsAllDriversBots());
-                    GuiTools.drawGameElements(gameMap);
+                    //GuiTools.drawGameElements(gameMap);
                     GuiTools.mapUpdate(gameMap, mapArea);
                 });
 

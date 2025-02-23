@@ -114,17 +114,6 @@ public final class GuiTools {
         clearWaypointsGC(gameMap);
 
         GuiTools.drawDriversOnTrack(gameMap);
-        //System.out.println("Driver name:" + driver.getName() + " Driver position:" + driver.getPosition());
-        //System.out.println("Possible position:" + Arrays.toString(possibleNextWaypoints));
-
-        Collection<GameMap.Waypoint> targets = gameMap.getFinishLine().getWaypoints();
-        GameMap.Waypoint bestTarget = RouteFinder.getBestTarget(
-                driver.getPosition(),
-                targets
-        );
-
-        //System.out.println("Best target:" + bestTarget);
-
     }
 
     public static void updateCommandButtons(Driver driver, GameMap gameMap, Button[] commandButtons) {
