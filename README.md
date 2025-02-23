@@ -1,4 +1,4 @@
-# F1-game
+# Farmula1
 
 > [!IMPORTANT]
 > As of now, the drawing parser is the only fully completed component of the project.
@@ -9,10 +9,6 @@
 </p>
 
 ---
-
-## Current Progress
-
-This repository features a Formula 1 game with a graphics rendering system for creating and visualizing tracks. The system utilizes a simple pseudocode language to define the map. A parser interprets these pseudocode commands to produce the visual output.
 
 ## Pseudocode Documentation
 
