@@ -6,6 +6,7 @@ import it.unicam.cs.api.components.actors.structs.Movement;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import it.unicam.cs.gui.util.CanvasTools;
+import javafx.geometry.Point2D;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
@@ -84,11 +85,25 @@ public final class RouteTools {
                     possibleNextWaypoints.add(nextWaypoint);
                 }
             } catch (IllegalArgumentException ignored) {
-                //TEMP:
                 // Ignore waypoints that are not on the grid intersection
             }
         }
 
         return possibleNextWaypoints;
+    }
+
+    /**
+     * Snaps a point to the grid.
+     * @param point the point to snap
+     * @param gameMap the game map
+     * @return the snapped waypoint
+     */
+    public static GameMap.Waypoint snapToGrid(Point2D point, GameMap gameMap) {
+        int cellSize = gameMap.getGridCanvas().getCellSize();
+        double x = point.getX();
+        double y = point.getY();
+        double newX = x - (x % cellSize);
+        double newY = y - (y % cellSize);
+        return gameMap.createWaypoint(newX, newY);
     }
 }

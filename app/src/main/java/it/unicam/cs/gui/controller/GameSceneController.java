@@ -19,7 +19,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static it.unicam.cs.engine.util.Useful.getGameMap;
+import static it.unicam.cs.engine.util.EngineTools.getGameMap;
 
 
 /**
@@ -63,9 +63,6 @@ public class GameSceneController extends SceneController {
     private GameMap currentGameMap;
 
 
-    private static Thread uiUpdater;
-
-
     @FXML
     public void initialize() {
         commandButtons = new Button[]{
@@ -88,13 +85,14 @@ public class GameSceneController extends SceneController {
                 printInitInfo();
 
                 GameManager.getInstance(gameMap, mapArea);
-                //GameManager.endGame(); //ERROR proofing
                 GuiTools.drawDriversOnTrack(gameMap);
-                GuiTools.drawGameElements(gameMap);
 
-                //NOTE: THE FOLLOWING CODE SHOULD BE MOVED TO GameManager if possible
+
+
                 Platform.runLater(() -> {
                     GameManager.initRound();
+                    commandGridPane.setVisible(!GameManager.getIsAllDriversBots());
+                    GuiTools.drawGameElements(gameMap);
                     GuiTools.mapUpdate(gameMap, mapArea);
                 });
 
@@ -214,4 +212,5 @@ public class GameSceneController extends SceneController {
         System.out.println("The Drivers:\n" + currentGameMap.getDrivers());
         System.out.println("######### THE RACE IS UP #########");
     }
+
 }

@@ -14,6 +14,7 @@ import java.util.concurrent.CountDownLatch;
 
 import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
 import static it.unicam.cs.api.parser.types.PropertiesParser.getProperty;
+import static it.unicam.cs.engine.util.EngineTools.setBotsCheckpoints;
 import static it.unicam.cs.gui.controller.GameSceneController.commandButtons;
 
 
@@ -74,6 +75,8 @@ public class GameManager {
     public static void initRound(){
         round = new Round();
         round.addAll(gameMap.getDrivers());
+        currentDrivers.addAll(gameMap.getDrivers());
+        setBotsCheckpoints(gameMap);
         onlyBotsCheck();
         roundThread = roundThread();
         roundThread.start();
@@ -102,6 +105,7 @@ public class GameManager {
                 currentDriver = round.take();
                 if (currentDriver instanceof Bot bot) {
                     if (allDriversBots) {
+
                         try {
                             Thread.sleep(BOT_DELAY);
                         } catch (InterruptedException e) {
@@ -140,6 +144,10 @@ public class GameManager {
         allDriversBots = true;
     }
 
+    public static boolean getIsAllDriversBots(){
+        return allDriversBots;
+    }
+
     /**
      * Returns the current driver
      * @return the current driver
@@ -161,11 +169,19 @@ public class GameManager {
      * @param bot the bot
      */
     private static void execute(Bot bot) {
+        Collection<GameMap.Waypoint> targets = new ArrayList<>();
+        GameMap.Waypoint current = bot.getPosition();
+        GameMap.Waypoint currentTarget = bot.getTarget();
+        if (current.equals(currentTarget)) {
+            bot.setTarget(bot.getNextCheckpoint());
+        }
+        targets.add(bot.getTarget());
+        System.out.println("Bot " + bot.getName() + " target: " + bot.getTarget());
         GameMap.Waypoint[] possibleNextWaypoints = RouteFinder.getPossibleNextWaypoints(gameMap, bot);
         GameMap.Waypoint bestTarget = RouteFinder.getBestTarget(
                 possibleNextWaypoints,
-                gameMap.getFinishLine().getWaypoints()
-        ); //TODO: add parsed waypoints
+                targets
+        );
         bot.move(bestTarget);
     }
 

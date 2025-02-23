@@ -12,7 +12,7 @@
    <children>
       <AnchorPane layoutX="687.2" layoutY="355.0" prefHeight="267.0" prefWidth="320.0" AnchorPane.bottomAnchor="160.0" AnchorPane.rightAnchor="70.0">
          <children>
-            <GridPane layoutY="-1.6" prefHeight="269.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="commandGridPane" layoutY="-1.6" prefHeight="269.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

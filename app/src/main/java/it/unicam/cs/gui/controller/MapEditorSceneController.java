@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import static it.unicam.cs.api.components.container.UiGenerator.*;
-import static it.unicam.cs.engine.util.Useful.getGameMap;
+import static it.unicam.cs.engine.util.EngineTools.getGameMap;
 import static it.unicam.cs.gui.util.GuiTools.align;
 
 

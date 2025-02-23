@@ -1,8 +1,10 @@
 package it.unicam.cs.engine.util;
 
+import it.unicam.cs.api.components.actors.Bot;
 import it.unicam.cs.api.components.container.Check;
 import it.unicam.cs.api.components.container.Graphics;
 import it.unicam.cs.api.parser.types.DrawingParser;
+import it.unicam.cs.engine.nav.RouteTools;
 import it.unicam.cs.gui.map.GameMap;
 import it.unicam.cs.gui.map.TrackCanvas;
 import javafx.geometry.Point2D;
@@ -12,12 +14,19 @@ import javafx.scene.paint.Color;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static it.unicam.cs.api.parser.types.AbstractParser.F1_MAP_FILE_EXTENSION;
 
-public final class Useful {
+/**
+ * Utility class for the game engine operations
+ * @author Younes Rabeh
+ * @version 1.4
+ */
+public final class EngineTools {
     /**
      * Print the waypoints of the game map.
      * @param waypoints the waypoints of the game map
@@ -35,7 +44,7 @@ public final class Useful {
      * @param waypoints the waypoints of the game map
      */
     public static void drawWaypoints(GraphicsContext gc, List<GameMap.Waypoint> waypoints){
-        Graphics.setFill(gc, new int[]{255, 0, 0});
+        Graphics.setFill(gc, new int[]{0, 255, 0});
         for (GameMap.Waypoint coords : waypoints) {
             Graphics.strokePoint(gc, new int[]{(int) coords.getX(), (int) coords.getY()});
         }
@@ -127,4 +136,19 @@ public final class Useful {
         );
         return parser.start();
     }
+
+    public static void setBotsCheckpoints(GameMap gameMap){
+        List<Bot> bots = gameMap.getBots();
+        List<Point2D> endPoints = gameMap.getTrackCanvas().getSegmentsEndPoints();
+        List<GameMap.Waypoint> waypoints = new ArrayList<>();
+        for (Point2D point: endPoints){
+            waypoints.add(RouteTools.snapToGrid(point, gameMap));
+        }
+        for (Bot bot: bots){
+            bot.setCheckpoints(waypoints);
+        }
+
+    }
+
+
 }

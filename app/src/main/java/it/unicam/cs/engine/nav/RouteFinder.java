@@ -8,7 +8,8 @@ import it.unicam.cs.gui.map.GameMap;
 import java.util.*;
 
 /**
- *
+ * A utility class that provides tools to find the best route for the driver.
+ * The best route is the route that leads to the  closest to the target.
  * @author Younes Rabeh
  * @version 1.3
  */
@@ -27,7 +28,7 @@ public final class RouteFinder {
     public static GameMap.Waypoint getBestTarget(
             GameMap.Waypoint currentPosition,
             Collection<GameMap.Waypoint> targets
-    ) { //TODO: add the parsed (snapped) segment endpoints to the path
+    ) {
         return targets.stream()
                 .filter(Objects::nonNull)  // Ignore null waypoints (non-admissible)
                 .min(Comparator.comparingDouble(wp -> wp.distance(currentPosition)))
@@ -46,16 +47,15 @@ public final class RouteFinder {
             GameMap.Waypoint[] waypoints,
             Collection<GameMap.Waypoint> targets
     ) {
-        //TODO: add the parsed (snapped) segment endpoints to the path
         if (waypoints == null || waypoints.length == 0 || targets == null || targets.isEmpty()) {
             return null;
         }
 
         // Reusing the logic from the collection-based version
         return Arrays.stream(waypoints)
-                .filter(Objects::nonNull)  // Ignore null waypoints
+                .filter(Objects::nonNull)
                 .min(Comparator.comparingDouble(wp -> calculateMinimumDistance(wp, targets)))
-                .orElse(null);  // Return null if no valid waypoint found
+                .orElse(null);
     }
 
     /**
@@ -113,8 +113,5 @@ public final class RouteFinder {
 
         return waypoints;
     }
-
-
-
 }
 

@@ -17,7 +17,7 @@ import java.util.List;
 
 import static it.unicam.cs.api.parser.types.PropertiesParser.CONFIG_PROPERTIES_PATH;
 import static it.unicam.cs.api.parser.types.PropertiesParser.getIntProperty;
-import static it.unicam.cs.engine.util.Useful.*;
+import static it.unicam.cs.engine.util.EngineTools.*;
 
 /**
  * Utility class for GUI operations
@@ -74,10 +74,13 @@ public final class GuiTools {
         Canvas[] canvases = gameMap.getCanvases();
         Collection<GameMap.Waypoint> waypoints = trackCanvas.getWaypoints();
         List<Point2D> segmentsEndPoints = trackCanvas.getSegmentsEndPoints();
+        //TEMP:
+        List<GameMap.Waypoint> parsedWaypoints = gameMap.getBots().getFirst().getCheckpoints();
+        System.out.println("Parsed waypoints:" + parsedWaypoints);
 
-        drawWaypoints(canvases[WAYPOINT_LVL].getGraphicsContext2D(), (List<GameMap.Waypoint>) waypoints);
-        drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
-        drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        drawWaypoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), parsedWaypoints);
+        //drawConnections(trackCanvas, canvases[EXTRA_LVL].getGraphicsContext2D(), segmentsEndPoints);
+        //drawParsedSegmentEndPoints(canvases[END_POINTS_LVL].getGraphicsContext2D(), segmentsEndPoints);
     }
 
     public static void mapUpdate(GameMap gameMap, AnchorPane mapArea) {
@@ -110,16 +113,6 @@ public final class GuiTools {
         mapArea.getChildren().clear();
         clearWaypointsGC(gameMap);
 
-        //Canvas[] canvases = gameMap.getCanvases();
-        //GameMap.Waypoint[] possibleNextWaypoints =
-        //        RouteFinder.getPossibleNextWaypoints(
-        //                gameMap,
-        //                driver
-        //        );
-
-        //for (GameMap.Waypoint waypoint : possibleNextWaypoints) {
-        //    drawWaypoint(canvases[WAYPOINT_LVL].getGraphicsContext2D(), waypoint, Color.AQUA);
-        //}
         GuiTools.drawDriversOnTrack(gameMap);
         //System.out.println("Driver name:" + driver.getName() + " Driver position:" + driver.getPosition());
         //System.out.println("Possible position:" + Arrays.toString(possibleNextWaypoints));

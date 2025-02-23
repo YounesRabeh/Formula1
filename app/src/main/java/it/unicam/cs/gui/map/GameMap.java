@@ -31,7 +31,7 @@ import static it.unicam.cs.gui.controller.GameSetupSceneController.MATCH_MAKING_
  * @see TrackCanvas
  * @see InertCanvas
  * @author Younes Rabeh
- * @version 2.3
+ * @version 2.4
  */
 public class GameMap {
     /** The grid canvas */
@@ -311,6 +311,20 @@ public class GameMap {
      */
     public boolean isWaypointFree(Waypoint waypoint) {
         return drivers.stream().noneMatch(driver -> driver.getPosition().equals(waypoint));
+    }
+
+    /**
+     * Get the bots on this map.
+     * @return the bots on this map
+     */
+    public List<Bot> getBots() {
+        List<Bot> bots = new ArrayList<>();
+        for (Driver driver : drivers) {
+            if (driver instanceof Bot) {
+                bots.add((Bot) driver);
+            }
+        }
+        return bots;
     }
 
     /**
