@@ -1,4 +1,4 @@
-# Farmula1
+# Formula1
 
 > [!IMPORTANT]
 > As of now, the drawing parser is the only fully completed component of the project.
