@@ -65,7 +65,6 @@ public class GameMap {
     public GameMap(int cellSize, int cellNumber_X, int cellNumber_Y, int layerNumber) {
         Check.checkNumbers(cellSize, cellNumber_X, cellNumber_Y, layerNumber);
         initDrivers();
-        //TODO: check if the generated map is smaller than window size
         this.width = cellSize * cellNumber_X;
         this.height = cellSize * cellNumber_Y;
 
@@ -97,7 +96,7 @@ public class GameMap {
         this(params[0], params[1], params[2], params[3]);
     }
 
-    //TODO: move this to a separate class
+    @SuppressWarnings("unused")
     private void gridEvent(){
         gridCanvas.setOnMouseClicked(e -> {
             int x = (int) e.getX();
@@ -343,32 +342,5 @@ public class GameMap {
         public String toString() {
             return String.format("Waypoint (x=%d, y=%d)" , (int) getX(), (int) getY());
         }
-    }
-
-    //TEMP: will be deleted
-
-    /**
-     * Get the possible next (reachable) waypoints, given a waypoint.
-     * @return the possible next waypoints
-     */
-    public Collection<Waypoint> getPossibleNextWaypoints(GameMap.Waypoint waypoint) {
-        // The function suppose that the waypoint is on the grid intersection
-        Collection<GameMap.Waypoint> possibleNextWaypoints = new ArrayList<>();
-        int cellSize = this.getGridCanvas().getCellSize();
-
-        for (Movement movement : Movement.values()) {
-            double newX = waypoint.getX() + movement.getXOffset() * cellSize;
-            double newY = waypoint.getY() + movement.getYOffset() * cellSize;
-            try {
-                GameMap.Waypoint nextWaypoint = this.createWaypoint(newX, newY);
-                if (this.getTrackCanvas().containsWaypoint(nextWaypoint)) {
-                    possibleNextWaypoints.add(nextWaypoint);
-                }
-            } catch (IllegalArgumentException ignored) {
-                // Ignore waypoints that are not on the grid intersection
-            }
-        }
-
-        return possibleNextWaypoints;
     }
 }

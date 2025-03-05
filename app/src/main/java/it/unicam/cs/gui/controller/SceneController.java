@@ -67,8 +67,6 @@ public abstract class SceneController {
             CONFIG_PROPERTIES_PATH, "MATCH_MAKING_FILE_PATH"
     );
 
-
-    // TEMP: For testing purposes
     public static final String NEW_MAP_FILE_PATH = getProperty(
             CONFIG_PROPERTIES_PATH, "EMPTY_MAP_FILE_PATH"
     );
@@ -80,7 +78,7 @@ public abstract class SceneController {
      */
     public static void init(Stage stage) {
         if (SceneController.stage == null) {
-            try { //TODO: add the splash screen and resources loading
+            try {
                 System.gc();
                 screenDimensionsSetup();
                 stageSetup(stage);
@@ -88,7 +86,7 @@ public abstract class SceneController {
             } catch (URISyntaxException | IOException e) {
                 e.printStackTrace();
             }
-        } else { //TODO: add the custom resources & app logic exceptions
+        } else {
             throw new IllegalStateException("The stage is already set");
         }
     }

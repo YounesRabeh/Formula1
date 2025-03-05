@@ -217,8 +217,6 @@ public final class UiGenerator {
     }
 
 
-    //FIXME: Add a method to create a segment entry to make the upper one private
-    //TODO: save the pairs of x and y in a list and °num is it size
     public static void addToVBOX(VBox vbox, List<HBox> HBoxes) {
         // Add 5px margin to each HBox before adding to VBox
         for (HBox hbox : HBoxes) {

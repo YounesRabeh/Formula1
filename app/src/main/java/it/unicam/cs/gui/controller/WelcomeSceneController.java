@@ -24,7 +24,6 @@ public class WelcomeSceneController extends SceneController {
      */
     @FXML
     private void quitButtonClick() {
-        // TODO: add the background checks to close without corrupting the data
         System.exit(0);
     }
 

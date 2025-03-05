@@ -35,11 +35,13 @@ public final class GuiTools {
     public static final int END_POINTS_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "END_POINTS_LVL");
     public static final int GRID_LVL = getIntProperty(CONFIG_PROPERTIES_PATH, "GRID_LVL");
 
+
     /**
      * Align all the nodes in the root.
      * @param root the root
      * @param nodes the nodes
      */
+    @SuppressWarnings("unused")
     public static void alignAll(AnchorPane root, Node[] nodes){
         for (Node node : nodes) {
             AnchorPane.setTopAnchor(node, 0.0);
@@ -65,16 +67,18 @@ public final class GuiTools {
 
 
     // TEMP: For visualizing the parsed data
+
     /**
      * Draws the game elements on the canvases.
      * @param gameMap the game map
      */
+    @SuppressWarnings("unused")
     public static void drawGameElements(GameMap gameMap) {
         TrackCanvas trackCanvas = gameMap.getTrackCanvas();
         Canvas[] canvases = gameMap.getCanvases();
         Collection<GameMap.Waypoint> waypoints = trackCanvas.getWaypoints();
         List<Point2D> segmentsEndPoints = trackCanvas.getSegmentsEndPoints();
-        //TEMP:
+
         List<GameMap.Waypoint> parsedWaypoints = gameMap.getBots().getFirst().getCheckpoints();
         System.out.println("Parsed waypoints:" + parsedWaypoints);
 
